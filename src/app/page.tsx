@@ -1,65 +1,1322 @@
+"use client";
+
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { useRef, useState, useEffect } from "react";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+
+// Google Review Type
+interface GoogleReview {
+  author_name: string;
+  rating: number;
+  text: string;
+  time: number;
+  profile_photo_url?: string;
+  relative_time_description: string;
+}
+
+// Enhanced Animation Variants
+const fadeInUp = {
+  initial: { opacity: 0, y: 40 },
+  animate: { opacity: 1, y: 0 },
+};
+
+const fadeInScale = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { opacity: 1, scale: 1 },
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const slideInLeft = {
+  initial: { opacity: 0, x: -60 },
+  animate: { opacity: 1, x: 0 },
+};
+
+const slideInRight = {
+  initial: { opacity: 0, x: 60 },
+  animate: { opacity: 1, x: 0 },
+};
+
+// Star Rating Component
+function StarRating({ rating, size = "w-5 h-5" }: { rating: number; size?: string }) {
+  return (
+    <div className="flex gap-0.5">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <svg
+          key={star}
+          className={`${size} ${star <= rating ? "text-yellow-400" : "text-slate-grey/20"}`}
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
+
+// Google Reviews Section Component
+function GoogleReviewsSection() {
+  const [reviews, setReviews] = useState<GoogleReview[]>([]);
+  const [overallRating, setOverallRating] = useState(5.0);
+  const [totalReviews, setTotalReviews] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Placeholder reviews - replace with API fetch
+  const placeholderReviews: GoogleReview[] = [
+    {
+      author_name: "Max Mustermann",
+      rating: 5,
+      text: "Absolut professionelle Zusammenarbeit! Origin Labs hat unsere Website komplett neu gestaltet und das Ergebnis übertrifft alle Erwartungen. Schnelle Kommunikation und termingerechte Lieferung.",
+      time: Date.now() - 86400000 * 3,
+      relative_time_description: "vor 3 Tagen",
+    },
+    {
+      author_name: "Anna Schmidt",
+      rating: 5,
+      text: "Unsere neue Webapp läuft einwandfrei! Das Team hat alle unsere Anforderungen perfekt umgesetzt. Besonders beeindruckt hat mich die Liebe zum Detail im UI-Design.",
+      time: Date.now() - 86400000 * 7,
+      relative_time_description: "vor einer Woche",
+    },
+    {
+      author_name: "Thomas Weber",
+      rating: 5,
+      text: "Von der ersten Beratung bis zum Launch wurde alles professionell abgewickelt. Die Mobile App für unser Unternehmen ist genau das, was wir gebraucht haben. Klare Empfehlung!",
+      time: Date.now() - 86400000 * 14,
+      relative_time_description: "vor 2 Wochen",
+    },
+    {
+      author_name: "Lisa Müller",
+      rating: 5,
+      text: "Hervorragende Arbeit bei unserem E-Commerce Projekt. Die Seite ist nicht nur schön, sondern auch blitzschnell. Der Support auch nach dem Launch ist top!",
+      time: Date.now() - 86400000 * 21,
+      relative_time_description: "vor 3 Wochen",
+    },
+    {
+      author_name: "Michael Braun",
+      rating: 5,
+      text: "Das Origin Labs Team versteht wirklich, was man braucht. Unsere Corporate Website sieht modern und professionell aus. Sehr zufrieden mit dem Ergebnis!",
+      time: Date.now() - 86400000 * 30,
+      relative_time_description: "vor einem Monat",
+    },
+  ];
+
+  useEffect(() => {
+    // Simulate fetching reviews - replace with actual API call
+    const fetchReviews = async () => {
+      setIsLoading(true);
+      try {
+        // TODO: Replace with actual Google Places API call
+        // const response = await fetch('/api/google-reviews');
+        // const data = await response.json();
+        // setReviews(data.reviews);
+        // setOverallRating(data.rating);
+        // setTotalReviews(data.total);
+
+        // Using placeholder data
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setReviews(placeholderReviews);
+        setOverallRating(5.0);
+        setTotalReviews(47);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        setReviews(placeholderReviews);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchReviews();
+
+    // Poll for new reviews every 5 minutes
+    const interval = setInterval(fetchReviews, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Auto-rotate reviews
+  useEffect(() => {
+    if (reviews.length === 0) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % reviews.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [reviews.length]);
+
+  const displayedReviews = reviews.length > 0 ? reviews : placeholderReviews;
+
+  return (
+    <section id="reviews" className="py-32 bg-white relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-gradient-to-l from-yellow-400/5 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-gradient-to-r from-primary-cyan/5 to-transparent rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
+            Kundenstimmen
+          </span>
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6">
+            Das sagen unsere <span className="gradient-text">Kunden</span>
+          </h2>
+          <p className="font-body text-lg text-slate-grey/60 max-w-2xl mx-auto">
+            Echte Bewertungen von echten Kunden – direkt von Google.
+          </p>
+        </motion.div>
+
+        {/* Overall Rating Card */}
+        <motion.div
+          className="flex justify-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="inline-flex items-center gap-6 px-8 py-6 bg-white rounded-3xl shadow-xl border border-slate-grey/5">
+            {/* Google Logo */}
+            <div className="flex items-center gap-3">
+              <svg className="w-10 h-10" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              <div>
+                <p className="font-body text-sm text-slate-grey/60">Google Bewertungen</p>
+                <div className="flex items-center gap-2">
+                  <span className="font-heading text-3xl font-bold text-slate-grey">
+                    {overallRating.toFixed(1)}
+                  </span>
+                  <StarRating rating={Math.round(overallRating)} size="w-6 h-6" />
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="w-px h-16 bg-slate-grey/10" />
+
+            {/* Total Reviews */}
+            <div className="text-center">
+              <p className="font-heading text-3xl font-bold text-slate-grey">{totalReviews}</p>
+              <p className="font-body text-sm text-slate-grey/60">Bewertungen</p>
+            </div>
+
+            {/* Live Indicator */}
+            <div className="flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+              </span>
+              <span className="font-body text-xs text-green-600 font-medium">Live</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Reviews Carousel */}
+        <div className="relative">
+          <div className="overflow-hidden">
+            <motion.div
+              className="flex gap-6"
+              animate={{ x: `-${activeIndex * (100 / 3)}%` }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {displayedReviews.map((review, index) => (
+                <motion.div
+                  key={`${review.author_name}-${index}`}
+                  className="min-w-[calc(33.333%-16px)] max-w-[calc(33.333%-16px)] hidden lg:block"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <ReviewCard review={review} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Mobile/Tablet: Single Review */}
+          <div className="lg:hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ReviewCard review={displayedReviews[activeIndex]} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Navigation Dots */}
+          <div className="flex justify-center gap-2 mt-8">
+            {displayedReviews.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  index === activeIndex
+                    ? "bg-primary-blue w-8"
+                    : "bg-slate-grey/20 hover:bg-slate-grey/40"
+                }`}
+                aria-label={`Bewertung ${index + 1} anzeigen`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <motion.div
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          <motion.a
+            href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-8 py-4 border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:text-primary-blue hover:shadow-lg hover:shadow-primary-cyan/10 transition-all"
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Alle Bewertungen auf Google ansehen
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </motion.a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// Review Card Component
+function ReviewCard({ review }: { review: GoogleReview }) {
+  return (
+    <motion.div
+      className="h-full p-8 bg-off-white rounded-3xl border border-slate-grey/5 hover:border-primary-cyan/20 hover:shadow-xl transition-all duration-500"
+      whileHover={{ y: -5 }}
+    >
+      {/* Header */}
+      <div className="flex items-start justify-between mb-6">
+        <div className="flex items-center gap-4">
+          {/* Avatar */}
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-cyan to-primary-blue flex items-center justify-center text-white font-heading font-bold text-lg shadow-lg shadow-primary-blue/20">
+            {review.author_name.charAt(0)}
+          </div>
+          <div>
+            <h4 className="font-heading font-semibold text-slate-grey">
+              {review.author_name}
+            </h4>
+            <p className="font-body text-sm text-slate-grey/50">
+              {review.relative_time_description}
+            </p>
+          </div>
+        </div>
+
+        {/* Google Icon */}
+        <svg className="w-6 h-6 text-slate-grey/30" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+      </div>
+
+      {/* Rating */}
+      <div className="mb-4">
+        <StarRating rating={review.rating} />
+      </div>
+
+      {/* Review Text */}
+      <p className="font-body text-slate-grey/70 leading-relaxed line-clamp-4">
+        &ldquo;{review.text}&rdquo;
+      </p>
+
+      {/* Verified Badge */}
+      <div className="flex items-center gap-2 mt-6 pt-4 border-t border-slate-grey/10">
+        <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <span className="font-body text-xs text-slate-grey/50">Verifizierte Google Bewertung</span>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Home() {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <>
+      <Header />
+
+      <main className="bg-white overflow-hidden">
+        {/* ==================== HERO SECTION ==================== */}
+        <section
+          id="hero"
+          ref={heroRef}
+          className="relative min-h-screen flex items-center justify-center pt-20"
+        >
+          {/* Animated Background */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-white to-white" />
+
+            {/* Floating Orbs */}
+            <motion.div
+              className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(45,212,224,0.15) 0%, transparent 70%)",
+              }}
+              animate={{
+                scale: [1, 1.1, 1],
+                x: [0, 30, 0],
+                y: [0, -20, 0],
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <motion.div
+              className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(0,85,255,0.1) 0%, transparent 70%)",
+              }}
+              animate={{
+                scale: [1.1, 1, 1.1],
+                x: [0, -20, 0],
+                y: [0, 30, 0],
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            {/* Grid Pattern */}
+            <div
+              className="absolute inset-0 opacity-[0.02]"
+              style={{
+                backgroundImage: `linear-gradient(rgba(0,85,255,1) 1px, transparent 1px),
+                                  linear-gradient(90deg, rgba(0,85,255,1) 1px, transparent 1px)`,
+                backgroundSize: "60px 60px",
+              }}
+            />
+          </div>
+
+          {/* Content */}
+          <motion.div
+            className="relative z-10 max-w-6xl mx-auto px-6 text-center"
+            style={{ y: heroY, opacity: heroOpacity }}
           >
-            Documentation
-          </a>
-        </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
+            >
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-cyan opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-cyan" />
+              </span>
+              <span className="font-body text-sm text-slate-grey font-medium">
+                Ihr Partner für digitale Exzellenz
+              </span>
+            </motion.div>
+
+            <motion.h1
+              className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 text-slate-grey leading-[1.1]"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Digitale Lösungen,
+              <br />
+              <span className="gradient-text">die begeistern</span>
+            </motion.h1>
+
+            <motion.p
+              className="font-body text-xl md:text-2xl text-slate-grey/60 max-w-2xl mx-auto mb-12"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Wir entwickeln Websites, Webapps und Mobile Apps, die Ihr
+              Unternehmen nach vorne bringen.
+            </motion.p>
+
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <motion.a
+                href="#contact"
+                className="group relative px-8 py-4 gradient-primary text-white font-heading font-semibold rounded-full overflow-hidden shadow-xl shadow-primary-blue/30"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Projekt starten
+                  <motion.svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </motion.svg>
+                </span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-primary-blue to-primary-cyan"
+                  initial={{ x: "100%" }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.a>
+
+              <motion.a
+                href="#about"
+                className="group px-8 py-4 bg-white border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg hover:shadow-primary-cyan/10 transition-all duration-300"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  Mehr erfahren
+                  <svg
+                    className="w-5 h-5 text-slate-grey/50 group-hover:text-primary-blue transition-colors"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </span>
+              </motion.a>
+            </motion.div>
+
+            {/* Scroll Indicator - Fixed Position */}
+            <motion.div
+              className="mt-20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              <motion.div
+                className="w-7 h-12 border-2 border-slate-grey/20 rounded-full mx-auto flex justify-center"
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <motion.div
+                  className="w-1.5 h-3 bg-gradient-to-b from-primary-cyan to-primary-blue rounded-full mt-2"
+                  animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </section>
+
+        {/* ==================== ABOUT SECTION ==================== */}
+        <section id="about" className="py-32 bg-off-white relative overflow-hidden">
+          {/* Background Decoration */}
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary-cyan/5 to-transparent" />
+
+          <div className="max-w-7xl mx-auto px-6 relative">
+            <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+              {/* Image Side */}
+              <motion.div
+                className="relative order-2 lg:order-1"
+                variants={slideInLeft}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="relative">
+                  {/* Main Image Container */}
+                  <motion.div
+                    className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-primary-cyan/20 via-white to-primary-blue/20 shadow-2xl"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <motion.div
+                        className="relative w-40 h-40"
+                        animate={{ rotate: [0, 5, 0, -5, 0] }}
+                        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        <Image
+                          src="/logo-icon.png"
+                          alt="Origin Labs"
+                          fill
+                          className="object-contain drop-shadow-2xl"
+                        />
+                      </motion.div>
+                    </div>
+
+                    {/* Floating Elements */}
+                    <motion.div
+                      className="absolute top-8 right-8 w-16 h-16 gradient-primary rounded-2xl shadow-lg shadow-primary-blue/30"
+                      animate={{ y: [0, -10, 0], rotate: [0, 10, 0] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    <motion.div
+                      className="absolute bottom-12 left-8 w-12 h-12 bg-primary-cyan/30 rounded-xl backdrop-blur-sm"
+                      animate={{ y: [0, 10, 0], rotate: [0, -10, 0] }}
+                      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    />
+                  </motion.div>
+
+                  {/* Stats Card */}
+                  <motion.div
+                    className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-6 shadow-xl border border-slate-grey/5 hover:shadow-2xl transition-shadow"
+                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                    whileHover={{ y: -5 }}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-heading text-2xl font-bold text-slate-grey">50+</p>
+                        <p className="font-body text-sm text-slate-grey/60">Projekte</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              {/* Text Side */}
+              <motion.div
+                className="order-1 lg:order-2"
+                variants={slideInRight}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <motion.span
+                  className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                >
+                  Über uns
+                </motion.span>
+                <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mt-4 mb-8 leading-tight">
+                  Innovation trifft
+                  <br />
+                  <span className="gradient-text">Leidenschaft</span>
+                </h2>
+                <p className="font-body text-lg text-slate-grey/70 mb-6 leading-relaxed">
+                  Wir sind ein Team aus kreativen Köpfen und technischen
+                  Experten, die gemeinsam an einer Vision arbeiten: Digitale
+                  Produkte zu schaffen, die einen echten Unterschied machen.
+                </p>
+                <p className="font-body text-lg text-slate-grey/70 mb-10 leading-relaxed">
+                  Mit Leidenschaft für Design und Technologie verwandeln wir
+                  Ihre Ideen in beeindruckende digitale Erlebnisse.
+                </p>
+
+                <motion.div
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Link
+                    href="/about"
+                    className="group inline-flex items-center gap-3 font-heading font-semibold text-primary-blue"
+                  >
+                    <span className="relative">
+                      Mehr über uns erfahren
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary-cyan/30 group-hover:bg-primary-cyan transition-colors" />
+                    </span>
+                    <motion.div
+                      className="w-10 h-10 rounded-full bg-primary-cyan/10 flex items-center justify-center group-hover:bg-primary-cyan/20 transition-colors"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <svg
+                        className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </motion.div>
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================== SERVICES SECTION ==================== */}
+        <section id="services" className="py-32 bg-white relative">
+          <div className="max-w-7xl mx-auto px-6">
+            <motion.div
+              className="text-center mb-20"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
+                Leistungen
+              </span>
+              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6">
+                Was wir <span className="gradient-text">bieten</span>
+              </h2>
+              <p className="font-body text-lg text-slate-grey/60 max-w-2xl mx-auto">
+                Von der ersten Idee bis zum fertigen Produkt – wir begleiten Sie
+                auf dem gesamten Weg.
+              </p>
+            </motion.div>
+
+            {/* Modern Bento Grid */}
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              {[
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  ),
+                  title: "Websites",
+                  description: "Moderne, responsive Websites mit erstklassigem Design und optimaler Performance.",
+                  link: "/services#websites",
+                },
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                    </svg>
+                  ),
+                  title: "Webapps",
+                  description: "Leistungsstarke Webanwendungen, die komplexe Prozesse vereinfachen.",
+                  link: "/services#webapps",
+                },
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  ),
+                  title: "Mobile Apps",
+                  description: "Native und Cross-Platform Apps für iOS und Android, die Nutzer begeistern.",
+                  link: "/services#mobile",
+                },
+              ].map((service, index) => (
+                <motion.div
+                  key={service.title}
+                  className="group relative"
+                  variants={fadeInUp}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <motion.div
+                    className="relative h-full bg-off-white p-8 lg:p-10 rounded-3xl border border-transparent hover:border-primary-cyan/20 transition-all duration-500"
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {/* Gradient overlay on hover */}
+                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary-cyan/5 via-transparent to-primary-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    {/* Glow effect */}
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-cyan to-primary-blue rounded-3xl opacity-0 group-hover:opacity-10 blur transition-opacity duration-500" />
+
+                    <div className="relative">
+                      <motion.div
+                        className="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-8 text-white shadow-lg shadow-primary-blue/20"
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {service.icon}
+                      </motion.div>
+
+                      <h3 className="font-heading text-2xl font-bold text-slate-grey mb-4 group-hover:text-primary-blue transition-colors">
+                        {service.title}
+                      </h3>
+
+                      <p className="font-body text-slate-grey/70 mb-6 leading-relaxed">
+                        {service.description}
+                      </p>
+
+                      <Link
+                        href={service.link}
+                        className="inline-flex items-center gap-2 font-body text-sm font-semibold text-primary-blue group/link"
+                      >
+                        <span>Mehr erfahren</span>
+                        <motion.svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          whileHover={{ x: 4 }}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </motion.svg>
+                      </Link>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <motion.div
+              className="text-center mt-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/services"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-slate-grey text-white font-heading font-semibold rounded-full hover:bg-slate-grey/90 transition-colors shadow-lg shadow-slate-grey/20"
+                >
+                  Alle Leistungen ansehen
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ==================== PRICING SECTION ==================== */}
+        <section id="pricing" className="py-32 bg-off-white relative overflow-hidden">
+          {/* Background Elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary-cyan/5 to-primary-blue/5 rounded-full blur-3xl" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-6 relative">
+            <motion.div
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
+                Preise
+              </span>
+              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6">
+                Individuelle <span className="gradient-text">Lösungen</span>
+              </h2>
+              <p className="font-body text-lg text-slate-grey/60 max-w-3xl mx-auto">
+                Wir entwickeln Websites, Webapps und Mobile Apps – maßgeschneidert auf Ihre Anforderungen.
+                Da jedes Projekt einzigartig ist, erstellen wir Ihnen ein individuelles Angebot.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-6 mb-16">
+              {[
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  ),
+                  name: "Websites",
+                  description: "Professionelle Webauftritte für Ihr Unternehmen",
+                  price: "ab 800€",
+                  features: ["Responsive Design", "SEO-Optimierung", "CMS auf Wunsch", "Schnelle Ladezeiten", "SSL-Verschlüsselung"],
+                },
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                    </svg>
+                  ),
+                  name: "Webapps",
+                  description: "Komplexe Webanwendungen für Ihre Prozesse",
+                  price: "ab 8.000€",
+                  features: ["Individuelle Funktionen", "Datenbank-Integration", "API-Anbindungen", "Benutzerverwaltung", "Cloud-Hosting"],
+                },
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  ),
+                  name: "Mobile Apps",
+                  description: "Native & Cross-Platform Apps",
+                  price: "ab 15.000€",
+                  features: ["iOS & Android", "Offline-Funktionalität", "Push-Benachrichtigungen", "App Store Veröffentlichung", "Regelmäßige Updates"],
+                },
+              ].map((service, index) => (
+                <motion.div
+                  key={service.name}
+                  className="relative"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                >
+                  <motion.div
+                    className="relative h-full p-8 lg:p-10 rounded-3xl bg-white border border-slate-grey/10 hover:border-primary-cyan/30 hover:shadow-xl transition-all duration-500"
+                    whileHover={{ y: -8 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <motion.div
+                      className="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-primary-blue/20"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {service.icon}
+                    </motion.div>
+
+                    <h3 className="font-heading text-2xl font-bold text-slate-grey mb-2">
+                      {service.name}
+                    </h3>
+                    <p className="font-body text-slate-grey/60 mb-6">
+                      {service.description}
+                    </p>
+
+                    <ul className="space-y-3 mb-8">
+                      {service.features.map((feature, i) => (
+                        <motion.li
+                          key={feature}
+                          className="flex items-center gap-3 font-body text-slate-grey/70"
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 + i * 0.05 }}
+                        >
+                          <div className="w-5 h-5 rounded-full bg-primary-cyan/10 flex items-center justify-center flex-shrink-0">
+                            <svg className="w-3 h-3 text-primary-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          {feature}
+                        </motion.li>
+                      ))}
+                    </ul>
+
+                    <div className="pt-6 border-t border-slate-grey/10">
+                      <p className="font-heading text-2xl font-bold gradient-text mb-1">
+                        {service.price}
+                      </p>
+                      <p className="font-body text-sm text-slate-grey/50">
+                        Endpreis nach Ihren Anforderungen
+                      </p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* CTA Box */}
+            <motion.div
+              className="relative rounded-3xl overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              {/* Animated Background */}
+              <div className="absolute inset-0 gradient-primary" />
+              <motion.div
+                className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"
+                animate={{ scale: [1, 1.2, 1], x: [0, 20, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"
+                animate={{ scale: [1.2, 1, 1.2], y: [0, -20, 0] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Grid Pattern */}
+              <div
+                className="absolute inset-0 opacity-10"
+                style={{
+                  backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                  backgroundSize: "32px 32px",
+                }}
+              />
+
+              {/* Content */}
+              <div className="relative p-8 lg:p-14">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+                  {/* Left: Text */}
+                  <div className="text-center lg:text-left">
+                    <motion.div
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+                      </span>
+                      <span className="font-body text-sm text-white/90">Unverbindlich & Kostenlos</span>
+                    </motion.div>
+
+                    <h3 className="font-heading text-3xl lg:text-4xl font-bold text-white mb-4">
+                      Bereit, Ihr Projekt zu starten?
+                    </h3>
+                    <p className="font-body text-white/70 max-w-xl text-lg">
+                      Erzählen Sie uns von Ihrer Idee und wir erstellen Ihnen ein
+                      maßgeschneidertes Angebot – transparent und fair.
+                    </p>
+                  </div>
+
+                  {/* Right: CTA */}
+                  <div className="flex flex-col items-center lg:items-end gap-4">
+                    <motion.a
+                      href="#contact"
+                      className="group relative px-8 py-4 bg-white text-primary-blue font-heading font-semibold rounded-full shadow-xl shadow-black/20 overflow-hidden"
+                      whileHover={{ scale: 1.03, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-off-white"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: 0 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                      <span className="relative z-10 flex items-center gap-2">
+                        Kostenloses Erstgespräch
+                        <svg
+                          className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </span>
+                    </motion.a>
+
+                    <p className="font-body text-sm text-white/50 flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Antwort innerhalb von 24h
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ==================== GOOGLE REVIEWS SECTION ==================== */}
+        <GoogleReviewsSection />
+
+        {/* ==================== PROJECTS SECTION ==================== */}
+        <section id="projects" className="py-32 bg-white relative">
+          <div className="max-w-7xl mx-auto px-6">
+            <motion.div
+              className="text-center mb-20"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
+                Projekte
+              </span>
+              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6">
+                Unsere <span className="gradient-text">Arbeiten</span>
+              </h2>
+              <p className="font-body text-lg text-slate-grey/60 max-w-2xl mx-auto">
+                Entdecken Sie eine Auswahl unserer erfolgreich umgesetzten
+                Projekte.
+              </p>
+            </motion.div>
+
+            {/* Projects Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {[
+                { title: "E-Commerce Platform", category: "Webapp", gradient: "from-[#00C6FB] to-[#005BEA]" },
+                { title: "Corporate Website", category: "Website", gradient: "from-[#667EEA] to-[#764BA2]" },
+                { title: "Fitness App", category: "Mobile App", gradient: "from-[#F093FB] to-[#F5576C]" },
+                { title: "Dashboard System", category: "Webapp", gradient: "from-[#4FACFE] to-[#00F2FE]" },
+              ].map((project, index) => (
+                <motion.div
+                  key={project.title}
+                  className="group relative aspect-[16/10] rounded-3xl overflow-hidden cursor-pointer"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  {/* Background Gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`} />
+
+                  {/* Pattern Overlay */}
+                  <div
+                    className="absolute inset-0 opacity-10"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                      backgroundSize: "24px 24px",
+                    }}
+                  />
+
+                  {/* Hover Overlay */}
+                  <motion.div
+                    className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500"
+                  />
+
+                  {/* Content */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-10">
+                    <motion.span
+                      className="inline-block self-start px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full mb-4"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 + 0.2 }}
+                    >
+                      {project.category}
+                    </motion.span>
+                    <motion.h3
+                      className="font-heading text-2xl lg:text-3xl font-bold text-white"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 + 0.3 }}
+                    >
+                      {project.title}
+                    </motion.h3>
+                  </div>
+
+                  {/* Arrow Button */}
+                  <motion.div
+                    className="absolute top-6 right-6 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 border border-white/20"
+                    whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.3)" }}
+                  >
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              className="text-center mt-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-3 px-8 py-4 border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:text-primary-blue hover:shadow-lg hover:shadow-primary-cyan/10 transition-all"
+                >
+                  Alle Projekte ansehen
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ==================== CONTACT SECTION ==================== */}
+        <section id="contact" className="py-32 bg-off-white relative overflow-hidden">
+          {/* Background */}
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-primary-cyan/10 via-primary-blue/5 to-transparent rounded-full blur-3xl" />
+          </div>
+
+          <div className="max-w-5xl mx-auto px-6 relative">
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
+                Kontakt
+              </span>
+              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6 leading-tight">
+                Lassen Sie uns
+                <br />
+                <span className="gradient-text">zusammenarbeiten</span>
+              </h2>
+              <p className="font-body text-lg text-slate-grey/60 max-w-xl mx-auto mb-12">
+                Haben Sie ein Projekt im Kopf? Wir freuen uns darauf, von Ihnen
+                zu hören und gemeinsam Großartiges zu schaffen.
+              </p>
+
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <motion.a
+                  href="/contact"
+                  className="group relative px-10 py-5 gradient-primary text-white font-heading font-semibold rounded-full overflow-hidden shadow-xl shadow-primary-blue/30"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    Kontakt aufnehmen
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-primary-blue to-primary-cyan"
+                    initial={{ x: "100%" }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.a>
+
+                <motion.a
+                  href="tel:+4915203037738"
+                  className="px-10 py-5 bg-white border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg hover:shadow-primary-cyan/10 transition-all flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  Jetzt anrufen
+                </motion.a>
+              </motion.div>
+
+              {/* Contact Info Cards */}
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-3 gap-6"
+                variants={staggerContainer}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+              >
+                {[
+                  {
+                    icon: (
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    ),
+                    title: "E-Mail",
+                    info: "info@origin-labs.de",
+                  },
+                  {
+                    icon: (
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    ),
+                    title: "Telefon",
+                    info: "+49 152 03037738",
+                  },
+                  {
+                    icon: (
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    ),
+                    title: "Standort",
+                    info: "Deutschland",
+                  },
+                ].map((item) => (
+                  <motion.div
+                    key={item.title}
+                    className="group bg-white p-8 rounded-3xl border border-slate-grey/5 hover:border-primary-cyan/20 hover:shadow-xl hover:shadow-primary-cyan/5 transition-all duration-500"
+                    variants={fadeInUp}
+                    whileHover={{ y: -5, scale: 1.02 }}
+                  >
+                    <motion.div
+                      className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-5 text-white shadow-lg shadow-primary-blue/20"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                    >
+                      {item.icon}
+                    </motion.div>
+                    <h4 className="font-heading font-semibold text-lg text-slate-grey mb-2">
+                      {item.title}
+                    </h4>
+                    <p className="font-body text-slate-grey/60">
+                      {item.info}
+                    </p>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
       </main>
-    </div>
+
+      <Footer />
+    </>
   );
 }
