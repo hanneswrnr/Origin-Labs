@@ -1,16 +1,26 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  const cookieStore = await cookies();
+export async function GET(request: Request) {
+  const baseUrl = process.env.NEXTAUTH_URL || "https://origin-labs.de";
 
-  // Delete all auth-related cookies
-  cookieStore.delete("authjs.session-token");
-  cookieStore.delete("authjs.csrf-token");
-  cookieStore.delete("authjs.callback-url");
-  cookieStore.delete("__Secure-authjs.session-token");
-  cookieStore.delete("__Host-authjs.csrf-token");
+  // Create response that redirects to login
+  const response = NextResponse.redirect(new URL("/admin/login", baseUrl));
 
-  // Redirect to login page
-  return NextResponse.redirect(new URL("/admin/login", process.env.NEXTAUTH_URL || "https://origin-labs.de"));
+  // Clear all possible auth cookies
+  const cookieOptions = {
+    expires: new Date(0),
+    path: "/",
+  };
+
+  response.cookies.set("authjs.session-token", "", cookieOptions);
+  response.cookies.set("authjs.csrf-token", "", cookieOptions);
+  response.cookies.set("authjs.callback-url", "", cookieOptions);
+  response.cookies.set("__Secure-authjs.session-token", "", cookieOptions);
+  response.cookies.set("__Host-authjs.csrf-token", "", cookieOptions);
+  response.cookies.set("next-auth.session-token", "", cookieOptions);
+  response.cookies.set("next-auth.csrf-token", "", cookieOptions);
+  response.cookies.set("next-auth.callback-url", "", cookieOptions);
+  response.cookies.set("__Secure-next-auth.session-token", "", cookieOptions);
+
+  return response;
 }
