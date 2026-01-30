@@ -232,22 +232,29 @@ export default function AdminSidebar() {
                               ${isCollapsed ? "justify-center px-3" : ""}
                               ${active ? "text-white" : "text-slate-grey hover:text-slate-grey"}`}
                   >
-                    {/* Active/Hover Background */}
+                    {/* Active Background - Always visible for active item */}
+                    {active && (
+                      <motion.div
+                        layoutId="activeBackground"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${item.gradient} shadow-lg`}
+                        style={{
+                          boxShadow: `0 10px 30px -10px ${item.gradient.includes('cyan') ? 'rgba(45, 212, 224, 0.4)' : 'rgba(139, 92, 246, 0.4)'}`
+                        }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+
+                    {/* Hover Background - Only for non-active items */}
                     <AnimatePresence>
-                      {(active || isHovered) && (
+                      {isHovered && !active && (
                         <motion.div
-                          layoutId="navBackground"
+                          layoutId="hoverBackground"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className={`absolute inset-0 rounded-2xl ${
-                            active
-                              ? `bg-gradient-to-r ${item.gradient} shadow-lg`
-                              : "bg-slate-grey/5"
-                          }`}
-                          style={{
-                            boxShadow: active ? `0 10px 30px -10px ${item.gradient.includes('cyan') ? 'rgba(45, 212, 224, 0.4)' : 'rgba(139, 92, 246, 0.4)'}` : 'none'
-                          }}
+                          className="absolute inset-0 rounded-2xl bg-slate-grey/5"
                           transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         />
                       )}

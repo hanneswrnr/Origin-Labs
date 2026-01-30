@@ -25,7 +25,7 @@ export default function AdminDashboardWrapper({
 
       {/* Main Content */}
       <main className="lg:ml-[288px] min-h-screen transition-all duration-500 relative z-10">
-        <div className="p-6 lg:p-10 max-w-7xl">
+        <div className="p-6 lg:p-10">
           {children}
         </div>
       </main>
