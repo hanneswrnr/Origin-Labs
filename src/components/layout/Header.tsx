@@ -13,7 +13,7 @@ const navItems = [
   { label: "Home", href: "#hero", homeHref: "/" },
   { label: "Über uns", href: "#about" },
   { label: "Leistungen", href: "#services" },
-  { label: "Preise", href: "#pricing" },
+  { label: "Preise", href: "/preise", isPage: true },
   { label: "Projekte", href: "/projekte", isPage: true },
   { label: "Kontakt", href: "/kontakt", isPage: true },
 ];
