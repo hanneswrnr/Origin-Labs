@@ -51,8 +51,8 @@ export default function PreviewsPage() {
     <!-- Header -->
     <tr>
       <td style="background: linear-gradient(135deg, #2DD4E0 0%, #0055FF 100%); padding: 32px 40px; text-align: center;">
-        <div style="display: inline-block; background-color: #ffffff; padding: 12px 24px; border-radius: 12px;">
-          <img src="/logo-full.png" alt="Origin Labs" height="32" style="display: block; height: 32px;">
+        <div style="display: inline-block; background-color: #ffffff; padding: 16px 32px; border-radius: 16px;">
+          <img src="/logo-full.png" alt="Origin Labs" height="48" style="display: block; height: 48px;">
         </div>
       </td>
     </tr>
@@ -170,8 +170,8 @@ export default function PreviewsPage() {
   <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <tr>
       <td style="background: linear-gradient(135deg, #2DD4E0 0%, #0055FF 100%); padding: 40px; text-align: center;">
-        <div style="display: inline-block; background-color: #ffffff; padding: 12px 24px; border-radius: 12px;">
-          <img src="/logo-full.png" alt="Origin Labs" height="32" style="display: block; height: 32px;">
+        <div style="display: inline-block; background-color: #ffffff; padding: 16px 32px; border-radius: 16px;">
+          <img src="/logo-full.png" alt="Origin Labs" height="48" style="display: block; height: 48px;">
         </div>
       </td>
     </tr>
