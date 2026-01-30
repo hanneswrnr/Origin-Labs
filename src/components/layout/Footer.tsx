@@ -84,9 +84,9 @@ export default function Footer() {
                 <Image
                   src="/logo-full.png"
                   alt="Origin Labs"
-                  width={220}
-                  height={55}
-                  className="h-12 w-auto"
+                  width={280}
+                  height={70}
+                  className="h-16 w-auto"
                 />
               </motion.div>
             </Link>

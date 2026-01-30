@@ -21,7 +21,7 @@ const pricingTiers: PricingTier[] = [
     name: "Websites",
     description: "Professionelle Webauftritte für Ihr Unternehmen",
     price: "ab 800",
-    priceNote: "einmalig",
+    priceNote: "zzgl. MwSt.",
     features: [
       "Responsive Design",
       "SEO-Optimierung",
@@ -37,7 +37,7 @@ const pricingTiers: PricingTier[] = [
     name: "Webapps",
     description: "Komplexe Webanwendungen für Ihre Prozesse",
     price: "ab 8.000",
-    priceNote: "einmalig",
+    priceNote: "zzgl. MwSt.",
     features: [
       "Individuelle Funktionen",
       "Datenbank-Integration",
@@ -49,14 +49,13 @@ const pricingTiers: PricingTier[] = [
       "Automatisierte Tests",
     ],
     highlighted: true,
-    popular: true,
     ctaText: "Projekt anfragen",
   },
   {
     name: "Mobile Apps",
     description: "Native & Cross-Platform Apps für iOS und Android",
     price: "ab 15.000",
-    priceNote: "einmalig",
+    priceNote: "zzgl. MwSt.",
     features: [
       "iOS & Android",
       "Offline-Funktionalität",
@@ -105,141 +104,177 @@ function PricingCard({ tier, index }: { tier: PricingTier; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`relative group ${tier.highlighted ? "lg:-mt-8 lg:mb-8" : ""}`}
+      className="relative group h-full"
+      whileHover={{ y: -8, scale: tier.highlighted ? 1.05 : 1 }}
     >
-      {/* Popular Badge */}
-      {tier.popular && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="px-4 py-1.5 gradient-primary text-white text-xs font-semibold rounded-full shadow-lg"
-          >
-            Beliebteste Wahl
-          </motion.div>
-        </div>
-      )}
 
+      {/* Card Container with Gradient Border Effect */}
       <div
-        className={`relative h-full rounded-3xl overflow-hidden transition-all duration-500 ${
+        className={`relative h-full rounded-[2rem] p-[2px] transition-all duration-700 ease-out ${
           tier.highlighted
-            ? "bg-gradient-to-b from-slate-grey to-slate-800 text-white shadow-2xl shadow-slate-grey/30 hover:shadow-3xl"
-            : "bg-white border border-slate-grey/10 hover:border-primary-cyan/30 hover:shadow-2xl hover:shadow-primary-cyan/10"
+            ? "bg-gradient-to-b from-primary-cyan via-primary-blue to-primary-cyan shadow-2xl shadow-primary-blue/25 group-hover:shadow-3xl group-hover:shadow-primary-blue/40"
+            : "bg-gradient-to-b from-slate-grey/10 via-transparent to-slate-grey/10 group-hover:from-primary-cyan group-hover:via-primary-blue group-hover:to-primary-cyan group-hover:shadow-2xl group-hover:shadow-primary-blue/20"
         }`}
       >
-        {/* Decorative gradient for highlighted */}
-        {tier.highlighted && (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-cyan/10 via-transparent to-primary-blue/10 opacity-50" />
-        )}
+        {/* Inner Card */}
+        <div
+          className={`relative h-full rounded-[calc(2rem-2px)] overflow-hidden flex flex-col transition-all duration-500 ${
+            tier.highlighted
+              ? "bg-gradient-to-b from-slate-800 via-slate-900 to-slate-800"
+              : "bg-white"
+          }`}
+        >
+          {/* Animated Glow Effect on Hover (non-highlighted only) */}
+          {!tier.highlighted && (
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-40 bg-gradient-to-b from-primary-cyan/15 via-primary-blue/10 to-transparent blur-2xl" />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-gradient-to-t from-primary-blue/10 to-transparent blur-2xl" />
+            </div>
+          )}
 
-        <div className="relative p-8 lg:p-10">
-          {/* Header */}
-          <div className="mb-8">
-            <h3
-              className={`font-heading text-2xl font-bold mb-2 ${
-                tier.highlighted ? "text-white" : "text-slate-grey"
-              }`}
-            >
-              {tier.name}
-            </h3>
-            <p
-              className={`font-body text-sm ${
-                tier.highlighted ? "text-white/70" : "text-slate-grey/60"
-              }`}
-            >
-              {tier.description}
-            </p>
-          </div>
+          {/* Animated Shimmer for Highlighted */}
+          {tier.highlighted && (
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-cyan/5 via-transparent to-primary-blue/5" />
+              <motion.div
+                className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent rotate-45"
+                animate={{ x: ["0%", "200%"], y: ["0%", "200%"] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
+              />
+            </div>
+          )}
 
-          {/* Price */}
-          <div className="mb-8">
-            <div className="flex items-baseline gap-2">
-              <span
-                className={`font-heading text-5xl lg:text-6xl font-bold ${
-                  tier.highlighted ? "text-white" : "gradient-text"
+          <div className="relative p-8 lg:p-10 flex flex-col flex-1">
+            {/* Header */}
+            <div className="mb-6">
+              <h3
+                className={`font-heading text-2xl font-bold mb-3 transition-all duration-500 ${
+                  tier.highlighted ? "text-white" : "text-slate-grey group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-primary-cyan group-hover:to-primary-blue group-hover:bg-clip-text"
                 }`}
               >
-                {tier.price}
-              </span>
-              {tier.price !== "Individuell" && (
-                <span
-                  className={`font-body text-lg ${
-                    tier.highlighted ? "text-white/70" : "text-slate-grey/60"
-                  }`}
-                >
-                  €
-                </span>
-              )}
-            </div>
-            <p
-              className={`font-body text-sm mt-1 ${
-                tier.highlighted ? "text-white/50" : "text-slate-grey/50"
-              }`}
-            >
-              {tier.priceNote}
-            </p>
-          </div>
-
-          {/* Features */}
-          <ul className="space-y-4 mb-10">
-            {tier.features.map((feature, i) => (
-              <motion.li
-                key={feature}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 + i * 0.05 }}
-                className="flex items-start gap-3"
+                {tier.name}
+              </h3>
+              <p
+                className={`font-body text-sm leading-relaxed ${
+                  tier.highlighted ? "text-white/60" : "text-slate-grey/60"
+                }`}
               >
-                <div
-                  className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${
-                    tier.highlighted
-                      ? "bg-primary-cyan/20"
-                      : "bg-primary-cyan/10"
-                  }`}
-                >
-                  <svg
-                    className={`w-3 h-3 ${
-                      tier.highlighted ? "text-primary-cyan" : "text-primary-blue"
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <span
-                  className={`font-body ${
-                    tier.highlighted ? "text-white/90" : "text-slate-grey/80"
-                  }`}
-                >
-                  {feature}
-                </span>
-              </motion.li>
-            ))}
-          </ul>
+                {tier.description}
+              </p>
+            </div>
 
-          {/* CTA */}
-          <motion.a
-            href="/kontakt"
-            className={`block w-full py-4 px-6 rounded-xl font-heading font-semibold text-center transition-all ${
-              tier.highlighted
-                ? "bg-white text-slate-grey hover:bg-primary-cyan hover:text-white shadow-lg"
-                : "gradient-primary text-white shadow-lg shadow-primary-blue/25 hover:shadow-xl"
-            }`}
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {tier.ctaText}
-          </motion.a>
+            {/* Price */}
+            <div className="mb-8">
+              <div className="flex items-baseline gap-1">
+                <span
+                  className={`font-heading text-5xl lg:text-6xl font-extrabold tracking-tight ${
+                    tier.highlighted ? "text-white" : "gradient-text"
+                  }`}
+                >
+                  {tier.price}
+                </span>
+                {tier.price !== "Individuell" && (
+                  <span
+                    className={`font-body text-xl font-medium ${
+                      tier.highlighted ? "text-white/50" : "text-slate-grey/40"
+                    }`}
+                  >
+                    €
+                  </span>
+                )}
+              </div>
+              <p
+                className={`font-body text-xs mt-2 ${
+                  tier.highlighted ? "text-white/40" : "text-slate-grey/40"
+                }`}
+              >
+                {tier.priceNote}
+              </p>
+            </div>
+
+            {/* Divider */}
+            <div className={`h-px mb-8 transition-all duration-500 ${tier.highlighted ? "bg-white/10" : "bg-slate-grey/10 group-hover:bg-gradient-to-r group-hover:from-transparent group-hover:via-primary-cyan/30 group-hover:to-transparent"}`} />
+
+            {/* Features */}
+            <ul className="space-y-4 flex-1">
+              {tier.features.map((feature, i) => (
+                <motion.li
+                  key={feature}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 + i * 0.03 }}
+                  className="flex items-center gap-3"
+                >
+                  <div
+                    className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300 ${
+                      tier.highlighted
+                        ? "bg-primary-cyan/20"
+                        : "bg-primary-cyan/10 group-hover:bg-gradient-to-br group-hover:from-primary-cyan/20 group-hover:to-primary-blue/20 group-hover:scale-110"
+                    }`}
+                  >
+                    <svg
+                      className={`w-3 h-3 transition-colors duration-300 ${
+                        tier.highlighted ? "text-primary-cyan" : "text-primary-blue group-hover:text-primary-cyan"
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={3}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    className={`font-body text-[15px] transition-colors duration-300 ${
+                      tier.highlighted ? "text-white/80" : "text-slate-grey/70 group-hover:text-slate-grey"
+                    }`}
+                  >
+                    {feature}
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
+
+            {/* CTA Button */}
+            <motion.a
+              href="/kontakt"
+              className={`relative block w-full py-4 px-6 rounded-xl font-heading font-semibold text-center mt-10 overflow-hidden group/btn ${
+                tier.highlighted
+                  ? "bg-white text-slate-grey"
+                  : "bg-gradient-to-r from-primary-cyan to-primary-blue text-white shadow-lg shadow-primary-blue/30"
+              }`}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              {/* Button Glow */}
+              <span className={`absolute inset-0 transition-opacity duration-300 ${
+                tier.highlighted
+                  ? "opacity-0 group-hover/btn:opacity-100 bg-gradient-to-r from-primary-cyan to-primary-blue"
+                  : "opacity-0 group-hover/btn:opacity-100 bg-white/20"
+              }`} />
+              {/* Button Shimmer */}
+              <span className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+              <span className={`relative z-10 transition-colors duration-300 ${
+                tier.highlighted ? "group-hover/btn:text-white" : ""
+              }`}>{tier.ctaText}</span>
+            </motion.a>
+          </div>
         </div>
       </div>
+
+      {/* Hover Glow Effect Behind Card */}
+      <div
+        className={`absolute inset-0 -z-10 rounded-[2rem] blur-3xl transition-all duration-700 ${
+          tier.highlighted
+            ? "bg-gradient-to-b from-primary-cyan/30 to-primary-blue/30 opacity-60 group-hover:opacity-100 group-hover:from-primary-cyan/50 group-hover:to-primary-blue/50"
+            : "bg-gradient-to-b from-primary-cyan/0 to-primary-blue/0 opacity-0 group-hover:from-primary-cyan/25 group-hover:to-primary-blue/25 group-hover:opacity-100"
+        }`}
+      />
     </motion.div>
   );
 }
@@ -491,7 +526,7 @@ export default function PreisePage() {
         {/* Pricing Cards */}
         <section className="py-20 lg:py-32">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 items-stretch">
               {pricingTiers.map((tier, index) => (
                 <PricingCard key={tier.name} tier={tier} index={index} />
               ))}

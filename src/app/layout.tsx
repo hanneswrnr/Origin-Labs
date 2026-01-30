@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import AdminShortcut from "@/components/AdminShortcut";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${inter.variable} font-body antialiased bg-white text-foreground`}
       >
+        <AdminShortcut />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

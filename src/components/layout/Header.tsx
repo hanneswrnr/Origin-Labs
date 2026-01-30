@@ -9,9 +9,13 @@ import Image from "next/image";
 // Track if header has animated (persists across page navigations)
 let hasHeaderAnimated = false;
 
+// Store previous indicator position for smooth transitions between pages
+let previousIndicatorStyle = { left: 0, width: 0 };
+let hasInitialPosition = false;
+
 const navItems = [
   { label: "Home", href: "#hero", homeHref: "/" },
-  { label: "Über uns", href: "#about" },
+  { label: "Über uns", href: "/ueber-uns", isPage: true },
   { label: "Leistungen", href: "/leistungen", isPage: true },
   { label: "Preise", href: "/preise", isPage: true },
   { label: "Projekte", href: "/projekte", isPage: true },
@@ -23,7 +27,8 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [shouldAnimate, setShouldAnimate] = useState(!hasHeaderAnimated);
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const [indicatorStyle, setIndicatorStyle] = useState(previousIndicatorStyle);
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const navRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
   const pathname = usePathname();
@@ -53,10 +58,20 @@ export default function Header() {
       if (activeIndex !== -1 && navRef.current && itemRefs.current[activeIndex]) {
         const navRect = navRef.current.getBoundingClientRect();
         const activeRect = itemRefs.current[activeIndex]!.getBoundingClientRect();
-        setIndicatorStyle({
+        const newStyle = {
           left: activeRect.left - navRect.left,
           width: activeRect.width,
-        });
+        };
+
+        setIndicatorStyle(newStyle);
+        // Store for next page navigation
+        previousIndicatorStyle = newStyle;
+        hasInitialPosition = true;
+
+        // Mark first render complete after a short delay
+        if (isFirstRender) {
+          setTimeout(() => setIsFirstRender(false), 50);
+        }
       }
     };
 
@@ -68,7 +83,7 @@ export default function Header() {
     // Also update on window resize
     window.addEventListener("resize", updateIndicator);
     return () => window.removeEventListener("resize", updateIndicator);
-  }, [pathname, activeSection, isHomePage]);
+  }, [pathname, activeSection, isHomePage, isFirstRender]);
 
   useEffect(() => {
     // Only detect active sections on homepage
@@ -171,18 +186,20 @@ export default function Header() {
             {indicatorStyle.width > 0 && (
               <motion.div
                 className="absolute top-0 h-full bg-gradient-to-r from-primary-cyan/20 to-primary-blue/20 rounded-full pointer-events-none border border-primary-cyan/10"
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={
+                  hasInitialPosition && isFirstRender
+                    ? { left: previousIndicatorStyle.left, width: previousIndicatorStyle.width, opacity: 1 }
+                    : false
+                }
                 animate={{
                   left: indicatorStyle.left,
                   width: indicatorStyle.width,
                   opacity: 1,
-                  scale: 1,
                 }}
                 transition={{
-                  left: { type: "spring", stiffness: 300, damping: 25 },
-                  width: { type: "spring", stiffness: 300, damping: 25 },
-                  opacity: { duration: 0.2 },
-                  scale: { duration: 0.2 },
+                  left: { type: "spring", stiffness: 120, damping: 18, mass: 1.2 },
+                  width: { type: "spring", stiffness: 150, damping: 20 },
+                  opacity: { duration: 0.15 },
                 }}
               />
             )}
@@ -198,7 +215,7 @@ export default function Header() {
                   <Link key={item.href} href={item.href}>
                     <motion.span
                       ref={(el) => { itemRefs.current[index] = el; }}
-                      className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden cursor-pointer block"
+                      className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden cursor-pointer block whitespace-nowrap"
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
                     >
@@ -225,7 +242,7 @@ export default function Header() {
                   key={item.href}
                   ref={(el) => { itemRefs.current[index] = el; }}
                   onClick={() => handleNavClick(item.href, item.homeHref)}
-                  className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden"
+                  className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden whitespace-nowrap"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >

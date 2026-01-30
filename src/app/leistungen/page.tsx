@@ -157,31 +157,61 @@ const processSteps = [
     number: "01",
     title: "Beratung",
     description: "Wir lernen Ihr Projekt kennen und definieren gemeinsam Ziele und Anforderungen.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg>
+    ),
   },
   {
     number: "02",
     title: "Konzept",
     description: "Wir erstellen Wireframes und ein detailliertes Konzept für Ihre Lösung.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+    ),
   },
   {
     number: "03",
     title: "Design",
     description: "Ihr individuelles Design entsteht – modern, benutzerfreundlich und markenkonform.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+      </svg>
+    ),
   },
   {
     number: "04",
     title: "Entwicklung",
     description: "Wir setzen Ihr Projekt mit modernsten Technologien um.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+      </svg>
+    ),
   },
   {
     number: "05",
     title: "Testing",
     description: "Umfangreiche Tests garantieren Qualität und Performance.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
   },
   {
     number: "06",
     title: "Launch",
     description: "Ihr Projekt geht live – mit unserer vollen Unterstützung.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+      </svg>
+    ),
   },
 ];
 
@@ -530,6 +560,7 @@ export default function LeistungenPage() {
           {/* Background */}
           <div className="absolute inset-0">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-to-b from-primary-cyan/5 to-transparent rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gradient-to-t from-primary-blue/5 to-transparent rounded-full blur-3xl" />
           </div>
 
           <div className="max-w-7xl mx-auto px-6 relative">
@@ -551,44 +582,111 @@ export default function LeistungenPage() {
               </p>
             </motion.div>
 
-            {/* Process Steps */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {processSteps.map((step, index) => (
+            {/* Modern Timeline Process */}
+            <div className="relative">
+              {/* Horizontal connection line - Desktop */}
+              <div className="hidden lg:block absolute top-[60px] left-[calc(8.33%+30px)] right-[calc(8.33%+30px)] h-[2px]">
                 <motion.div
-                  key={step.number}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  className="h-full bg-gradient-to-r from-primary-cyan via-primary-blue to-primary-cyan rounded-full"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                >
+                  transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+                />
+              </div>
+
+              {/* Process Steps Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-4">
+                {processSteps.map((step, index) => (
                   <motion.div
-                    className="relative h-full p-8 bg-white rounded-3xl border border-slate-grey/10 hover:border-primary-cyan/30 hover:shadow-xl hover:shadow-primary-cyan/5 transition-all duration-500"
-                    whileHover={{ y: -8 }}
+                    key={step.number}
+                    className="group relative"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 + 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    {/* Number */}
-                    <span className="font-heading text-6xl font-bold text-slate-grey/5 absolute top-4 right-6">
-                      {step.number}
-                    </span>
+                    {/* Step Card */}
+                    <div className="flex flex-col items-center text-center">
+                      {/* Icon Circle with Glow */}
+                      <motion.div
+                        className="relative mb-6"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      >
+                        {/* Glow effect */}
+                        <div className="absolute inset-0 w-[120px] h-[120px] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 bg-gradient-to-br from-primary-cyan/20 to-primary-blue/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    {/* Gradient line on hover */}
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-cyan to-primary-blue rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                        {/* Main circle */}
+                        <div className="relative w-[120px] h-[120px] rounded-full bg-white border-2 border-slate-grey/10 group-hover:border-primary-cyan/40 transition-all duration-500 shadow-lg group-hover:shadow-2xl group-hover:shadow-primary-cyan/10 flex items-center justify-center">
+                          {/* Inner gradient circle */}
+                          <div className="absolute inset-3 rounded-full bg-gradient-to-br from-slate-grey/[0.02] to-slate-grey/[0.06] group-hover:from-primary-cyan/10 group-hover:to-primary-blue/10 transition-all duration-500" />
 
-                    <div className="relative">
-                      <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center text-white font-heading font-bold mb-6 shadow-lg shadow-primary-blue/20">
-                        {step.number}
+                          {/* Icon container */}
+                          <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-cyan to-primary-blue flex items-center justify-center text-white shadow-lg shadow-primary-blue/30 group-hover:shadow-xl group-hover:shadow-primary-blue/40 transition-all duration-500">
+                            {step.icon}
+                          </div>
+
+                          {/* Step number badge */}
+                          <div className="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-white border-2 border-primary-cyan/30 flex items-center justify-center shadow-md">
+                            <span className="font-heading text-xs font-bold gradient-text">
+                              {step.number}
+                            </span>
+                          </div>
+                        </div>
+                      </motion.div>
+
+                      {/* Content */}
+                      <div className="space-y-2">
+                        <h3 className="font-heading text-xl font-bold text-slate-grey group-hover:text-primary-blue transition-colors duration-300">
+                          {step.title}
+                        </h3>
+                        <p className="font-body text-sm text-slate-grey/60 leading-relaxed max-w-[200px] mx-auto">
+                          {step.description}
+                        </p>
                       </div>
-                      <h3 className="font-heading text-xl font-bold text-slate-grey mb-3">
-                        {step.title}
-                      </h3>
-                      <p className="font-body text-slate-grey/60">
-                        {step.description}
-                      </p>
+
+                      {/* Arrow indicator (Mobile & Tablet) */}
+                      {index < processSteps.length - 1 && (
+                        <motion.div
+                          className="lg:hidden mt-8 text-primary-cyan/40"
+                          animate={{ y: [0, 5, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                          <svg className="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                          </svg>
+                        </motion.div>
+                      )}
                     </div>
                   </motion.div>
-                </motion.div>
-              ))}
+                ))}
+              </div>
             </div>
+
+            {/* Bottom CTA */}
+            <motion.div
+              className="mt-20 text-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              <p className="font-body text-slate-grey/60 mb-6">
+                Bereit, Ihr Projekt zu starten?
+              </p>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/kontakt"
+                  className="inline-flex items-center gap-3 px-8 py-4 gradient-primary text-white font-heading font-semibold rounded-full shadow-lg shadow-primary-blue/25 hover:shadow-xl hover:shadow-primary-blue/30 transition-shadow"
+                >
+                  <span>Jetzt Projekt anfragen</span>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 

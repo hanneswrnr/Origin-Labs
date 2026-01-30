@@ -12,13 +12,22 @@ interface GoogleReview {
   relative_time_description: string;
 }
 
-interface PlaceDetailsResponse {
-  result?: {
-    reviews?: GoogleReview[];
-    rating?: number;
-    user_ratings_total?: number;
-  };
-  status: string;
+// New Places API response structure
+interface PlaceDetailsResponseNew {
+  reviews?: Array<{
+    authorAttribution: {
+      displayName: string;
+      photoUri?: string;
+    };
+    rating: number;
+    text: {
+      text: string;
+    };
+    relativePublishTimeDescription: string;
+    publishTime: string;
+  }>;
+  rating?: number;
+  userRatingCount?: number;
 }
 
 export async function GET() {
@@ -34,26 +43,40 @@ export async function GET() {
   }
 
   try {
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&fields=reviews,rating,user_ratings_total&key=${GOOGLE_API_KEY}&language=de`;
+    // New Places API endpoint
+    const url = `https://places.googleapis.com/v1/places/${PLACE_ID}?languageCode=de`;
 
-    // Next.js caches this fetch for 4 days automatically
     const response = await fetch(url, {
+      headers: {
+        "X-Goog-Api-Key": GOOGLE_API_KEY,
+        "X-Goog-FieldMask": "reviews,rating,userRatingCount",
+      },
       next: { revalidate: REVALIDATE_SECONDS },
     });
 
-    const data: PlaceDetailsResponse = await response.json();
-
-    if (data.status !== "OK" || !data.result) {
-      console.error("Google API Error:", data.status);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Google API Error:", response.status, errorText);
       return NextResponse.json(
-        { error: "Failed to fetch reviews", status: data.status },
+        { error: "Failed to fetch reviews", status: response.status },
         { status: 500 }
       );
     }
 
-    const reviews = data.result.reviews || [];
-    const rating = data.result.rating || 0;
-    const total = data.result.user_ratings_total || 0;
+    const data: PlaceDetailsResponseNew = await response.json();
+
+    // Transform to our expected format
+    const reviews: GoogleReview[] = (data.reviews || []).map((review) => ({
+      author_name: review.authorAttribution.displayName,
+      rating: review.rating,
+      text: review.text.text,
+      time: new Date(review.publishTime).getTime(),
+      profile_photo_url: review.authorAttribution.photoUri,
+      relative_time_description: review.relativePublishTimeDescription,
+    }));
+
+    const rating = data.rating || 0;
+    const total = data.userRatingCount || 0;
 
     return NextResponse.json({ reviews, rating, total });
   } catch (error) {
