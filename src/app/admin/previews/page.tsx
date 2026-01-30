@@ -29,9 +29,6 @@ const budgetLabels: Record<string, string> = {
   enterprise: "Über 50.000 EUR",
 };
 
-// Base64 encoded Origin Labs logo (simplified SVG version for emails)
-const logoBase64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTYwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMyREQ0RTAiLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDA1NUZGIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjM2IiBoZWlnaHQ9IjM2IiB4PSIyIiB5PSIyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkKSIvPgo8dGV4dCB4PSI0OCIgeT0iMjgiIGZvbnQtZmFtaWx5PSJJbnRlciwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFhMWEyZSI+T3JpZ2luIExhYnM8L3RleHQ+Cjwvc3ZnPg==";
-
 export default function PreviewsPage() {
   const [activeTemplate, setActiveTemplate] = useState<"notification" | "confirmation">("notification");
 
@@ -54,8 +51,8 @@ export default function PreviewsPage() {
     <!-- Header -->
     <tr>
       <td style="background: linear-gradient(135deg, #2DD4E0 0%, #0055FF 100%); padding: 32px 40px; text-align: center;">
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 24px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">
-          Origin Labs
+        <div style="display: inline-block; background-color: #ffffff; padding: 12px 24px; border-radius: 12px;">
+          <img src="/logo-full.png" alt="Origin Labs" height="32" style="display: block; height: 32px;">
         </div>
       </td>
     </tr>
@@ -173,8 +170,8 @@ export default function PreviewsPage() {
   <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <tr>
       <td style="background: linear-gradient(135deg, #2DD4E0 0%, #0055FF 100%); padding: 40px; text-align: center;">
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 24px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">
-          Origin Labs
+        <div style="display: inline-block; background-color: #ffffff; padding: 12px 24px; border-radius: 12px;">
+          <img src="/logo-full.png" alt="Origin Labs" height="32" style="display: block; height: 32px;">
         </div>
       </td>
     </tr>
