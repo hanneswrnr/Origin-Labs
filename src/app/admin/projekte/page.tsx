@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import AdminDashboardWrapper from "@/components/admin/AdminDashboardWrapper";
 
 interface Project {
@@ -20,55 +20,6 @@ interface Project {
   order: number;
 }
 
-// 3D Tilt Card Component
-function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 500, damping: 100 });
-  const mouseYSpring = useSpring(y, { stiffness: 500, damping: 100 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className={className}
-    >
-      <div style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}>
-        {children}
-      </div>
-    </motion.div>
-  );
-}
-
 // Empty initial data
 const initialProjects: Project[] = [];
 
@@ -81,8 +32,6 @@ const categoryLabels = {
 export default function AdminProjektePage() {
   const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [filter, setFilter] = useState<"all" | "websites" | "webapps" | "mobile">("all");
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  const [hoveredFilter, setHoveredFilter] = useState<string | null>(null);
 
   const filteredProjects = projects.filter(
     (p) => filter === "all" || p.category === filter
@@ -122,43 +71,13 @@ export default function AdminProjektePage() {
         </div>
 
         <Link href="/admin/projekte/neu">
-          <motion.button
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.95 }}
-            className="relative flex items-center gap-3 px-6 py-3 gradient-primary text-white font-semibold
-                     rounded-2xl shadow-xl shadow-primary-blue/30 overflow-hidden group"
-          >
-            {/* Animated shine effect */}
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent
-                           -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            {/* Floating particles effect */}
-            <span className="absolute inset-0 overflow-hidden">
-              {[...Array(5)].map((_, i) => (
-                <motion.span
-                  key={i}
-                  className="absolute w-1 h-1 bg-white/50 rounded-full"
-                  initial={{ opacity: 0, y: 20, x: Math.random() * 100 }}
-                  animate={{
-                    opacity: [0, 1, 0],
-                    y: [-10, -30],
-                    x: Math.random() * 100,
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.4,
-                  }}
-                />
-              ))}
-            </span>
-
-            <svg className="w-5 h-5 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button className="flex items-center gap-3 px-6 py-3 gradient-primary text-white font-semibold
+                     rounded-2xl shadow-xl shadow-primary-blue/30 hover:shadow-2xl transition-all">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            <span className="relative z-10">Neues Projekt</span>
-          </motion.button>
+            <span>Neues Projekt</span>
+          </button>
         </Link>
       </div>
 
@@ -170,176 +89,106 @@ export default function AdminProjektePage() {
           { value: "webapps", label: "Webapps", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
           { value: "mobile", label: "Mobile Apps", icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" },
         ].map((tab) => (
-          <motion.button
+          <button
             key={tab.value}
             onClick={() => setFilter(tab.value as typeof filter)}
-            onMouseEnter={() => setHoveredFilter(tab.value)}
-            onMouseLeave={() => setHoveredFilter(null)}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className={`relative flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-semibold
-                      whitespace-nowrap transition-all duration-300 overflow-hidden
+            className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-semibold
+                      whitespace-nowrap transition-all duration-300
                       ${filter === tab.value
-                        ? "text-white shadow-xl shadow-primary-blue/30"
+                        ? "text-white gradient-primary"
                         : "bg-white/90 text-slate-grey border-2 border-slate-grey/10 hover:border-primary-cyan/30"
                       }`}
           >
-            {/* Active gradient background */}
-            {filter === tab.value && (
-              <motion.div
-                layoutId="activeFilterBg"
-                className="absolute inset-0 gradient-primary"
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              />
-            )}
-
-            {/* Hover glow effect */}
-            {hoveredFilter === tab.value && filter !== tab.value && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="absolute inset-0 bg-gradient-to-r from-primary-cyan/5 to-primary-blue/5"
-              />
-            )}
-
-            <svg className="w-4 h-4 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
             </svg>
-            <span className="relative z-10">{tab.label}</span>
-          </motion.button>
+            <span>{tab.label}</span>
+          </button>
         ))}
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" style={{ perspective: "1500px" }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
         {filteredProjects.map((project, index) => (
-          <TiltCard key={project.id}>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              onMouseEnter={() => setHoveredProject(project.id)}
-              onMouseLeave={() => setHoveredProject(null)}
-              className="relative bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
-                       shadow-xl shadow-slate-grey/5 overflow-hidden group"
-            >
-              {/* Animated border glow */}
-              <div className={`absolute -inset-[2px] rounded-3xl bg-gradient-to-r ${project.color} opacity-0 blur-xl
-                             transition-opacity duration-500 ${hoveredProject === project.id ? "opacity-40" : ""}`} />
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="relative bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
+                       shadow-xl shadow-slate-grey/5 overflow-hidden group hover:shadow-2xl hover:border-primary-cyan/30 transition-all duration-300"
+          >
 
-              {/* Project Color Header with parallax effect */}
+              {/* Project Color Header */}
               <div className={`relative h-28 bg-gradient-to-br ${project.color} overflow-hidden`}>
-                {/* Animated background pattern */}
-                <motion.div
-                  className="absolute inset-0 opacity-30"
-                  animate={{
-                    backgroundPosition: hoveredProject === project.id ? ["0% 0%", "100% 100%"] : "0% 0%",
-                  }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                  }}
-                />
-
                 {/* Status Badge */}
-                <motion.div
-                  className="absolute top-4 left-4"
-                  whileHover={{ scale: 1.1 }}
-                >
+                <div className="absolute top-4 left-4">
                   <span className={`px-4 py-1.5 text-xs font-bold rounded-full backdrop-blur-2xl shadow-lg
                                 ${project.published
                                   ? "bg-white/95 text-green-600"
                                   : "bg-white/95 text-amber-600"
                                 }`}>
-                    <span className={`inline-block w-2 h-2 rounded-full mr-2 ${project.published ? "bg-green-500" : "bg-amber-500"} animate-pulse`} />
+                    <span className={`inline-block w-2 h-2 rounded-full mr-2 ${project.published ? "bg-green-500" : "bg-amber-500"}`} />
                     {project.published ? "Live" : "Entwurf"}
                   </span>
-                </motion.div>
+                </div>
 
                 {/* Year Badge */}
-                <motion.div
-                  className="absolute top-4 right-4"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                >
+                <div className="absolute top-4 right-4">
                   <span className="px-4 py-1.5 text-xs font-bold bg-white/95 text-slate-grey rounded-full shadow-lg">
                     {project.year}
                   </span>
-                </motion.div>
-
-                {/* Floating decoration */}
-                <motion.div
-                  className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/20 blur-2xl"
-                  animate={{
-                    scale: hoveredProject === project.id ? [1, 1.2, 1] : 1,
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
+                </div>
               </div>
 
               {/* Content */}
               <div className="relative p-6 bg-white">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <motion.h3
-                      className="font-bold text-slate-grey text-xl"
-                      animate={{ x: hoveredProject === project.id ? 5 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
+                    <h3 className="font-bold text-slate-grey text-xl">
                       {project.title}
-                    </motion.h3>
+                    </h3>
                     <p className="text-slate-grey/60 text-sm mt-1">{project.subtitle}</p>
                   </div>
-                  <motion.span
-                    whileHover={{ scale: 1.1 }}
-                    className="px-3 py-1.5 text-xs font-bold bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10
-                             text-primary-blue rounded-xl border border-primary-cyan/20"
-                  >
+                  <span className="px-3 py-1.5 text-xs font-bold bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10
+                             text-primary-blue rounded-xl border border-primary-cyan/20">
                     {categoryLabels[project.category]}
-                  </motion.span>
+                  </span>
                 </div>
 
                 <p className="text-slate-grey/70 text-sm line-clamp-2 mb-5 leading-relaxed">
                   {project.description}
                 </p>
 
-                {/* Tags with stagger animation */}
+                {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-5">
-                  {project.tags.slice(0, 3).map((tag, i) => (
-                    <motion.span
+                  {project.tags.slice(0, 3).map((tag) => (
+                    <span
                       key={tag}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: i * 0.1 }}
-                      whileHover={{ scale: 1.1, y: -2 }}
                       className="px-3 py-1.5 text-xs font-medium bg-slate-grey/5 text-slate-grey/70
                                rounded-lg transition-all duration-300 hover:bg-gradient-to-r
                                hover:from-primary-cyan/10 hover:to-primary-blue/10 hover:text-primary-blue
                                cursor-default"
                     >
                       {tag}
-                    </motion.span>
+                    </span>
                   ))}
                   {project.tags.length > 3 && (
-                    <motion.span
-                      whileHover={{ scale: 1.1 }}
-                      className="px-3 py-1.5 text-xs font-medium bg-slate-grey/5 text-slate-grey/40 rounded-lg"
-                    >
+                    <span className="px-3 py-1.5 text-xs font-medium bg-slate-grey/5 text-slate-grey/40 rounded-lg">
                       +{project.tags.length - 3}
-                    </motion.span>
+                    </span>
                   )}
                 </div>
 
                 {/* Actions */}
                 <div className="flex items-center justify-between pt-5 border-t-2 border-slate-grey/5">
                   <div className="flex items-center gap-1">
-                    <motion.button
+                    <button
                       onClick={() => togglePublished(project.id)}
-                      whileHover={{ scale: 1.15, rotate: 5 }}
-                      whileTap={{ scale: 0.9 }}
                       className={`p-3 rounded-xl transition-all duration-300 ${
                         project.published
-                          ? "text-green-500 hover:bg-green-50 hover:shadow-lg hover:shadow-green-500/20"
-                          : "text-amber-500 hover:bg-amber-50 hover:shadow-lg hover:shadow-amber-500/20"
+                          ? "text-green-500 hover:bg-green-50"
+                          : "text-amber-500 hover:bg-amber-50"
                       }`}
                       title={project.published ? "Als Entwurf markieren" : "Veröffentlichen"}
                     >
@@ -353,47 +202,31 @@ export default function AdminProjektePage() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                         </svg>
                       )}
-                    </motion.button>
-                    <motion.button
+                    </button>
+                    <button
                       onClick={() => deleteProject(project.id)}
-                      whileHover={{ scale: 1.15, rotate: -5 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="p-3 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-xl
-                               transition-all duration-300 hover:shadow-lg hover:shadow-red-500/20"
+                      className="p-3 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-300"
                       title="Löschen"
                     >
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                       </svg>
-                    </motion.button>
+                    </button>
                   </div>
 
                   <Link href={`/admin/projekte/${project.id}`}>
-                    <motion.span
-                      whileHover={{ scale: 1.05, x: 5 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-primary-blue
+                    <span className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-primary-blue
                                hover:text-white bg-gradient-to-r from-transparent to-transparent
-                               hover:from-primary-cyan hover:to-primary-blue rounded-xl
-                               transition-all duration-300 group/edit"
-                    >
+                               hover:from-primary-cyan hover:to-primary-blue rounded-xl transition-all duration-300">
                       Bearbeiten
-                      <motion.svg
-                        className="w-4 h-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        animate={{ x: hoveredProject === project.id ? [0, 5, 0] : 0 }}
-                        transition={{ duration: 1, repeat: Infinity }}
-                      >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </motion.svg>
-                    </motion.span>
+                      </svg>
+                    </span>
                   </Link>
                 </div>
               </div>
             </motion.div>
-          </TiltCard>
         ))}
 
         {/* Empty State */}

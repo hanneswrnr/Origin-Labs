@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import AdminDashboardWrapper from "@/components/admin/AdminDashboardWrapper";
 
 // Empty initial data
@@ -29,41 +29,13 @@ const recentSubmissions: {
   createdAt: string;
 }[] = [];
 
-// 3D Card Component
-function Card3D({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 400, damping: 90 });
-  const mouseYSpring = useSpring(y, { stiffness: 400, damping: 90 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["3deg", "-3deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-3deg", "3deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
+// Simple Card Component
+function Card({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       className={className}
     >
       {children}
@@ -71,7 +43,7 @@ function Card3D({ children, className, delay = 0 }: { children: React.ReactNode;
   );
 }
 
-// Animated Stat Card Component
+// Stat Card Component
 function StatCard({ label, value, change, positive, index, icon }: {
   label: string;
   value: string;
@@ -80,70 +52,38 @@ function StatCard({ label, value, change, positive, index, icon }: {
   index: number;
   icon: React.ReactNode;
 }) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
-    <Card3D delay={index * 0.1}>
-      <motion.div
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="relative bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
-                 shadow-xl shadow-slate-grey/5 p-6 overflow-hidden group"
-      >
-        {/* Animated gradient border on hover */}
-        <motion.div
-          className="absolute -inset-[2px] rounded-3xl bg-gradient-to-r from-primary-cyan via-primary-blue to-violet-500 opacity-0 blur-xl"
-          animate={{ opacity: isHovered ? 0.3 : 0 }}
-          transition={{ duration: 0.3 }}
-        />
-
-        {/* Floating background effect */}
-        <motion.div
-          className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br from-primary-cyan/10 to-primary-blue/10 blur-2xl"
-          animate={{
-            scale: isHovered ? 1.5 : 1,
-            opacity: isHovered ? 0.5 : 0.2,
-          }}
-          transition={{ duration: 0.5 }}
-        />
+    <Card delay={index * 0.1}>
+      <div className="relative bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
+                 shadow-xl shadow-slate-grey/5 p-6 overflow-hidden group">
+        {/* Background effect */}
+        <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br from-primary-cyan/10 to-primary-blue/10 blur-2xl opacity-20" />
 
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-3">
             <p className="text-slate-grey/60 text-sm font-medium">{label}</p>
-            <motion.div
-              whileHover={{ rotate: 360, scale: 1.2 }}
-              transition={{ duration: 0.5 }}
-              className="p-2 bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10 rounded-xl"
-            >
+            <div className="p-2 bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10 rounded-xl">
               {icon}
-            </motion.div>
+            </div>
           </div>
 
           <div className="flex items-end justify-between">
-            <motion.span
-              className="text-4xl font-bold text-slate-grey font-montserrat"
-              animate={{ scale: isHovered ? 1.05 : 1 }}
-              transition={{ duration: 0.2 }}
-            >
+            <span className="text-4xl font-bold text-slate-grey font-montserrat">
               {value}
-            </motion.span>
+            </span>
 
-            <motion.span
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
+            <span
               className={`flex items-center gap-1 px-3 py-1.5 text-sm font-bold rounded-full
                         ${positive
                           ? "bg-green-50 text-green-600"
                           : "bg-red-50 text-red-600"
                         }`}
             >
-              <motion.svg
+              <svg
                 className="w-4 h-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                animate={{ y: isHovered ? (positive ? -2 : 2) : 0 }}
               >
                 <path
                   strokeLinecap="round"
@@ -151,21 +91,13 @@ function StatCard({ label, value, change, positive, index, icon }: {
                   strokeWidth={2}
                   d={positive ? "M5 10l7-7m0 0l7 7m-7-7v18" : "M19 14l-7 7m0 0l-7-7m7 7V3"}
                 />
-              </motion.svg>
+              </svg>
               {change}
-            </motion.span>
+            </span>
           </div>
         </div>
-
-        {/* Shimmer effect */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-          initial={{ x: "-100%" }}
-          animate={{ x: isHovered ? "100%" : "-100%" }}
-          transition={{ duration: 0.6 }}
-        />
-      </motion.div>
-    </Card3D>
+      </div>
+    </Card>
   );
 }
 
@@ -245,7 +177,7 @@ export default function AdminTrafficPage() {
       </div>
 
       {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8" style={{ perspective: "1500px" }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
         {[
           {
             label: "Page Views",
@@ -280,9 +212,9 @@ export default function AdminTrafficPage() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8" style={{ perspective: "1500px" }}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         {/* Page Views Chart */}
-        <Card3D delay={0.2} className="lg:col-span-2">
+        <Card delay={0.2} className="lg:col-span-2">
           <div className="bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
                        shadow-xl shadow-slate-grey/5 p-8 overflow-hidden group">
             {/* Decorative background */}
@@ -293,15 +225,11 @@ export default function AdminTrafficPage() {
             />
 
             <h2 className="relative z-10 text-xl font-bold text-slate-grey mb-8 font-montserrat flex items-center gap-3">
-              <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-                className="p-2 bg-gradient-to-r from-primary-cyan to-primary-blue rounded-xl shadow-lg shadow-primary-cyan/30"
-              >
+              <div className="p-2 bg-gradient-to-r from-primary-cyan to-primary-blue rounded-xl shadow-lg shadow-primary-cyan/30">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
-              </motion.div>
+              </div>
               Page Views (letzte 7 Tage)
             </h2>
 
@@ -333,7 +261,6 @@ export default function AdminTrafficPage() {
                     initial={{ height: 0 }}
                     animate={{ height: `${(day.views / maxViews) * 100}%` }}
                     transition={{ delay: i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ scale: 1.1 }}
                   >
                     <div
                       className={`w-full h-full rounded-t-xl transition-all duration-300 relative overflow-hidden
@@ -361,22 +288,18 @@ export default function AdminTrafficPage() {
               ))}
             </div>
           </div>
-        </Card3D>
+        </Card>
 
         {/* Top Referrers */}
-        <Card3D delay={0.3}>
+        <Card delay={0.3}>
           <div className="bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
                        shadow-xl shadow-slate-grey/5 p-8 overflow-hidden">
             <h2 className="text-xl font-bold text-slate-grey mb-8 font-montserrat flex items-center gap-3">
-              <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-                className="p-2 bg-gradient-to-r from-violet-500 to-purple-500 rounded-xl shadow-lg shadow-violet-500/30"
-              >
+              <div className="p-2 bg-gradient-to-r from-violet-500 to-purple-500 rounded-xl shadow-lg shadow-violet-500/30">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                 </svg>
-              </motion.div>
+              </div>
               Traffic-Quellen
             </h2>
 
@@ -387,25 +310,16 @@ export default function AdminTrafficPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 + 0.3 }}
-                  whileHover={{ scale: 1.02, x: 5 }}
                   className="group cursor-default"
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-slate-grey font-semibold flex items-center gap-2">
-                      <motion.span
-                        whileHover={{ scale: 1.3, rotate: 10 }}
-                        className="text-lg"
-                      >
-                        {ref.icon}
-                      </motion.span>
+                      <span className="text-lg">{ref.icon}</span>
                       {ref.source}
                     </span>
-                    <motion.span
-                      className="text-sm text-slate-grey/60 font-bold"
-                      whileHover={{ scale: 1.1 }}
-                    >
+                    <span className="text-sm text-slate-grey/60 font-bold">
                       {ref.visits}
-                    </motion.span>
+                    </span>
                   </div>
                   <div className="h-3 bg-slate-grey/10 rounded-full overflow-hidden">
                     <motion.div
@@ -427,25 +341,21 @@ export default function AdminTrafficPage() {
               ))}
             </div>
           </div>
-        </Card3D>
+        </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" style={{ perspective: "1500px" }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Top Pages */}
-        <Card3D delay={0.4}>
+        <Card delay={0.4}>
           <div className="bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
                        shadow-xl shadow-slate-grey/5 overflow-hidden">
             <div className="p-6 border-b-2 border-slate-grey/5">
               <h2 className="text-xl font-bold text-slate-grey font-montserrat flex items-center gap-3">
-                <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                  className="p-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl shadow-lg shadow-amber-500/30"
-                >
+                <div className="p-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl shadow-lg shadow-amber-500/30">
                   <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
-                </motion.div>
+                </div>
                 Top-Seiten
               </h2>
             </div>
@@ -471,8 +381,7 @@ export default function AdminTrafficPage() {
                   />
 
                   <div className="flex items-center gap-4">
-                    <motion.span
-                      whileHover={{ scale: 1.2, rotate: 10 }}
+                    <span
                       className={`w-8 h-8 flex items-center justify-center text-sm font-bold rounded-xl transition-all duration-300
                                 ${hoveredPage === page.path
                                   ? "bg-gradient-to-r from-primary-cyan to-primary-blue text-white shadow-lg shadow-primary-cyan/30"
@@ -480,7 +389,7 @@ export default function AdminTrafficPage() {
                                 }`}
                     >
                       {i + 1}
-                    </motion.span>
+                    </span>
                     <span className={`font-semibold transition-colors duration-300
                                    ${hoveredPage === page.path ? "text-primary-blue" : "text-slate-grey"}`}>
                       {page.path}
@@ -500,43 +409,33 @@ export default function AdminTrafficPage() {
                                   }`}
                       />
                     </div>
-                    <motion.span
-                      animate={{ scale: hoveredPage === page.path ? 1.1 : 1 }}
-                      className="text-sm text-slate-grey/60 w-12 text-right font-bold"
-                    >
+                    <span className="text-sm text-slate-grey/60 w-12 text-right font-bold">
                       {page.views}
-                    </motion.span>
+                    </span>
                   </div>
                 </motion.div>
               ))}
             </div>
           </div>
-        </Card3D>
+        </Card>
 
         {/* Recent Form Submissions */}
-        <Card3D delay={0.5}>
+        <Card delay={0.5}>
           <div className="bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
                        shadow-xl shadow-slate-grey/5 overflow-hidden">
             <div className="p-6 border-b-2 border-slate-grey/5 flex items-center justify-between">
               <h2 className="text-xl font-bold text-slate-grey font-montserrat flex items-center gap-3">
-                <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                  className="p-2 bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl shadow-lg shadow-pink-500/30"
-                >
+                <div className="p-2 bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl shadow-lg shadow-pink-500/30">
                   <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                </motion.div>
+                </div>
                 Kontakt-Anfragen
               </h2>
-              <motion.span
-                whileHover={{ scale: 1.1 }}
-                className="px-4 py-1.5 text-xs font-bold bg-gradient-to-r from-pink-500/10 to-rose-500/10
-                         text-pink-600 rounded-full border border-pink-500/20"
-              >
+              <span className="px-4 py-1.5 text-xs font-bold bg-gradient-to-r from-pink-500/10 to-rose-500/10
+                         text-pink-600 rounded-full border border-pink-500/20">
                 {recentSubmissions.length} neu
-              </motion.span>
+              </span>
             </div>
 
             <div className="divide-y-2 divide-slate-grey/5 max-h-[450px] overflow-y-auto">
@@ -575,50 +474,34 @@ export default function AdminTrafficPage() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2 mt-4">
-                    <motion.span
-                      whileHover={{ scale: 1.05 }}
-                      className="px-3 py-1.5 text-xs font-bold bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10
-                               text-primary-blue rounded-xl border border-primary-cyan/20"
-                    >
+                    <span className="px-3 py-1.5 text-xs font-bold bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10
+                               text-primary-blue rounded-xl border border-primary-cyan/20">
                       {sub.service}
-                    </motion.span>
-                    <motion.span
-                      whileHover={{ scale: 1.05 }}
-                      className="px-3 py-1.5 text-xs font-medium bg-slate-grey/5
-                               text-slate-grey/60 rounded-xl"
-                    >
+                    </span>
+                    <span className="px-3 py-1.5 text-xs font-medium bg-slate-grey/5
+                               text-slate-grey/60 rounded-xl">
                       {sub.budget}
-                    </motion.span>
-                    <motion.span
-                      whileHover={{ scale: 1.05 }}
-                      className="px-3 py-1.5 text-xs font-medium bg-green-50
-                               text-green-600 rounded-xl"
-                    >
+                    </span>
+                    <span className="px-3 py-1.5 text-xs font-medium bg-green-50
+                               text-green-600 rounded-xl">
                       via {sub.source}
-                    </motion.span>
+                    </span>
                   </div>
                 </motion.div>
               ))}
             </div>
 
-            <motion.div
-              whileHover={{ backgroundColor: "rgba(45, 212, 224, 0.05)" }}
-              className="p-5 border-t-2 border-slate-grey/5 bg-slate-grey/[0.02]"
-            >
-              <motion.button
-                whileHover={{ scale: 1.02, x: 5 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full text-center text-sm font-bold text-primary-blue
-                         hover:text-primary-cyan transition-colors flex items-center justify-center gap-2"
-              >
+            <div className="p-5 border-t-2 border-slate-grey/5 bg-slate-grey/[0.02] hover:bg-primary-cyan/5 transition-colors">
+              <button className="w-full text-center text-sm font-bold text-primary-blue
+                         hover:text-primary-cyan transition-colors flex items-center justify-center gap-2">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
                 CSV exportieren
-              </motion.button>
-            </motion.div>
+              </button>
+            </div>
           </div>
-        </Card3D>
+        </Card>
       </div>
 
     </AdminDashboardWrapper>

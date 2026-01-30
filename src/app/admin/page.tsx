@@ -39,7 +39,6 @@ function StatCard({
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -8, scale: 1.02 }}
       className="group relative bg-white/70 backdrop-blur-2xl rounded-3xl p-6 border border-white/50
                 overflow-hidden shadow-xl shadow-slate-grey/5 hover:shadow-2xl hover:shadow-primary-cyan/10
                 transition-all duration-500"
@@ -56,13 +55,9 @@ function StatCard({
 
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-4">
-          <motion.div
-            className={`p-3 rounded-2xl ${gradient} shadow-lg`}
-            whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className={`p-3 rounded-2xl ${gradient} shadow-lg`}>
             {icon}
-          </motion.div>
+          </div>
           {change && (
             <motion.span
               initial={{ opacity: 0, x: 20 }}
@@ -108,8 +103,6 @@ function QuickAction({
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{ x: 8, scale: 1.01 }}
-        whileTap={{ scale: 0.98 }}
         className="group flex items-center gap-4 p-5 bg-white/60 hover:bg-white/90 backdrop-blur-xl
                   rounded-2xl border border-white/50 hover:border-primary-cyan/30
                   shadow-lg shadow-slate-grey/5 hover:shadow-xl hover:shadow-primary-cyan/10
@@ -119,28 +112,23 @@ function QuickAction({
         <div className={`absolute left-0 top-0 bottom-0 w-1 ${gradient} opacity-0
                         group-hover:opacity-100 transition-opacity duration-300`} />
 
-        <motion.div
-          className={`p-3.5 ${gradient} rounded-xl shadow-lg group-hover:shadow-xl transition-shadow`}
-          whileHover={{ rotate: 5 }}
-        >
+        <div className={`p-3.5 ${gradient} rounded-xl shadow-lg group-hover:shadow-xl transition-shadow`}>
           {icon}
-        </motion.div>
+        </div>
         <div className="flex-1">
           <h4 className="font-semibold text-slate-grey group-hover:text-primary-blue transition-colors">
             {label}
           </h4>
           <p className="text-sm text-slate-grey/60">{description}</p>
         </div>
-        <motion.svg
+        <svg
           className="w-5 h-5 text-slate-grey/30 group-hover:text-primary-cyan transition-colors"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          animate={{ x: [0, 5, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </motion.svg>
+        </svg>
       </motion.div>
     </Link>
   );
@@ -335,16 +323,14 @@ export default function AdminDashboard() {
             >
               <span className="flex items-center justify-center gap-2">
                 Alle Anfragen anzeigen
-                <motion.svg
+                <svg
                   className="w-4 h-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </motion.svg>
+                </svg>
               </span>
             </Link>
           </motion.div>

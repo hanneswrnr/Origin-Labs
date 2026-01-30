@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import AdminDashboardWrapper from "@/components/admin/AdminDashboardWrapper";
 
 interface PricingTier {
@@ -16,55 +16,6 @@ interface PricingTier {
   discountBadge: string | null;
   discountActive: boolean;
   order: number;
-}
-
-// 3D Tilt Card Component
-function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 500, damping: 100 });
-  const mouseYSpring = useSpring(y, { stiffness: 500, damping: 100 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7.5deg", "-7.5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7.5deg", "7.5deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className={className}
-    >
-      <div style={{ transform: "translateZ(75px)", transformStyle: "preserve-3d" }}>
-        {children}
-      </div>
-    </motion.div>
-  );
 }
 
 // Empty initial data
@@ -151,11 +102,9 @@ export default function AdminPreisePage() {
         <motion.button
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
           onClick={() => setShowPreview(!showPreview)}
           className="relative flex items-center gap-2 px-5 py-3 bg-white/90 backdrop-blur-xl rounded-2xl
-                   border border-slate-grey/10 text-slate-grey font-medium overflow-hidden group"
+                   border border-slate-grey/10 text-slate-grey font-medium overflow-hidden group hover:border-primary-cyan/30 transition-all"
         >
           {/* Animated gradient border on hover */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -181,30 +130,16 @@ export default function AdminPreisePage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            style={{ perspective: "1000px" }}
           >
             {pricingTiers.map((tier) => (
-              <TiltCard key={tier.id}>
-                <motion.div
-                  onMouseEnter={() => setHoveredCard(tier.id)}
-                  onMouseLeave={() => setHoveredCard(null)}
+              <div key={tier.id}>
+                <div
                   className={`relative bg-white/90 backdrop-blur-2xl rounded-3xl p-8 border-2 transition-all duration-500
                             ${tier.highlighted
                               ? "border-primary-cyan/50 shadow-2xl shadow-primary-cyan/20"
-                              : hoveredCard === tier.id
-                                ? "border-primary-blue/30 shadow-2xl shadow-primary-blue/10"
-                                : "border-slate-grey/10 shadow-xl shadow-slate-grey/5"
+                              : "border-slate-grey/10 shadow-xl shadow-slate-grey/5 hover:border-primary-blue/30 hover:shadow-2xl hover:shadow-primary-blue/10"
                             }`}
                 >
-                  {/* Animated glow effect */}
-                  <div className={`absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-primary-cyan via-primary-blue to-violet-500 opacity-0 blur-xl transition-opacity duration-500 -z-10
-                                 ${hoveredCard === tier.id ? "opacity-30" : ""}`} />
-
-                  {/* Shimmer effect on hover */}
-                  <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-                    <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full transition-transform duration-1000
-                                   ${hoveredCard === tier.id ? "translate-x-full" : ""}`} />
-                  </div>
 
                   {tier.discountActive && tier.discountBadge && (
                     <motion.span
@@ -246,21 +181,17 @@ export default function AdminPreisePage() {
                     ))}
                   </ul>
 
-                  <motion.button
-                    whileHover={{ scale: 1.03, y: -2 }}
-                    whileTap={{ scale: 0.97 }}
-                    className={`w-full mt-8 py-4 rounded-2xl font-semibold transition-all duration-300 relative overflow-hidden group
+                  <button
+                    className={`w-full mt-8 py-4 rounded-2xl font-semibold transition-all duration-300
                               ${tier.highlighted
                                 ? "gradient-primary text-white shadow-xl shadow-primary-blue/30"
                                 : "bg-slate-grey/5 text-slate-grey hover:bg-slate-grey/10"
                               }`}
                   >
-                    {/* Button shine effect */}
-                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                    <span className="relative z-10">{tier.ctaText}</span>
-                  </motion.button>
-                </motion.div>
-              </TiltCard>
+                    {tier.ctaText}
+                  </button>
+                </div>
+              </div>
             ))}
           </motion.div>
         ) : (
@@ -290,11 +221,7 @@ export default function AdminPreisePage() {
                   {/* Tier Header */}
                   <div className="flex items-center justify-between p-6 border-b border-slate-grey/10">
                     <div className="flex items-center gap-4">
-                      <motion.div
-                        whileHover={{ scale: 1.2, rotate: 180 }}
-                        transition={{ duration: 0.5 }}
-                        className={`w-4 h-4 rounded-full ${tier.highlighted ? "gradient-primary" : "bg-slate-grey/20"}`}
-                      />
+                      <div className={`w-4 h-4 rounded-full ${tier.highlighted ? "gradient-primary" : "bg-slate-grey/20"}`} />
                       <div>
                         <h3 className="font-bold text-slate-grey text-lg">{tier.name}</h3>
                         <p className="text-slate-grey/60 text-sm">{tier.price} {tier.priceNote}</p>
@@ -311,10 +238,8 @@ export default function AdminPreisePage() {
                           Hervorgehoben
                         </motion.span>
                       )}
-                      <motion.button
+                      <button
                         onClick={() => handleEdit(tier)}
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        whileTap={{ scale: 0.9 }}
                         className="p-3 hover:bg-gradient-to-r hover:from-primary-cyan/10 hover:to-primary-blue/10
                                  rounded-xl transition-all duration-300 group/btn"
                       >
@@ -323,7 +248,7 @@ export default function AdminPreisePage() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
-                      </motion.button>
+                      </button>
                     </div>
                   </div>
 
@@ -396,24 +321,20 @@ export default function AdminPreisePage() {
                                              transition-all duration-300 text-sm group-hover/feature:border-slate-grey/20"
                                     placeholder="Feature..."
                                   />
-                                  <motion.button
+                                  <button
                                     onClick={() => removeFeature(i)}
-                                    whileHover={{ scale: 1.1, rotate: 10 }}
-                                    whileTap={{ scale: 0.9 }}
                                     className="p-3 hover:bg-red-50 text-red-400 hover:text-red-500 rounded-xl transition-all duration-300"
                                   >
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
-                                  </motion.button>
+                                  </button>
                                 </motion.div>
                               ))}
                             </div>
-                            <motion.button
+                            <button
                               onClick={addFeature}
-                              whileHover={{ scale: 1.02, x: 5 }}
-                              whileTap={{ scale: 0.98 }}
                               className="mt-4 flex items-center gap-2 text-sm text-primary-blue hover:text-primary-cyan
                                        font-semibold transition-colors"
                             >
@@ -421,7 +342,7 @@ export default function AdminPreisePage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                               </svg>
                               Feature hinzufügen
-                            </motion.button>
+                            </button>
                           </div>
 
                           {/* Options */}
@@ -477,40 +398,29 @@ export default function AdminPreisePage() {
 
                           {/* Actions */}
                           <div className="flex items-center justify-end gap-4 pt-6 border-t border-slate-grey/10">
-                            <motion.button
+                            <button
                               onClick={handleCancel}
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
                               className="px-6 py-3 text-slate-grey/60 hover:text-slate-grey font-medium
                                        rounded-xl hover:bg-slate-grey/5 transition-all duration-300"
                             >
                               Abbrechen
-                            </motion.button>
-                            <motion.button
+                            </button>
+                            <button
                               onClick={handleSave}
                               disabled={isSaving}
-                              whileHover={{ scale: isSaving ? 1 : 1.02, y: isSaving ? 0 : -2 }}
-                              whileTap={{ scale: isSaving ? 1 : 0.98 }}
-                              className="relative flex items-center gap-2 px-8 py-3 gradient-primary text-white
+                              className="flex items-center gap-2 px-8 py-3 gradient-primary text-white
                                        font-semibold rounded-xl shadow-xl shadow-primary-blue/30
-                                       hover:shadow-2xl transition-all duration-300 disabled:opacity-70 overflow-hidden group"
+                                       hover:shadow-2xl transition-all duration-300 disabled:opacity-70"
                             >
-                              {/* Button shine effect */}
-                              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent
-                                             -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                               {isSaving ? (
                                 <>
-                                  <motion.div
-                                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                                    animate={{ rotate: 360 }}
-                                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                  />
-                                  <span className="relative z-10">Speichern...</span>
+                                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                  <span>Speichern...</span>
                                 </>
                               ) : (
-                                <span className="relative z-10">Speichern</span>
+                                <span>Speichern</span>
                               )}
-                            </motion.button>
+                            </button>
                           </div>
                         </div>
                       </motion.div>
@@ -522,26 +432,19 @@ export default function AdminPreisePage() {
                     <div className="p-6 pt-4">
                       <div className="flex flex-wrap gap-2">
                         {tier.features.slice(0, 4).map((feature, i) => (
-                          <motion.span
+                          <span
                             key={i}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: i * 0.05 }}
-                            whileHover={{ scale: 1.05, y: -2 }}
                             className="px-4 py-2 text-xs bg-gradient-to-r from-slate-grey/5 to-slate-grey/10
                                      text-slate-grey/70 rounded-full cursor-default transition-all duration-300
                                      hover:from-primary-cyan/10 hover:to-primary-blue/10 hover:text-primary-blue"
                           >
                             {feature}
-                          </motion.span>
+                          </span>
                         ))}
                         {tier.features.length > 4 && (
-                          <motion.span
-                            whileHover={{ scale: 1.05 }}
-                            className="px-4 py-2 text-xs bg-slate-grey/5 text-slate-grey/50 rounded-full"
-                          >
+                          <span className="px-4 py-2 text-xs bg-slate-grey/5 text-slate-grey/50 rounded-full">
                             +{tier.features.length - 4} mehr
-                          </motion.span>
+                          </span>
                         )}
                       </div>
                     </div>

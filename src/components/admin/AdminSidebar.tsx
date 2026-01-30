@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { signOut } from "@/app/admin/actions";
 
 const navItems = [
   {
@@ -72,8 +73,8 @@ export default function AdminSidebar() {
     return pathname.startsWith(href);
   };
 
-  const handleSignOut = () => {
-    window.location.href = "/";
+  const handleSignOut = async () => {
+    await signOut();
   };
 
   return (
@@ -302,8 +303,6 @@ export default function AdminSidebar() {
             {/* View Website Link */}
             <motion.a
               href="/"
-              target="_blank"
-              rel="noopener noreferrer"
               whileHover={{ x: 4 }}
               className={`flex items-center gap-3 px-4 py-3 text-slate-grey/70 hover:text-primary-blue
                          bg-slate-grey/5 hover:bg-primary-cyan/10 rounded-xl transition-all duration-300

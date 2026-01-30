@@ -1,9 +1,10 @@
-import AdminSidebar from "@/components/admin/AdminSidebar";
-
 export const metadata = {
   title: "Admin Dashboard | Origin Labs",
   description: "Origin Labs Admin Dashboard",
 };
+
+// Force dynamic rendering to ensure middleware auth check runs on every request
+export const dynamic = "force-dynamic";
 
 export default function AdminLayout({
   children,
