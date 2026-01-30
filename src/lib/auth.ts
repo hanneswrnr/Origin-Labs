@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
-import prisma from "./prisma";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -20,17 +19,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const password = credentials.password as string;
 
         try {
+          // Dynamic import to avoid initialization issues
+          const { default: prisma } = await import("./prisma");
+
           const user = await prisma.adminUser.findUnique({
             where: { email },
           });
 
           if (!user) {
+            console.log("User not found:", email);
             return null;
           }
 
           const isPasswordValid = await compare(password, user.passwordHash);
 
           if (!isPasswordValid) {
+            console.log("Invalid password for:", email);
             return null;
           }
 
@@ -39,7 +43,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: user.email,
             name: user.name,
           };
-        } catch {
+        } catch (error) {
+          console.error("Auth error:", error);
           return null;
         }
       },
