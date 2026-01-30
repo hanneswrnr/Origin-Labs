@@ -180,7 +180,7 @@ function GoogleReviewsSection() {
   };
 
   return (
-    <section id="reviews" className="py-32 bg-white relative overflow-hidden">
+    <section id="reviews" className="py-32 bg-background relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-gradient-to-l from-yellow-400/5 to-transparent rounded-full blur-3xl" />
@@ -215,7 +215,7 @@ function GoogleReviewsSection() {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          <div className="inline-flex items-center gap-6 px-8 py-6 bg-white rounded-3xl shadow-xl border border-slate-grey/5">
+          <div className="inline-flex items-center gap-6 px-8 py-6 bg-card-bg rounded-3xl shadow-xl border border-divider">
             {/* Google Logo */}
             <div className="flex items-center gap-3">
               <svg className="w-10 h-10" viewBox="0 0 24 24">
@@ -260,7 +260,7 @@ function GoogleReviewsSection() {
           {/* Navigation Arrows */}
           <motion.button
             onClick={goToPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-slate-grey/5 flex items-center justify-center text-slate-grey/50 hover:text-primary-blue hover:bg-white hover:shadow-xl transition-all hidden md:flex"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-card-bg/90 backdrop-blur-sm rounded-full shadow-lg border border-divider flex items-center justify-center text-slate-grey/50 hover:text-primary-blue hover:bg-card-bg hover:shadow-xl transition-all hidden md:flex"
             whileHover={{ scale: 1.05, x: -2 }}
             whileTap={{ scale: 0.95 }}
             aria-label="Vorherige Bewertung"
@@ -272,7 +272,7 @@ function GoogleReviewsSection() {
 
           <motion.button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-slate-grey/5 flex items-center justify-center text-slate-grey/50 hover:text-primary-blue hover:bg-white hover:shadow-xl transition-all hidden md:flex"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-card-bg/90 backdrop-blur-sm rounded-full shadow-lg border border-divider flex items-center justify-center text-slate-grey/50 hover:text-primary-blue hover:bg-card-bg hover:shadow-xl transition-all hidden md:flex"
             whileHover={{ scale: 1.05, x: 2 }}
             whileTap={{ scale: 0.95 }}
             aria-label="Nächste Bewertung"
@@ -360,7 +360,7 @@ function GoogleReviewsSection() {
             <div className="flex justify-center gap-4 mt-6">
               <motion.button
                 onClick={goToPrev}
-                className="w-11 h-11 bg-white/90 backdrop-blur-sm rounded-full shadow-md border border-slate-grey/5 flex items-center justify-center text-slate-grey/50"
+                className="w-11 h-11 bg-card-bg/90 backdrop-blur-sm rounded-full shadow-md border border-divider flex items-center justify-center text-slate-grey/50"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Vorherige"
@@ -371,7 +371,7 @@ function GoogleReviewsSection() {
               </motion.button>
               <motion.button
                 onClick={goToNext}
-                className="w-11 h-11 bg-white/90 backdrop-blur-sm rounded-full shadow-md border border-slate-grey/5 flex items-center justify-center text-slate-grey/50"
+                className="w-11 h-11 bg-card-bg/90 backdrop-blur-sm rounded-full shadow-md border border-divider flex items-center justify-center text-slate-grey/50"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Nächste"
@@ -501,7 +501,7 @@ export default function Home() {
     <>
       <Header />
 
-      <main className="bg-white overflow-hidden">
+      <main className="bg-background overflow-hidden">
         {/* ==================== HERO SECTION ==================== */}
         <section
           id="hero"
@@ -510,7 +510,7 @@ export default function Home() {
         >
           {/* Animated Background */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-white to-white" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-background to-background" />
 
             {/* Floating Orbs */}
             <motion.div
@@ -560,7 +560,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
+              className="inline-flex items-center gap-3 px-5 py-2.5 bg-card-bg/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
             >
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-cyan opacity-75" />
@@ -632,7 +632,7 @@ export default function Home() {
 
               <motion.a
                 href="#about"
-                className="group px-8 py-4 bg-white border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg hover:shadow-primary-cyan/10 transition-all duration-300"
+                className="group px-8 py-4 bg-card-bg border-2 border-divider text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg hover:shadow-primary-cyan/10 transition-all duration-300"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -805,7 +805,7 @@ export default function Home() {
                 <div className="relative">
                   {/* Main Image Container */}
                   <motion.div
-                    className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-primary-cyan/20 via-white to-primary-blue/20 shadow-2xl"
+                    className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-primary-cyan/20 via-background to-primary-blue/20 shadow-2xl"
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.4 }}
                   >
@@ -839,7 +839,7 @@ export default function Home() {
 
                   {/* Stats Card */}
                   <motion.div
-                    className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-6 shadow-xl border border-slate-grey/5 hover:shadow-2xl transition-shadow"
+                    className="absolute -bottom-6 -right-6 bg-card-bg rounded-2xl p-6 shadow-xl border border-divider hover:shadow-2xl transition-shadow"
                     initial={{ opacity: 0, scale: 0.8, y: 20 }}
                     whileInView={{ opacity: 1, scale: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -931,7 +931,7 @@ export default function Home() {
         </section>
 
         {/* ==================== SERVICES SECTION ==================== */}
-        <section id="services" className="py-32 bg-white relative">
+        <section id="services" className="py-32 bg-background relative">
           <div className="max-w-7xl mx-auto px-6">
             <motion.div
               className="text-center mb-20"
@@ -1141,7 +1141,7 @@ export default function Home() {
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                 >
                   <motion.div
-                    className="relative h-full p-8 lg:p-10 rounded-3xl bg-white border border-slate-grey/10 hover:border-primary-cyan/30 hover:shadow-xl transition-all duration-500"
+                    className="relative h-full p-8 lg:p-10 rounded-3xl bg-card-bg border border-divider hover:border-primary-cyan/30 hover:shadow-xl transition-all duration-500"
                     whileHover={{ y: -8 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -1295,7 +1295,7 @@ export default function Home() {
         <GoogleReviewsSection />
 
         {/* ==================== PROJECTS SECTION ==================== */}
-        <section id="projects" className="py-32 bg-white relative">
+        <section id="projects" className="py-32 bg-background relative">
           <div className="max-w-7xl mx-auto px-6">
             <motion.div
               className="text-center mb-20"
@@ -1508,7 +1508,7 @@ export default function Home() {
                           {project.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="px-4 py-2 bg-white border border-slate-grey/10 text-slate-grey/80 text-sm font-medium rounded-xl hover:border-primary-cyan/30 hover:bg-primary-cyan/5 transition-colors cursor-default"
+                              className="px-4 py-2 bg-card-bg border border-divider text-slate-grey/80 text-sm font-medium rounded-xl hover:border-primary-cyan/30 hover:bg-primary-cyan/5 transition-colors cursor-default"
                             >
                               {tag}
                             </span>
@@ -1619,7 +1619,7 @@ export default function Home() {
 
                 <motion.a
                   href="tel:+4915203037738"
-                  className="px-10 py-5 bg-white border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg hover:shadow-primary-cyan/10 transition-all flex items-center justify-center gap-2"
+                  className="px-10 py-5 bg-card-bg border-2 border-divider text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg hover:shadow-primary-cyan/10 transition-all flex items-center justify-center gap-2"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -1664,7 +1664,7 @@ export default function Home() {
                 ].map((item) => (
                   <div
                     key={item.title}
-                    className="group bg-white p-8 rounded-3xl border border-slate-grey/5 hover:border-primary-cyan/20 hover:shadow-xl hover:shadow-primary-cyan/5 hover:-translate-y-1 transition-all duration-300"
+                    className="group bg-card-bg p-8 rounded-3xl border border-divider hover:border-primary-cyan/20 hover:shadow-xl hover:shadow-primary-cyan/5 hover:-translate-y-1 transition-all duration-300"
                   >
                     <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-5 text-white shadow-lg shadow-primary-blue/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                       {item.icon}

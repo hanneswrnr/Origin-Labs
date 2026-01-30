@@ -140,12 +140,12 @@ export default function UeberUnsPage() {
     <>
       <Header />
 
-      <main className="bg-white overflow-hidden">
+      <main className="bg-background overflow-hidden">
         {/* Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center pt-20">
           {/* Animated Background */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-white to-white" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-background to-background" />
 
             {/* Floating Orbs */}
             <motion.div
@@ -196,7 +196,7 @@ export default function UeberUnsPage() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
+              className="inline-flex items-center gap-3 px-5 py-2.5 bg-card-bg/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
             >
               <span className="w-2 h-2 bg-primary-cyan rounded-full animate-pulse" />
               <span className="font-body text-sm text-slate-grey font-medium">
@@ -420,7 +420,7 @@ export default function UeberUnsPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-primary-cyan/20 rounded-3xl -rotate-3" />
 
                   {/* Main card */}
-                  <div className="relative h-full bg-white rounded-3xl border border-slate-grey/10 p-8 shadow-2xl overflow-hidden">
+                  <div className="relative h-full bg-card-bg rounded-3xl border border-divider p-8 shadow-2xl overflow-hidden">
                     {/* Logo */}
                     <div className="flex justify-center mb-8">
                       <div className="relative w-64 h-20">
@@ -499,7 +499,7 @@ export default function UeberUnsPage() {
                     className={`relative h-full p-6 lg:p-8 rounded-3xl border transition-all duration-500 overflow-hidden ${
                       reason.highlight
                         ? 'bg-gradient-to-br from-primary-cyan to-primary-blue text-white border-transparent shadow-2xl shadow-primary-blue/20'
-                        : 'bg-white border-slate-grey/10 hover:border-primary-cyan/30 hover:shadow-xl hover:shadow-primary-cyan/5'
+                        : 'bg-card-bg border-divider hover:border-primary-cyan/30 hover:shadow-xl hover:shadow-primary-cyan/5'
                     }`}
                     whileHover={{ y: -6, scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -609,7 +609,7 @@ export default function UeberUnsPage() {
                   transition={{ delay: index * 0.1, duration: 0.6 }}
                 >
                   <motion.div
-                    className="relative h-full p-8 bg-white rounded-3xl border border-slate-grey/10 hover:border-transparent hover:shadow-2xl hover:shadow-slate-grey/10 transition-all duration-500 overflow-hidden"
+                    className="relative h-full p-8 bg-card-bg rounded-3xl border border-divider hover:border-transparent hover:shadow-2xl hover:shadow-slate-grey/10 transition-all duration-500 overflow-hidden"
                     whileHover={{ y: -8 }}
                   >
                     {/* Background gradient on hover */}
@@ -679,7 +679,7 @@ export default function UeberUnsPage() {
                   transition={{ delay: index * 0.05, duration: 0.4 }}
                 >
                   <motion.div
-                    className="px-6 py-3 bg-white rounded-full border border-slate-grey/10 shadow-sm hover:shadow-lg hover:border-primary-cyan/30 transition-all duration-300"
+                    className="px-6 py-3 bg-card-bg rounded-full border border-divider shadow-sm hover:shadow-lg hover:border-primary-cyan/30 transition-all duration-300"
                     whileHover={{ y: -4, scale: 1.05 }}
                   >
                     <span className="font-body font-medium text-slate-grey group-hover:text-primary-blue transition-colors">

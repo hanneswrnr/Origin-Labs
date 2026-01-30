@@ -220,12 +220,12 @@ export default function LeistungenPage() {
     <>
       <Header />
 
-      <main className="bg-white overflow-hidden">
+      <main className="bg-background overflow-hidden">
         {/* Hero Section - Full height like other pages */}
         <section className="relative min-h-screen flex items-center justify-center pt-20">
           {/* Animated Background */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-white to-white" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-background to-background" />
 
             {/* Floating Orbs */}
             <motion.div
@@ -276,7 +276,7 @@ export default function LeistungenPage() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
+              className="inline-flex items-center gap-3 px-5 py-2.5 bg-card-bg/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
             >
               <span className="w-2 h-2 bg-primary-cyan rounded-full animate-pulse" />
               <span className="font-body text-sm text-slate-grey font-medium">
@@ -441,7 +441,7 @@ export default function LeistungenPage() {
                           </div>
 
                           {/* Feature Grid Inside */}
-                          <div className="relative h-full bg-white/95 backdrop-blur rounded-[22px] p-8 lg:p-10">
+                          <div className="relative h-full bg-card-bg/95 backdrop-blur rounded-[22px] p-8 lg:p-10">
                             <div className="grid grid-cols-2 gap-4 h-full">
                               {service.features.map((feature, featureIndex) => (
                                 <motion.div
@@ -467,7 +467,7 @@ export default function LeistungenPage() {
                           </div>
 
                           {/* Price Badge */}
-                          <div className="absolute -bottom-4 -right-4 px-6 py-3 bg-white rounded-2xl shadow-xl border border-slate-grey/10">
+                          <div className="absolute -bottom-4 -right-4 px-6 py-3 bg-card-bg rounded-2xl shadow-xl border border-divider">
                             <span className={`font-heading text-2xl font-bold bg-gradient-to-r ${service.color} bg-clip-text text-transparent`}>
                               {service.price}
                             </span>
@@ -618,7 +618,7 @@ export default function LeistungenPage() {
                         <div className="absolute inset-0 w-[120px] h-[120px] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 bg-gradient-to-br from-primary-cyan/20 to-primary-blue/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                         {/* Main circle */}
-                        <div className="relative w-[120px] h-[120px] rounded-full bg-white border-2 border-slate-grey/10 group-hover:border-primary-cyan/40 transition-all duration-500 shadow-lg group-hover:shadow-2xl group-hover:shadow-primary-cyan/10 flex items-center justify-center">
+                        <div className="relative w-[120px] h-[120px] rounded-full bg-card-bg border-2 border-divider group-hover:border-primary-cyan/40 transition-all duration-500 shadow-lg group-hover:shadow-2xl group-hover:shadow-primary-cyan/10 flex items-center justify-center">
                           {/* Inner gradient circle */}
                           <div className="absolute inset-3 rounded-full bg-gradient-to-br from-slate-grey/[0.02] to-slate-grey/[0.06] group-hover:from-primary-cyan/10 group-hover:to-primary-blue/10 transition-all duration-500" />
 
@@ -628,7 +628,7 @@ export default function LeistungenPage() {
                           </div>
 
                           {/* Step number badge */}
-                          <div className="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-white border-2 border-primary-cyan/30 flex items-center justify-center shadow-md">
+                          <div className="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-card-bg border-2 border-primary-cyan/30 flex items-center justify-center shadow-md">
                             <span className="font-heading text-xs font-bold gradient-text">
                               {step.number}
                             </span>

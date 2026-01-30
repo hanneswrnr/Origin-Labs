@@ -121,7 +121,7 @@ function PricingCard({ tier, index }: { tier: PricingTier; index: number }) {
           className={`relative h-full rounded-[calc(2rem-2px)] overflow-hidden flex flex-col transition-all duration-500 ${
             tier.highlighted
               ? "bg-gradient-to-b from-slate-800 via-slate-900 to-slate-800"
-              : "bg-white"
+              : "bg-card-bg"
           }`}
         >
           {/* Animated Glow Effect on Hover (non-highlighted only) */}
@@ -333,12 +333,12 @@ export default function PreisePage() {
     <>
       <Header />
 
-      <main className="bg-white overflow-hidden">
+      <main className="bg-background overflow-hidden">
         {/* Hero Section - Full height like homepage */}
         <section className="relative min-h-screen flex items-center justify-center pt-20">
           {/* Animated Background */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-white to-white" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-background to-background" />
 
             {/* Floating Orbs */}
             <motion.div
@@ -389,7 +389,7 @@ export default function PreisePage() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
+              className="inline-flex items-center gap-3 px-5 py-2.5 bg-card-bg/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
             >
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -627,7 +627,7 @@ export default function PreisePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
-                  className="bg-white p-6 rounded-2xl border border-slate-grey/5 hover:border-primary-cyan/20 hover:shadow-xl hover:shadow-primary-cyan/5 transition-all group"
+                  className="bg-card-bg p-6 rounded-2xl border border-divider hover:border-primary-cyan/20 hover:shadow-xl hover:shadow-primary-cyan/5 transition-all group"
                 >
                   <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform">
                     {feature.icon}
@@ -661,7 +661,7 @@ export default function PreisePage() {
               </p>
             </motion.div>
 
-            <div className="bg-white rounded-3xl border border-slate-grey/10 p-8 lg:p-10">
+            <div className="bg-card-bg rounded-3xl border border-divider p-8 lg:p-10">
               {faqs.map((faq, index) => (
                 <FAQItem key={faq.question} faq={faq} index={index} />
               ))}
@@ -670,7 +670,7 @@ export default function PreisePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 bg-gradient-to-b from-white via-off-white to-white relative overflow-hidden">
+        <section className="py-32 bg-gradient-to-b from-background via-off-white to-background relative overflow-hidden">
           <div className="absolute inset-0">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-primary-cyan/8 to-transparent rounded-full blur-3xl" />
           </div>
@@ -714,7 +714,7 @@ export default function PreisePage() {
                 </motion.a>
                 <motion.a
                   href="tel:+4917647666407"
-                  className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg transition-all"
+                  className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-card-bg border-2 border-divider text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg transition-all"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >

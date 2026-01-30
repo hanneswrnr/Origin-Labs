@@ -252,12 +252,12 @@ export default function ContactPage() {
     <>
       <Header />
 
-      <main className="bg-white overflow-hidden">
+      <main className="bg-background overflow-hidden">
         {/* Hero Section - Full height like homepage */}
         <section className="relative min-h-screen flex items-center justify-center pt-20">
           {/* Animated Background */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-white to-white" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-background to-background" />
 
             {/* Floating Orbs */}
             <motion.div
@@ -310,7 +310,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
+              className="inline-flex items-center gap-3 px-5 py-2.5 bg-card-bg/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
             >
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -466,7 +466,7 @@ export default function ContactPage() {
                   <div className="absolute -top-4 -left-4 w-8 h-8 border-l-2 border-t-2 border-primary-cyan/30 rounded-tl-lg" />
                   <div className="absolute -bottom-4 -right-4 w-8 h-8 border-r-2 border-b-2 border-primary-blue/30 rounded-br-lg" />
 
-                  <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl shadow-slate-grey/5 border border-slate-grey/5 relative overflow-hidden">
+                  <div className="bg-card-bg rounded-3xl p-8 lg:p-10 shadow-2xl shadow-slate-grey/5 border border-divider relative overflow-hidden">
                     {/* Subtle gradient overlay */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-primary-cyan/5 to-transparent rounded-full blur-2xl" />
 
@@ -714,7 +714,7 @@ export default function ContactPage() {
                 <div className="space-y-4">
                   <a
                     href="tel:+4915203037738"
-                    className="group flex items-center gap-4 p-5 bg-white rounded-2xl border border-slate-grey/5 hover:border-primary-cyan/30 shadow-lg shadow-slate-grey/5 hover:shadow-xl hover:shadow-primary-cyan/10 transition-all duration-300"
+                    className="group flex items-center gap-4 p-5 bg-card-bg rounded-2xl border border-divider hover:border-primary-cyan/30 shadow-lg shadow-slate-grey/5 hover:shadow-xl hover:shadow-primary-cyan/10 transition-all duration-300"
                   >
                     <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary-blue/25 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -734,7 +734,7 @@ export default function ContactPage() {
 
                   <a
                     href="mailto:info@origin-labs.de"
-                    className="group flex items-center gap-4 p-5 bg-white rounded-2xl border border-slate-grey/5 hover:border-primary-cyan/30 shadow-lg shadow-slate-grey/5 hover:shadow-xl hover:shadow-primary-cyan/10 transition-all duration-300"
+                    className="group flex items-center gap-4 p-5 bg-card-bg rounded-2xl border border-divider hover:border-primary-cyan/30 shadow-lg shadow-slate-grey/5 hover:shadow-xl hover:shadow-primary-cyan/10 transition-all duration-300"
                   >
                     <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary-blue/25 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -754,7 +754,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Address & Map Card */}
-                <div className="bg-white rounded-2xl border border-slate-grey/5 shadow-lg shadow-slate-grey/5 overflow-hidden">
+                <div className="bg-card-bg rounded-2xl border border-divider shadow-lg shadow-slate-grey/5 overflow-hidden">
                   <div className="p-5">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary-blue/20 flex-shrink-0">
@@ -788,10 +788,10 @@ export default function ContactPage() {
                 </div>
 
                 {/* Response Time Badge */}
-                <div className="relative p-5 bg-gradient-to-br from-primary-cyan/10 via-white to-primary-blue/10 rounded-2xl border border-primary-cyan/10 overflow-hidden">
+                <div className="relative p-5 bg-gradient-to-br from-primary-cyan/10 via-background to-primary-blue/10 rounded-2xl border border-primary-cyan/10 overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-cyan/20 to-transparent rounded-full blur-2xl" />
                   <div className="relative flex items-center gap-4">
-                    <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-14 h-14 bg-card-bg rounded-2xl flex items-center justify-center shadow-lg">
                       <svg className="w-7 h-7 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -806,7 +806,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Social Links */}
-                <div className="p-5 bg-white rounded-2xl border border-slate-grey/5 shadow-lg shadow-slate-grey/5">
+                <div className="p-5 bg-card-bg rounded-2xl border border-divider shadow-lg shadow-slate-grey/5">
                   <p className="font-body text-sm text-slate-grey/50 mb-4">Folgen Sie uns</p>
                   <div className="flex gap-3">
                     {[
@@ -893,10 +893,10 @@ export default function ContactPage() {
                 >
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className={`w-full text-left bg-white rounded-2xl p-6 border transition-all duration-300 ${
+                    className={`w-full text-left bg-card-bg rounded-2xl p-6 border transition-all duration-300 ${
                       openFaq === index
                         ? "border-primary-cyan/30 shadow-xl shadow-primary-cyan/10"
-                        : "border-slate-grey/5 shadow-lg shadow-slate-grey/5 hover:border-slate-grey/10"
+                        : "border-divider shadow-lg shadow-slate-grey/5 hover:border-slate-grey/10"
                     }`}
                   >
                     <div className="flex items-center justify-between gap-4">

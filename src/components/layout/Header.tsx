@@ -167,7 +167,7 @@ export default function Header() {
           layout
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center group px-3">
+          <Link href="/" className="flex items-center group px-3 flex-shrink-0">
             <motion.div
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -184,10 +184,10 @@ export default function Header() {
           </Link>
 
           {/* Divider */}
-          <div className="hidden lg:block w-px h-6 bg-gradient-to-b from-transparent via-slate-grey/20 to-transparent mx-2" />
+          <div className="hidden xl:block w-px h-6 bg-gradient-to-b from-transparent via-slate-grey/20 to-transparent mx-2" />
 
           {/* Desktop Navigation */}
-          <div ref={navRef} className="hidden lg:flex items-center gap-0.5 relative">
+          <div ref={navRef} className="hidden xl:flex items-center gap-0.5 relative">
             {/* Sliding Active Indicator */}
             {indicatorStyle.width > 0 && (
               <motion.div
@@ -275,14 +275,14 @@ export default function Header() {
           </div>
 
           {/* Theme Toggle - Desktop */}
-          <div className="hidden lg:flex items-center ml-1">
+          <div className="hidden xl:flex items-center ml-1">
             <ThemeToggle />
           </div>
 
           {/* CTA Button */}
           <Link href="/kontakt">
             <motion.span
-              className="hidden lg:flex items-center gap-2 ml-1 px-5 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group cursor-pointer"
+              className="hidden xl:flex items-center gap-2 ml-1 px-5 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group cursor-pointer"
               whileHover={{ scale: 1.03, y: -1 }}
               whileTap={{ scale: 0.97 }}
             >
@@ -290,6 +290,8 @@ export default function Header() {
               <motion.span
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
               />
+              {/* Left spacer for visual balance */}
+              <span className="w-4 relative z-10" />
               <span className="relative z-10">Projekt starten</span>
               <svg
                 className="w-4 h-4 relative z-10"
@@ -309,7 +311,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-hover-bg transition-colors"
+            className="xl:hidden relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-hover-bg transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileTap={{ scale: 0.9 }}
             aria-label="Menü"
@@ -350,7 +352,7 @@ export default function Header() {
           <>
             {/* Backdrop */}
             <motion.div
-              className="fixed inset-0 z-40 lg:hidden bg-slate-grey/20 backdrop-blur-md"
+              className="fixed inset-0 z-40 xl:hidden bg-slate-grey/20 backdrop-blur-md"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -359,7 +361,7 @@ export default function Header() {
 
             {/* Menu Panel */}
             <motion.div
-              className="fixed top-24 left-4 right-4 z-50 lg:hidden"
+              className="fixed top-24 left-4 right-4 z-50 xl:hidden"
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -488,6 +490,8 @@ export default function Header() {
                   <Link href="/kontakt" onClick={() => setIsMobileMenuOpen(false)}>
                     <span className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-primary text-white font-heading font-semibold rounded-2xl shadow-lg shadow-primary-blue/25 relative overflow-hidden group">
                       <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                      {/* Left spacer for visual balance */}
+                      <span className="w-5 relative z-10" />
                       <span className="relative z-10">Projekt starten</span>
                       <svg
                         className="w-5 h-5 relative z-10"

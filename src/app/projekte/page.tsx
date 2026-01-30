@@ -242,7 +242,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-4 py-2 bg-white border border-slate-grey/10 text-slate-grey/80 text-sm font-medium rounded-xl hover:border-primary-cyan/30 hover:bg-primary-cyan/5 transition-colors cursor-default"
+                className="px-4 py-2 bg-card-bg border border-divider text-slate-grey/80 text-sm font-medium rounded-xl hover:border-primary-cyan/30 hover:bg-primary-cyan/5 transition-colors cursor-default"
               >
                 {tag}
               </span>
@@ -284,12 +284,12 @@ export default function ProjektePage() {
     <>
       <Header />
 
-      <main className="bg-white overflow-hidden">
+      <main className="bg-background overflow-hidden">
         {/* Hero Section - Full height like homepage */}
         <section className="relative min-h-screen flex items-center justify-center pt-20">
           {/* Animated Background */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-white to-white" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-background to-background" />
 
             {/* Floating Orbs */}
             <motion.div
@@ -340,7 +340,7 @@ export default function ProjektePage() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
+              className="inline-flex items-center gap-3 px-5 py-2.5 bg-card-bg/80 backdrop-blur-xl rounded-full border border-primary-cyan/20 shadow-lg shadow-primary-cyan/10 mb-8"
             >
               <span className="w-2 h-2 bg-primary-cyan rounded-full animate-pulse" />
               <span className="font-body text-sm text-slate-grey font-medium">
@@ -472,7 +472,7 @@ export default function ProjektePage() {
         </section>
 
         {/* Filter Section */}
-        <section className="py-8 sticky top-20 z-30 bg-white/80 backdrop-blur-xl border-y border-slate-grey/5">
+        <section className="py-8 sticky top-20 z-30 bg-card-bg/80 backdrop-blur-xl border-y border-divider">
           <div className="max-w-7xl mx-auto px-6">
             <motion.div
               className="flex flex-wrap justify-center gap-2"
@@ -595,7 +595,7 @@ export default function ProjektePage() {
                 </motion.a>
                 <motion.a
                   href="tel:+4917647666407"
-                  className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg transition-all"
+                  className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-card-bg border-2 border-divider text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:shadow-lg transition-all"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
