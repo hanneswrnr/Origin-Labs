@@ -1,9 +1,155 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+
+interface SelectOption {
+  value: string;
+  label: string;
+}
+
+interface CustomSelectProps {
+  name: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: SelectOption[];
+  placeholder: string;
+  required?: boolean;
+}
+
+function CustomSelect({ name, value, onChange, options, placeholder, required }: CustomSelectProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const selectedOption = options.find(opt => opt.value === value);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Close on escape key
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative">
+      {/* Hidden input for form validation */}
+      <input
+        type="hidden"
+        name={name}
+        value={value}
+        required={required}
+      />
+
+      {/* Trigger Button */}
+      <motion.button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full px-4 py-3.5 bg-slate-grey/[0.03] border rounded-xl font-body text-left flex items-center justify-between transition-all duration-300 cursor-pointer ${
+          isOpen
+            ? "border-primary-cyan bg-white shadow-lg shadow-primary-cyan/10"
+            : "border-slate-grey/10 hover:border-slate-grey/20"
+        }`}
+        whileTap={{ scale: 0.995 }}
+      >
+        <span className={selectedOption ? "text-slate-grey" : "text-slate-grey/40"}>
+          {selectedOption ? selectedOption.label : placeholder}
+        </span>
+        <motion.svg
+          className="w-5 h-5 text-slate-grey/40"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </motion.svg>
+      </motion.button>
+
+      {/* Dropdown Panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute z-50 w-full mt-2 bg-white rounded-xl border border-slate-grey/10 shadow-2xl shadow-slate-grey/15 overflow-hidden"
+          >
+            {/* Gradient accent line */}
+            <div className="h-0.5 bg-gradient-to-r from-primary-cyan to-primary-blue" />
+
+            <div className="py-2 max-h-60 overflow-auto">
+              {options.map((option, index) => (
+                <motion.button
+                  key={option.value}
+                  type="button"
+                  onClick={() => {
+                    onChange(option.value);
+                    setIsOpen(false);
+                  }}
+                  className={`w-full px-4 py-3 text-left font-body transition-all duration-200 flex items-center gap-3 ${
+                    value === option.value
+                      ? "bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10 text-primary-blue"
+                      : "text-slate-grey hover:bg-slate-grey/5"
+                  }`}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.03 }}
+                >
+                  {/* Selection indicator */}
+                  <motion.span
+                    className="w-2 h-2 rounded-full bg-gradient-to-r from-primary-cyan to-primary-blue"
+                    initial={false}
+                    animate={{
+                      scale: value === option.value ? 1 : 0,
+                      opacity: value === option.value ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.15 }}
+                  />
+                  <span className={value !== option.value ? "ml-5" : ""}>
+                    {option.label}
+                  </span>
+                  {/* Checkmark for selected */}
+                  {value === option.value && (
+                    <motion.svg
+                      className="w-4 h-4 ml-auto text-primary-cyan"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </motion.svg>
+                  )}
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -18,6 +164,21 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  // Dropdown options
+  const serviceOptions: SelectOption[] = [
+    { value: "website", label: "Website" },
+    { value: "webapp", label: "Webapp" },
+    { value: "mobile", label: "Mobile App" },
+    { value: "other", label: "Sonstiges" },
+  ];
+
+  const budgetOptions: SelectOption[] = [
+    { value: "small", label: "Unter 2.000 EUR" },
+    { value: "medium", label: "2.000 - 10.000 EUR" },
+    { value: "large", label: "10.000 - 50.000 EUR" },
+    { value: "enterprise", label: "Über 50.000 EUR" },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -425,46 +586,26 @@ export default function ContactPage() {
                                 <label className="block font-body text-sm font-medium text-slate-grey mb-2">
                                   Gewünschte Leistung <span className="text-primary-cyan">*</span>
                                 </label>
-                                <div className="relative">
-                                  <select
-                                    name="service"
-                                    required
-                                    value={formData.service}
-                                    onChange={handleChange}
-                                    className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey focus:outline-none focus:border-primary-cyan focus:bg-white focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300 appearance-none cursor-pointer"
-                                  >
-                                    <option value="">Bitte wählen...</option>
-                                    <option value="website">Website</option>
-                                    <option value="webapp">Webapp</option>
-                                    <option value="mobile">Mobile App</option>
-                                    <option value="other">Sonstiges</option>
-                                  </select>
-                                  <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-grey/40 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                  </svg>
-                                </div>
+                                <CustomSelect
+                                  name="service"
+                                  value={formData.service}
+                                  onChange={(value) => setFormData({ ...formData, service: value })}
+                                  options={serviceOptions}
+                                  placeholder="Bitte wählen..."
+                                  required
+                                />
                               </div>
                               <div>
                                 <label className="block font-body text-sm font-medium text-slate-grey mb-2">
                                   Budget
                                 </label>
-                                <div className="relative">
-                                  <select
-                                    name="budget"
-                                    value={formData.budget}
-                                    onChange={handleChange}
-                                    className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey focus:outline-none focus:border-primary-cyan focus:bg-white focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300 appearance-none cursor-pointer"
-                                  >
-                                    <option value="">Bitte wählen...</option>
-                                    <option value="small">Unter 2.000 EUR</option>
-                                    <option value="medium">2.000 - 10.000 EUR</option>
-                                    <option value="large">10.000 - 50.000 EUR</option>
-                                    <option value="enterprise">Über 50.000 EUR</option>
-                                  </select>
-                                  <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-grey/40 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                  </svg>
-                                </div>
+                                <CustomSelect
+                                  name="budget"
+                                  value={formData.budget}
+                                  onChange={(value) => setFormData({ ...formData, budget: value })}
+                                  options={budgetOptions}
+                                  placeholder="Bitte wählen..."
+                                />
                               </div>
                             </div>
 
