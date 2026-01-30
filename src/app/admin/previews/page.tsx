@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import AdminSidebar from "@/components/admin/AdminSidebar";
+import { motion } from "framer-motion";
 
 // Sample data for preview
 const sampleData = {
@@ -27,7 +29,10 @@ const budgetLabels: Record<string, string> = {
   enterprise: "Über 50.000 EUR",
 };
 
-export default function PreviewPage() {
+// Base64 encoded Origin Labs logo (simplified SVG version for emails)
+const logoBase64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTYwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMyREQ0RTAiLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDA1NUZGIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjM2IiBoZWlnaHQ9IjM2IiB4PSIyIiB5PSIyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkKSIvPgo8dGV4dCB4PSI0OCIgeT0iMjgiIGZvbnQtZmFtaWx5PSJJbnRlciwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFhMWEyZSI+T3JpZ2luIExhYnM8L3RleHQ+Cjwvc3ZnPg==";
+
+export default function PreviewsPage() {
   const [activeTemplate, setActiveTemplate] = useState<"notification" | "confirmation">("notification");
 
   const submittedAt = new Intl.DateTimeFormat("de-DE", {
@@ -49,7 +54,9 @@ export default function PreviewPage() {
     <!-- Header -->
     <tr>
       <td style="background: linear-gradient(135deg, #2DD4E0 0%, #0055FF 100%); padding: 32px 40px; text-align: center;">
-        <img src="https://origin-labs.de/logo-full.png" alt="Origin Labs" width="160" style="display: block; margin: 0 auto;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 24px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">
+          Origin Labs
+        </div>
       </td>
     </tr>
 
@@ -166,7 +173,9 @@ export default function PreviewPage() {
   <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <tr>
       <td style="background: linear-gradient(135deg, #2DD4E0 0%, #0055FF 100%); padding: 40px; text-align: center;">
-        <img src="https://origin-labs.de/logo-full.png" alt="Origin Labs" width="160" style="display: block; margin: 0 auto;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 24px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">
+          Origin Labs
+        </div>
       </td>
     </tr>
     <tr>
@@ -206,148 +215,171 @@ export default function PreviewPage() {
   `;
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      {/* Header */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-bold text-slate-900">E-Mail Template Preview</h1>
-              <p className="text-sm text-slate-500 mt-1">Vorschau der Kontaktformular E-Mails</p>
-            </div>
-            <a
-              href="/admin"
-              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <AdminSidebar />
+
+      <main className="lg:pl-72 min-h-screen">
+        <div className="p-6 lg:p-8">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8"
+          >
+            <h1 className="text-3xl font-bold text-slate-900">E-Mail Previews</h1>
+            <p className="text-slate-500 mt-2">
+              Vorschau der E-Mail-Templates für das Kontaktformular
+            </p>
+          </motion.div>
+
+          {/* Template Selector */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-2xl shadow-sm border border-slate-200/60 p-2 inline-flex gap-2 mb-6"
+          >
+            <button
+              onClick={() => setActiveTemplate("notification")}
+              className={`px-6 py-3 rounded-xl font-medium text-sm transition-all ${
+                activeTemplate === "notification"
+                  ? "bg-gradient-to-r from-primary-cyan to-primary-blue text-white shadow-lg shadow-primary-blue/25"
+                  : "text-slate-600 hover:bg-slate-100"
+              }`}
             >
-              ← Zurück zum Admin
-            </a>
-          </div>
-        </div>
-      </div>
+              Benachrichtigung (An Origin Labs)
+            </button>
+            <button
+              onClick={() => setActiveTemplate("confirmation")}
+              className={`px-6 py-3 rounded-xl font-medium text-sm transition-all ${
+                activeTemplate === "confirmation"
+                  ? "bg-gradient-to-r from-primary-cyan to-primary-blue text-white shadow-lg shadow-primary-blue/25"
+                  : "text-slate-600 hover:bg-slate-100"
+              }`}
+            >
+              Bestätigung (An Kunde)
+            </button>
+          </motion.div>
 
-      {/* Template Selector */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-2 inline-flex gap-2">
-          <button
-            onClick={() => setActiveTemplate("notification")}
-            className={`px-6 py-3 rounded-lg font-medium text-sm transition-all ${
-              activeTemplate === "notification"
-                ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
-                : "text-slate-600 hover:bg-slate-100"
-            }`}
+          {/* Template Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-2xl shadow-sm border border-slate-200/60 p-6 mb-6"
           >
-            📬 Benachrichtigung (An Origin Labs)
-          </button>
-          <button
-            onClick={() => setActiveTemplate("confirmation")}
-            className={`px-6 py-3 rounded-lg font-medium text-sm transition-all ${
-              activeTemplate === "confirmation"
-                ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
-                : "text-slate-600 hover:bg-slate-100"
-            }`}
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary-cyan to-primary-blue rounded-xl flex items-center justify-center text-white">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-slate-900">
+                  {activeTemplate === "notification"
+                    ? "Benachrichtigungs-E-Mail"
+                    : "Bestätigungs-E-Mail"}
+                </h2>
+                <p className="text-slate-500 text-sm mt-1">
+                  {activeTemplate === "notification"
+                    ? "Diese E-Mail wird an info@origin-labs.de gesendet, wenn jemand das Kontaktformular ausfüllt."
+                    : "Diese E-Mail wird automatisch an den Kunden gesendet, um den Eingang seiner Anfrage zu bestätigen."}
+                </p>
+                <div className="flex flex-wrap items-center gap-4 mt-3">
+                  <div className="flex items-center gap-2 text-sm text-slate-500">
+                    <span className="font-medium text-slate-700">Von:</span>
+                    <code className="bg-slate-100 px-2 py-1 rounded text-xs">
+                      {activeTemplate === "notification"
+                        ? '"Origin Labs Website" <info@origin-labs.de>'
+                        : '"Origin Labs" <info@origin-labs.de>'}
+                    </code>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-slate-500">
+                    <span className="font-medium text-slate-700">An:</span>
+                    <code className="bg-slate-100 px-2 py-1 rounded text-xs">
+                      {activeTemplate === "notification"
+                        ? "info@origin-labs.de"
+                        : sampleData.email}
+                    </code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Email Preview */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
           >
-            ✉️ Bestätigung (An Kunde)
-          </button>
-        </div>
-
-        {/* Template Info */}
-        <div className="mt-6 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white text-xl">
-              {activeTemplate === "notification" ? "📬" : "✉️"}
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold text-slate-900">
-                {activeTemplate === "notification"
-                  ? "Benachrichtigungs-E-Mail"
-                  : "Bestätigungs-E-Mail"}
-              </h2>
-              <p className="text-slate-500 text-sm mt-1">
-                {activeTemplate === "notification"
-                  ? "Diese E-Mail wird an info@origin-labs.de gesendet, wenn jemand das Kontaktformular ausfüllt."
-                  : "Diese E-Mail wird automatisch an den Kunden gesendet, um den Eingang seiner Anfrage zu bestätigen."}
-              </p>
-              <div className="flex items-center gap-4 mt-3">
-                <div className="flex items-center gap-2 text-sm text-slate-500">
-                  <span className="font-medium text-slate-700">Von:</span>
-                  <code className="bg-slate-100 px-2 py-1 rounded text-xs">
-                    {activeTemplate === "notification"
-                      ? '"Origin Labs Website" <info@origin-labs.de>'
-                      : '"Origin Labs" <info@origin-labs.de>'}
-                  </code>
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
+              <div className="bg-slate-50 border-b border-slate-200 px-6 py-3 flex items-center gap-2">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-red-400" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                  <div className="w-3 h-3 rounded-full bg-green-400" />
                 </div>
-                <div className="flex items-center gap-2 text-sm text-slate-500">
-                  <span className="font-medium text-slate-700">An:</span>
-                  <code className="bg-slate-100 px-2 py-1 rounded text-xs">
-                    {activeTemplate === "notification"
-                      ? "info@origin-labs.de"
-                      : sampleData.email}
-                  </code>
+                <span className="text-sm text-slate-500 ml-4">E-Mail Vorschau</span>
+              </div>
+              <iframe
+                srcDoc={activeTemplate === "notification" ? notificationHtml : confirmationHtml}
+                className="w-full h-[700px] border-0"
+                title="Email Preview"
+              />
+            </div>
+          </motion.div>
+
+          {/* Sample Data Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-6 bg-amber-50 border border-amber-200 rounded-2xl p-6"
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-semibold text-amber-900">Beispieldaten</h3>
+                <p className="text-amber-700 text-sm mt-1">
+                  Die Vorschau verwendet Beispieldaten. In der echten E-Mail werden die tatsächlichen
+                  Formulardaten des Kunden angezeigt.
+                </p>
+                <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <span className="text-amber-600 font-medium">Name:</span>{" "}
+                    <span className="text-amber-900">{sampleData.name}</span>
+                  </div>
+                  <div>
+                    <span className="text-amber-600 font-medium">E-Mail:</span>{" "}
+                    <span className="text-amber-900">{sampleData.email}</span>
+                  </div>
+                  <div>
+                    <span className="text-amber-600 font-medium">Unternehmen:</span>{" "}
+                    <span className="text-amber-900">{sampleData.company}</span>
+                  </div>
+                  <div>
+                    <span className="text-amber-600 font-medium">Telefon:</span>{" "}
+                    <span className="text-amber-900">{sampleData.phone}</span>
+                  </div>
+                  <div>
+                    <span className="text-amber-600 font-medium">Leistung:</span>{" "}
+                    <span className="text-amber-900">{serviceLabels[sampleData.service]}</span>
+                  </div>
+                  <div>
+                    <span className="text-amber-600 font-medium">Budget:</span>{" "}
+                    <span className="text-amber-900">{budgetLabels[sampleData.budget]}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-
-        {/* Email Preview */}
-        <div className="mt-6">
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="bg-slate-50 border-b border-slate-200 px-6 py-3 flex items-center gap-2">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                <div className="w-3 h-3 rounded-full bg-green-400" />
-              </div>
-              <span className="text-sm text-slate-500 ml-4">E-Mail Vorschau</span>
-            </div>
-            <iframe
-              srcDoc={activeTemplate === "notification" ? notificationHtml : confirmationHtml}
-              className="w-full h-[800px] border-0"
-              title="Email Preview"
-            />
-          </div>
-        </div>
-
-        {/* Sample Data Info */}
-        <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-6">
-          <div className="flex items-start gap-3">
-            <span className="text-2xl">💡</span>
-            <div>
-              <h3 className="font-semibold text-amber-900">Beispieldaten</h3>
-              <p className="text-amber-700 text-sm mt-1">
-                Die Vorschau verwendet Beispieldaten. In der echten E-Mail werden die tatsächlichen
-                Formulardaten des Kunden angezeigt.
-              </p>
-              <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="text-amber-600 font-medium">Name:</span>{" "}
-                  <span className="text-amber-900">{sampleData.name}</span>
-                </div>
-                <div>
-                  <span className="text-amber-600 font-medium">E-Mail:</span>{" "}
-                  <span className="text-amber-900">{sampleData.email}</span>
-                </div>
-                <div>
-                  <span className="text-amber-600 font-medium">Unternehmen:</span>{" "}
-                  <span className="text-amber-900">{sampleData.company}</span>
-                </div>
-                <div>
-                  <span className="text-amber-600 font-medium">Telefon:</span>{" "}
-                  <span className="text-amber-900">{sampleData.phone}</span>
-                </div>
-                <div>
-                  <span className="text-amber-600 font-medium">Leistung:</span>{" "}
-                  <span className="text-amber-900">{serviceLabels[sampleData.service]}</span>
-                </div>
-                <div>
-                  <span className="text-amber-600 font-medium">Budget:</span>{" "}
-                  <span className="text-amber-900">{budgetLabels[sampleData.budget]}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }
