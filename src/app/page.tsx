@@ -1316,77 +1316,232 @@ export default function Home() {
               </p>
             </motion.div>
 
-            {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Projects - Full Width Alternating Cards */}
+            <div className="space-y-24 lg:space-y-32">
               {[
-                { title: "E-Commerce Platform", category: "Webapp", gradient: "from-[#00C6FB] to-[#005BEA]" },
-                { title: "Corporate Website", category: "Website", gradient: "from-[#667EEA] to-[#764BA2]" },
-                { title: "Fitness App", category: "Mobile App", gradient: "from-[#F093FB] to-[#F5576C]" },
-                { title: "Dashboard System", category: "Webapp", gradient: "from-[#4FACFE] to-[#00F2FE]" },
-              ].map((project, index) => (
-                <motion.div
-                  key={project.title}
-                  className="group relative aspect-[16/10] rounded-3xl overflow-hidden cursor-pointer"
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  {/* Background Gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`} />
-
-                  {/* Pattern Overlay */}
-                  <div
-                    className="absolute inset-0 opacity-10"
-                    style={{
-                      backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
-                      backgroundSize: "24px 24px",
-                    }}
-                  />
-
-                  {/* Hover Overlay */}
+                {
+                  title: "E-Commerce Platform",
+                  subtitle: "Online Shopping neu definiert",
+                  description: "Moderner Online-Shop mit Echtzeit-Inventar, personalisierten Empfehlungen und nahtloser Checkout-Experience.",
+                  category: "Web App",
+                  tags: ["Next.js", "Stripe", "PostgreSQL", "Redis"],
+                  color: "from-violet-500 to-purple-600",
+                  year: "2024",
+                },
+                {
+                  title: "Corporate Website",
+                  subtitle: "Digitale Unternehmensidentität",
+                  description: "Elegante Unternehmenswebsite mit Fokus auf Storytelling, Performance und Conversion-Optimierung.",
+                  category: "Website",
+                  tags: ["React", "Tailwind CSS", "Framer Motion", "Sanity"],
+                  color: "from-blue-500 to-cyan-500",
+                  year: "2024",
+                },
+                {
+                  title: "Fitness Tracker App",
+                  subtitle: "Gesundheit in der Hosentasche",
+                  description: "Native Mobile App mit Workout-Tracking, Ernährungsplanung und Social Features.",
+                  category: "Mobile App",
+                  tags: ["React Native", "Firebase", "HealthKit", "Charts"],
+                  color: "from-green-500 to-emerald-500",
+                  year: "2024",
+                },
+                {
+                  title: "SaaS Dashboard",
+                  subtitle: "Daten, die Geschichten erzählen",
+                  description: "Komplexes Analytics-Dashboard mit Echtzeit-Daten, interaktiven Visualisierungen und Team-Kollaboration.",
+                  category: "Web App",
+                  tags: ["TypeScript", "D3.js", "WebSocket", "GraphQL"],
+                  color: "from-orange-500 to-red-500",
+                  year: "2023",
+                },
+              ].map((project, index) => {
+                const isEven = index % 2 === 0;
+                return (
                   <motion.div
-                    className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500"
-                  />
-
-                  {/* Content */}
-                  <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-10">
-                    <motion.span
-                      className="inline-block self-start px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full mb-4"
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 + 0.2 }}
-                    >
-                      {project.category}
-                    </motion.span>
-                    <motion.h3
-                      className="font-heading text-2xl lg:text-3xl font-bold text-white"
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 + 0.3 }}
-                    >
-                      {project.title}
-                    </motion.h3>
-                  </div>
-
-                  {/* Arrow Button */}
-                  <motion.div
-                    className="absolute top-6 right-6 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 border border-white/20"
-                    whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.3)" }}
+                    key={project.title}
+                    initial={{ opacity: 0, y: 60 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    className="group"
                   >
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
+                    <div className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-8 lg:gap-16 items-center`}>
+                      {/* Preview/Mockup Area */}
+                      <motion.div
+                        className="w-full lg:w-3/5 relative"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.4 }}
+                      >
+                        <div className={`relative aspect-[16/10] rounded-3xl overflow-hidden bg-gradient-to-br ${project.color} p-8 lg:p-12 shadow-2xl`}>
+                          {/* Decorative Elements */}
+                          <div className="absolute inset-0 opacity-20">
+                            <div
+                              className="absolute inset-0"
+                              style={{
+                                backgroundImage: `radial-gradient(circle at 20% 50%, white 1px, transparent 1px)`,
+                                backgroundSize: "30px 30px",
+                              }}
+                            />
+                          </div>
+
+                          {/* Floating Shapes */}
+                          <motion.div
+                            className="absolute top-6 right-6 w-20 h-20 border-2 border-white/30 rounded-2xl"
+                            animate={{ rotate: [0, 90, 0] }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                          />
+                          <motion.div
+                            className="absolute bottom-8 left-8 w-12 h-12 bg-white/20 rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 4, repeat: Infinity }}
+                          />
+
+                          {/* Browser Mockup */}
+                          <div className="relative h-full bg-white rounded-2xl shadow-2xl overflow-hidden transform group-hover:translate-y-[-8px] transition-transform duration-500">
+                            {/* Browser Bar */}
+                            <div className="bg-slate-100 px-4 py-3 flex items-center gap-2 border-b border-slate-200">
+                              <div className="flex gap-1.5">
+                                <div className="w-3 h-3 rounded-full bg-red-400" />
+                                <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                                <div className="w-3 h-3 rounded-full bg-green-400" />
+                              </div>
+                              <div className="flex-1 mx-4">
+                                <div className="bg-white rounded-lg px-4 py-1.5 text-xs text-slate-400 font-mono flex items-center gap-2 max-w-xs">
+                                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                  </svg>
+                                  origin-labs.de/{project.category.toLowerCase().replace(" ", "")}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Content Preview */}
+                            <div className="p-6 bg-gradient-to-b from-slate-50 to-white h-full">
+                              {/* Skeleton UI Preview */}
+                              <div className="space-y-4">
+                                <div className="flex items-center gap-4">
+                                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${project.color} opacity-80`} />
+                                  <div className="space-y-2 flex-1">
+                                    <div className="h-4 bg-slate-200 rounded w-1/3" />
+                                    <div className="h-3 bg-slate-100 rounded w-1/2" />
+                                  </div>
+                                </div>
+                                <div className="grid grid-cols-3 gap-3 mt-6">
+                                  {[1, 2, 3].map((i) => (
+                                    <div key={i} className="aspect-square rounded-xl bg-slate-100" />
+                                  ))}
+                                </div>
+                                <div className="space-y-2 mt-4">
+                                  <div className="h-3 bg-slate-100 rounded w-full" />
+                                  <div className="h-3 bg-slate-100 rounded w-4/5" />
+                                  <div className="h-3 bg-slate-100 rounded w-3/5" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Year Badge */}
+                          <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-slate-700">
+                            {project.year}
+                          </div>
+                        </div>
+                      </motion.div>
+
+                      {/* Content */}
+                      <div className="w-full lg:w-2/5 space-y-6">
+                        {/* Category Badge */}
+                        <motion.div
+                          initial={{ opacity: 0, x: isEven ? -20 : 20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.2 }}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-slate-grey/5 rounded-full"
+                        >
+                          <span className={`w-2 h-2 rounded-full bg-gradient-to-r ${project.color}`} />
+                          <span className="text-sm font-medium text-slate-grey">
+                            {project.category}
+                          </span>
+                        </motion.div>
+
+                        {/* Title & Subtitle */}
+                        <div>
+                          <motion.h3
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="font-heading text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-grey mb-3"
+                          >
+                            {project.title}
+                          </motion.h3>
+                          <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.35 }}
+                            className={`font-heading text-lg lg:text-xl font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent`}
+                          >
+                            {project.subtitle}
+                          </motion.p>
+                        </div>
+
+                        {/* Description */}
+                        <motion.p
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.4 }}
+                          className="font-body text-slate-grey/70 text-lg leading-relaxed"
+                        >
+                          {project.description}
+                        </motion.p>
+
+                        {/* Tags */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.45 }}
+                          className="flex flex-wrap gap-2"
+                        >
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-4 py-2 bg-white border border-slate-grey/10 text-slate-grey/80 text-sm font-medium rounded-xl hover:border-primary-cyan/30 hover:bg-primary-cyan/5 transition-colors cursor-default"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </motion.div>
+
+                        {/* CTA Button */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.5 }}
+                        >
+                          <motion.button
+                            className={`inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r ${project.color} text-white font-heading font-semibold rounded-full shadow-lg hover:shadow-xl transition-shadow`}
+                            whileHover={{ scale: 1.03, y: -2 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <span>Case Study ansehen</span>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                          </motion.button>
+                        </motion.div>
+                      </div>
+                    </div>
                   </motion.div>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
 
             <motion.div
-              className="text-center mt-16"
+              className="text-center mt-20"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -1394,7 +1549,7 @@ export default function Home() {
             >
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Link
-                  href="/projects"
+                  href="/projekte"
                   className="inline-flex items-center gap-3 px-8 py-4 border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:text-primary-blue hover:shadow-lg hover:shadow-primary-cyan/10 transition-all"
                 >
                   Alle Projekte ansehen
