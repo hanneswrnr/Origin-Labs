@@ -24,25 +24,25 @@
 }
 
 .dark {
-  --background: #0F172A;
+  --background: #121212;
   --foreground: #F1F5F9;
 
   /* Dark Mode Primary Colors */
   --primary-blue: #3B82F6;
   --accent-blue: #60A5FA;
-  --slate-grey: #94A3B8;
-  --off-white: #1E293B;
+  --slate-grey: #FFFFFF;
+  --off-white: #1E1E1E;
 
   /* Dark Mode Component Colors */
-  --card-bg: #1E293B;
-  --card-border: rgba(148, 163, 184, 0.15);
-  --nav-bg: rgba(15, 23, 42, 0.85);
-  --nav-bg-scrolled: rgba(15, 23, 42, 0.95);
-  --nav-border: rgba(148, 163, 184, 0.1);
-  --mobile-menu-bg: rgba(30, 41, 59, 0.98);
-  --hover-bg: rgba(148, 163, 184, 0.1);
-  --text-muted: rgba(148, 163, 184, 0.9);
-  --divider: rgba(148, 163, 184, 0.1);
+  --card-bg: #1E1E1E;
+  --card-border: rgba(255, 255, 255, 0.15);
+  --nav-bg: rgba(18, 18, 18, 0.85);
+  --nav-bg-scrolled: rgba(18, 18, 18, 0.95);
+  --nav-border: rgba(255, 255, 255, 0.1);
+  --mobile-menu-bg: rgba(30, 30, 30, 0.98);
+  --hover-bg: rgba(255, 255, 255, 0.1);
+  --text-muted: rgba(255, 255, 255, 0.85);
+  --divider: rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {
