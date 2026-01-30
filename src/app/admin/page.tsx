@@ -182,8 +182,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <StatCard
           title="Projekte"
-          value="6"
-          change="+2"
+          value="0"
           gradient="bg-gradient-to-br from-violet-500 to-purple-600"
           delay={0}
           icon={
@@ -194,8 +193,7 @@ export default function AdminDashboard() {
         />
         <StatCard
           title="Anfragen"
-          value="12"
-          change="+5"
+          value="0"
           gradient="bg-gradient-to-br from-primary-cyan to-primary-blue"
           delay={0.1}
           icon={
@@ -206,8 +204,7 @@ export default function AdminDashboard() {
         />
         <StatCard
           title="Page Views"
-          value="1.2k"
-          change="+18%"
+          value="0"
           gradient="bg-gradient-to-br from-green-500 to-emerald-600"
           delay={0.2}
           icon={
@@ -219,7 +216,7 @@ export default function AdminDashboard() {
         />
         <StatCard
           title="Google Rating"
-          value="4.9"
+          value="-"
           gradient="bg-gradient-to-br from-amber-500 to-orange-600"
           delay={0.3}
           icon={
@@ -314,41 +311,20 @@ export default function AdminDashboard() {
                       shadow-xl shadow-slate-grey/5 overflow-hidden"
           >
             <div className="divide-y divide-slate-grey/5">
-              {[
-                { name: "Max Mustermann", email: "max@example.com", service: "Website", time: "vor 2 Stunden", gradient: "from-cyan-500 to-blue-500" },
-                { name: "Anna Schmidt", email: "anna@example.com", service: "Webapp", time: "vor 5 Stunden", gradient: "from-violet-500 to-purple-500" },
-                { name: "Peter Weber", email: "peter@example.com", service: "Mobile App", time: "gestern", gradient: "from-green-500 to-emerald-500" },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 + i * 0.1 }}
-                  className="p-5 hover:bg-gradient-to-r hover:from-primary-cyan/5 hover:to-transparent
-                            transition-all duration-300 group cursor-pointer"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.gradient}
-                                   flex items-center justify-center text-white font-bold text-lg
-                                   shadow-lg group-hover:scale-110 transition-transform`}>
-                      {item.name.charAt(0)}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-slate-grey group-hover:text-primary-blue transition-colors">
-                        {item.name}
-                      </h4>
-                      <p className="text-sm text-slate-grey/60">{item.email}</p>
-                    </div>
-                    <div className="text-right">
-                      <span className={`inline-block px-3 py-1.5 text-xs font-semibold bg-gradient-to-r ${item.gradient}
-                                       text-white rounded-full shadow-md`}>
-                        {item.service}
-                      </span>
-                      <p className="text-xs text-slate-grey/40 mt-2">{item.time}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="p-10 text-center"
+              >
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-slate-grey/10 to-slate-grey/5
+                               flex items-center justify-center">
+                  <svg className="w-8 h-8 text-slate-grey/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                  </svg>
+                </div>
+                <p className="text-slate-grey/50 font-medium">Keine Anfragen vorhanden</p>
+              </motion.div>
             </div>
 
             <Link
@@ -375,48 +351,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Database Status Notice - More Modern */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9 }}
-        className="mt-10 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 rounded-3xl" />
-        <div className="relative p-8 border border-amber-200/50 rounded-3xl backdrop-blur-xl">
-          <div className="flex items-start gap-5">
-            <motion.div
-              className="p-4 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl shadow-lg shadow-amber-500/25"
-              animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-              </svg>
-            </motion.div>
-            <div className="flex-1">
-              <h3 className="text-xl font-bold text-amber-800 font-montserrat">
-                Datenbank einrichten
-              </h3>
-              <p className="text-amber-700 mt-2">
-                Verbinden Sie Ihre MySQL-Datenbank, um alle Funktionen freizuschalten.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-3">
-                {["MySQL erstellen", "Zugangsdaten kopieren", "db:push ausführen", "db:seed ausführen"].map((step, i) => (
-                  <span key={i} className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 rounded-xl
-                                          text-sm font-medium text-amber-700 border border-amber-200/50">
-                    <span className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-500 to-orange-600
-                                   text-white text-xs flex items-center justify-center font-bold">
-                      {i + 1}
-                    </span>
-                    {step}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
     </AdminDashboardWrapper>
   );
 }

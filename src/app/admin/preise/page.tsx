@@ -67,74 +67,8 @@ function TiltCard({ children, className }: { children: React.ReactNode; classNam
   );
 }
 
-// Initial placeholder data (will be replaced with DB data)
-const initialPricingTiers: PricingTier[] = [
-  {
-    id: "1",
-    name: "Websites",
-    description: "Professionelle Websites für Ihr Unternehmen – von der Visitenkarte bis zum komplexen Webauftritt.",
-    price: "ab 800",
-    priceNote: "zzgl. MwSt.",
-    features: [
-      "Responsive Design für alle Geräte",
-      "SEO-Grundoptimierung",
-      "Content Management System",
-      "SSL-Zertifikat inklusive",
-      "DSGVO-konforme Umsetzung",
-      "Kontaktformular Integration",
-      "3 Monate Support inklusive",
-    ],
-    highlighted: false,
-    ctaText: "Projekt anfragen",
-    discountBadge: null,
-    discountActive: false,
-    order: 0,
-  },
-  {
-    id: "2",
-    name: "Webapps",
-    description: "Maßgeschneiderte Webanwendungen für Ihre individuellen Geschäftsprozesse.",
-    price: "ab 8.000",
-    priceNote: "zzgl. MwSt.",
-    features: [
-      "Individuelle Entwicklung",
-      "Benutzer-Authentifizierung",
-      "Datenbank-Integration",
-      "API-Entwicklung",
-      "Cloud-Hosting Setup",
-      "Automatisierte Tests",
-      "6 Monate Support inklusive",
-      "Skalierbare Architektur",
-    ],
-    highlighted: true,
-    ctaText: "Projekt anfragen",
-    discountBadge: null,
-    discountActive: false,
-    order: 1,
-  },
-  {
-    id: "3",
-    name: "Mobile Apps",
-    description: "Native und Cross-Platform Apps für iOS und Android.",
-    price: "ab 15.000",
-    priceNote: "zzgl. MwSt.",
-    features: [
-      "iOS & Android Entwicklung",
-      "Cross-Platform (React Native)",
-      "Push-Benachrichtigungen",
-      "Offline-Funktionalität",
-      "App Store Veröffentlichung",
-      "Analytics Integration",
-      "12 Monate Support inklusive",
-      "Regelmäßige Updates",
-    ],
-    highlighted: false,
-    ctaText: "Projekt anfragen",
-    discountBadge: null,
-    discountActive: false,
-    order: 2,
-  },
-];
+// Empty initial data
+const initialPricingTiers: PricingTier[] = [];
 
 export default function AdminPreisePage() {
   const [pricingTiers, setPricingTiers] = useState<PricingTier[]>(initialPricingTiers);

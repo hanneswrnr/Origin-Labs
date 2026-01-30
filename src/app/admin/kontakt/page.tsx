@@ -109,16 +109,16 @@ export default function AdminKontaktPage() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [form, setForm] = useState<ContactInfo>({
-    phone: "+49 152 03037738",
-    email: "info@origin-labs.de",
-    companyName: "Origin Labs",
-    street: "Karl-Marx-Weg 20",
-    city: "06242 Krumpa",
-    country: "Deutschland",
-    responseTime: "24 Stunden",
-    linkedIn: "https://linkedin.com/company/origin-labs",
-    instagram: "https://instagram.com/originlabs",
-    github: "https://github.com/origin-labs",
+    phone: "",
+    email: "",
+    companyName: "",
+    street: "",
+    city: "",
+    country: "",
+    responseTime: "",
+    linkedIn: "",
+    instagram: "",
+    github: "",
     twitter: "",
   });
 

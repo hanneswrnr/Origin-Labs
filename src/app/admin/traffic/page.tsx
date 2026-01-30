@@ -4,81 +4,30 @@ import { useState, useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import AdminDashboardWrapper from "@/components/admin/AdminDashboardWrapper";
 
-// Placeholder data for demonstration
+// Empty initial data
 const pageViewsData = [
-  { date: "Mo", views: 45 },
-  { date: "Di", views: 52 },
-  { date: "Mi", views: 38 },
-  { date: "Do", views: 65 },
-  { date: "Fr", views: 48 },
-  { date: "Sa", views: 29 },
-  { date: "So", views: 35 },
+  { date: "Mo", views: 0 },
+  { date: "Di", views: 0 },
+  { date: "Mi", views: 0 },
+  { date: "Do", views: 0 },
+  { date: "Fr", views: 0 },
+  { date: "Sa", views: 0 },
+  { date: "So", views: 0 },
 ];
 
-const topPages = [
-  { path: "/", views: 450, percentage: 35 },
-  { path: "/kontakt", views: 280, percentage: 22 },
-  { path: "/projekte", views: 195, percentage: 15 },
-  { path: "/preise", views: 165, percentage: 13 },
-  { path: "/leistungen", views: 120, percentage: 10 },
-  { path: "/ueber-uns", views: 65, percentage: 5 },
-];
+const topPages: { path: string; views: number; percentage: number }[] = [];
 
-const referrers = [
-  { source: "Google", visits: 320, color: "from-blue-500 to-blue-600", icon: "🔍" },
-  { source: "Direkt", visits: 180, color: "from-green-500 to-emerald-600", icon: "🌐" },
-  { source: "LinkedIn", visits: 95, color: "from-cyan-500 to-blue-500", icon: "💼" },
-  { source: "Instagram", visits: 45, color: "from-pink-500 to-purple-600", icon: "📸" },
-  { source: "Andere", visits: 35, color: "from-slate-400 to-slate-500", icon: "🔗" },
-];
+const referrers: { source: string; visits: number; color: string; icon: string }[] = [];
 
-const recentSubmissions = [
-  {
-    id: "1",
-    name: "Max Mustermann",
-    email: "max@example.com",
-    service: "Website",
-    budget: "2.000 - 10.000 EUR",
-    source: "Google",
-    createdAt: "2024-01-15T10:30:00",
-  },
-  {
-    id: "2",
-    name: "Anna Schmidt",
-    email: "anna@example.com",
-    service: "Webapp",
-    budget: "10.000 - 50.000 EUR",
-    source: "LinkedIn",
-    createdAt: "2024-01-14T14:15:00",
-  },
-  {
-    id: "3",
-    name: "Peter Weber",
-    email: "peter@example.com",
-    service: "Mobile App",
-    budget: "Über 50.000 EUR",
-    source: "Direkt",
-    createdAt: "2024-01-13T09:45:00",
-  },
-  {
-    id: "4",
-    name: "Lisa Müller",
-    email: "lisa@example.com",
-    service: "Website",
-    budget: "Unter 2.000 EUR",
-    source: "Google",
-    createdAt: "2024-01-12T16:20:00",
-  },
-  {
-    id: "5",
-    name: "Thomas Klein",
-    email: "thomas@example.com",
-    service: "Webapp",
-    budget: "2.000 - 10.000 EUR",
-    source: "Instagram",
-    createdAt: "2024-01-11T11:00:00",
-  },
-];
+const recentSubmissions: {
+  id: string;
+  name: string;
+  email: string;
+  service: string;
+  budget: string;
+  source: string;
+  createdAt: string;
+}[] = [];
 
 // 3D Card Component
 function Card3D({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -300,29 +249,29 @@ export default function AdminTrafficPage() {
         {[
           {
             label: "Page Views",
-            value: "1.275",
-            change: "+18%",
+            value: "0",
+            change: "-",
             positive: true,
             icon: <svg className="w-5 h-5 text-primary-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>,
           },
           {
             label: "Unique Visitors",
-            value: "843",
-            change: "+12%",
+            value: "0",
+            change: "-",
             positive: true,
             icon: <svg className="w-5 h-5 text-primary-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>,
           },
           {
             label: "Anfragen",
-            value: "12",
-            change: "+5",
+            value: "0",
+            change: "-",
             positive: true,
             icon: <svg className="w-5 h-5 text-primary-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
           },
           {
             label: "Bounce Rate",
-            value: "42%",
-            change: "-3%",
+            value: "-",
+            change: "-",
             positive: true,
             icon: <svg className="w-5 h-5 text-primary-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
           },
@@ -672,47 +621,6 @@ export default function AdminTrafficPage() {
         </Card3D>
       </div>
 
-      {/* Placeholder Notice */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        whileHover={{ scale: 1.01 }}
-        className="mt-10 p-8 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200
-                 rounded-3xl shadow-lg shadow-amber-500/10 group"
-      >
-        <div className="flex items-start gap-5">
-          <motion.div
-            animate={{ rotate: [0, 10, -10, 0] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            className="p-3 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl shadow-lg shadow-amber-500/30"
-          >
-            <svg
-              className="w-7 h-7 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </motion.div>
-          <div>
-            <h3 className="font-bold text-amber-800 text-lg">
-              Demo-Daten
-            </h3>
-            <p className="text-amber-700 mt-2 leading-relaxed">
-              Diese Seite zeigt aktuell Placeholder-Daten. Sobald die Datenbank konfiguriert ist,
-              werden hier echte Analytics-Daten angezeigt. Das Tracking wird automatisch aktiviert,
-              wenn Sie die öffentlichen Seiten auf die Datenbankanbindung umstellen.
-            </p>
-          </div>
-        </div>
-      </motion.div>
     </AdminDashboardWrapper>
   );
 }
