@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { signOut } from "next-auth/react";
 
 const navItems = [
   {
@@ -73,8 +72,8 @@ export default function AdminSidebar() {
     return pathname.startsWith(href);
   };
 
-  const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/admin/login" });
+  const handleSignOut = () => {
+    window.location.href = "/";
   };
 
   return (
