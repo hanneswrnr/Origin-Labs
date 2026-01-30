@@ -285,8 +285,8 @@ export default function ProjektePage() {
       <Header />
 
       <main className="bg-white overflow-hidden">
-        {/* Hero Section */}
-        <section className="relative min-h-[70vh] flex items-center justify-center pt-20 pb-10">
+        {/* Hero Section - Full height like homepage */}
+        <section className="relative min-h-screen flex items-center justify-center pt-20">
           {/* Animated Background */}
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-cyan/10 via-white to-white" />
@@ -295,7 +295,7 @@ export default function ProjektePage() {
             <motion.div
               className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full"
               style={{
-                background: "radial-gradient(circle, rgba(45,212,224,0.12) 0%, transparent 70%)",
+                background: "radial-gradient(circle, rgba(45,212,224,0.15) 0%, transparent 70%)",
               }}
               animate={{
                 scale: [1, 1.1, 1],
@@ -307,7 +307,7 @@ export default function ProjektePage() {
             <motion.div
               className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] rounded-full"
               style={{
-                background: "radial-gradient(circle, rgba(0,85,255,0.08) 0%, transparent 70%)",
+                background: "radial-gradient(circle, rgba(0,85,255,0.1) 0%, transparent 70%)",
               }}
               animate={{
                 scale: [1.1, 1, 1.1],
@@ -319,7 +319,7 @@ export default function ProjektePage() {
 
             {/* Grid Pattern */}
             <div
-              className="absolute inset-0 opacity-[0.015]"
+              className="absolute inset-0 opacity-[0.02]"
               style={{
                 backgroundImage: `linear-gradient(rgba(0,85,255,1) 1px, transparent 1px),
                                   linear-gradient(90deg, rgba(0,85,255,1) 1px, transparent 1px)`,
@@ -330,7 +330,7 @@ export default function ProjektePage() {
 
           {/* Content */}
           <motion.div
-            className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+            className="relative z-10 max-w-6xl mx-auto px-6 text-center"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -344,21 +344,23 @@ export default function ProjektePage() {
             >
               <span className="w-2 h-2 bg-primary-cyan rounded-full animate-pulse" />
               <span className="font-body text-sm text-slate-grey font-medium">
-                {projects.length} erfolgreiche Projekte
+                {projects.length}+ erfolgreiche Projekte
               </span>
             </motion.div>
 
             <motion.h1
-              className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-slate-grey leading-[1.1]"
+              className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 text-slate-grey leading-[1.1]"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              Unsere <span className="gradient-text">Projekte</span>
+              Unsere
+              <br />
+              <span className="gradient-text">Projekte</span>
             </motion.h1>
 
             <motion.p
-              className="font-body text-xl text-slate-grey/60 max-w-2xl mx-auto"
+              className="font-body text-xl md:text-2xl text-slate-grey/60 max-w-2xl mx-auto mb-12"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
@@ -368,27 +370,105 @@ export default function ProjektePage() {
             </motion.p>
           </motion.div>
 
-          {/* Decorative Elements */}
+          {/* Decorative Elements - More Visible */}
+          {/* Large rotating square */}
           <motion.div
-            className="absolute top-28 left-[8%] w-20 h-20 border-2 border-primary-cyan/20 rounded-2xl hidden lg:block"
-            animate={{ rotate: [0, 90, 0] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute top-28 left-[6%] w-28 h-28 border-2 border-primary-cyan/30 rounded-3xl hidden lg:block"
+            animate={{ rotate: [0, 180, 360], scale: [1, 1.05, 1] }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           />
+          {/* Gradient circle top right */}
           <motion.div
-            className="absolute bottom-20 right-[10%] w-16 h-16 border-2 border-primary-blue/15 rounded-full hidden lg:block"
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 6, repeat: Infinity }}
+            className="absolute top-32 right-[8%] w-20 h-20 bg-gradient-to-br from-primary-blue/20 to-primary-cyan/10 rounded-full blur-sm hidden md:block"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.7, 0.4] }}
+            transition={{ duration: 5, repeat: Infinity }}
           />
+          {/* Floating dots - larger and more visible */}
           <motion.div
-            className="absolute top-40 right-[15%] w-3 h-3 bg-primary-cyan/40 rounded-full"
-            animate={{ y: [0, -20, 0] }}
+            className="absolute top-48 right-[15%] w-4 h-4 bg-primary-cyan/50 rounded-full"
+            animate={{ y: [0, -40, 0], opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 4, repeat: Infinity }}
           />
           <motion.div
-            className="absolute bottom-32 left-[12%] w-4 h-4 bg-primary-blue/30 rounded-full"
-            animate={{ y: [0, 15, 0] }}
+            className="absolute top-60 left-[12%] w-3 h-3 bg-primary-blue/60 rounded-full"
+            animate={{ y: [0, 30, 0], x: [0, 15, 0] }}
             transition={{ duration: 5, repeat: Infinity, delay: 1 }}
           />
+          <motion.div
+            className="absolute bottom-40 left-[8%] w-5 h-5 bg-primary-cyan/40 rounded-full"
+            animate={{ y: [0, -25, 0], scale: [1, 1.3, 1] }}
+            transition={{ duration: 6, repeat: Infinity, delay: 0.5 }}
+          />
+          <motion.div
+            className="absolute bottom-32 right-[10%] w-4 h-4 bg-primary-blue/50 rounded-full"
+            animate={{ y: [0, 20, 0], x: [0, -10, 0] }}
+            transition={{ duration: 4.5, repeat: Infinity, delay: 2 }}
+          />
+          {/* Large ring bottom */}
+          <motion.div
+            className="absolute bottom-28 right-[6%] w-24 h-24 border-2 border-primary-blue/20 rounded-full hidden lg:block"
+            animate={{ scale: [1, 1.15, 1], rotate: [0, -90, 0] }}
+            transition={{ duration: 8, repeat: Infinity }}
+          />
+          {/* Side gradient lines */}
+          <motion.div
+            className="absolute top-1/2 left-[4%] w-1.5 h-48 bg-gradient-to-b from-transparent via-primary-cyan/40 to-transparent rounded-full hidden xl:block"
+            animate={{ opacity: [0.3, 0.7, 0.3], scaleY: [1, 1.1, 1] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          />
+          <motion.div
+            className="absolute top-1/3 right-[4%] w-1.5 h-36 bg-gradient-to-b from-transparent via-primary-blue/40 to-transparent rounded-full hidden xl:block"
+            animate={{ opacity: [0.4, 0.8, 0.4], scaleY: [1, 1.15, 1] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 1 }}
+          />
+          {/* Plus signs */}
+          <motion.div
+            className="absolute top-1/4 left-[18%] text-primary-cyan/40 hidden md:block"
+            animate={{ rotate: [0, 90, 0], scale: [1, 1.2, 1] }}
+            transition={{ duration: 8, repeat: Infinity }}
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </motion.div>
+          <motion.div
+            className="absolute bottom-1/4 right-[20%] text-primary-blue/35 hidden md:block"
+            animate={{ rotate: [0, -90, 0], scale: [1, 1.15, 1] }}
+            transition={{ duration: 7, repeat: Infinity, delay: 2 }}
+          >
+            <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </motion.div>
+
+          {/* Floating Project Icons */}
+          <motion.div
+            className="absolute bottom-1/3 left-[15%] text-primary-cyan/35 hidden lg:block"
+            animate={{ y: [0, -20, 0], rotate: [0, 15, 0] }}
+            transition={{ duration: 6, repeat: Infinity }}
+          >
+            <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </motion.div>
+          <motion.div
+            className="absolute top-1/3 right-[15%] text-primary-blue/30 hidden lg:block"
+            animate={{ y: [0, 15, 0], rotate: [0, -10, 0] }}
+            transition={{ duration: 7, repeat: Infinity, delay: 2 }}
+          >
+            <svg className="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+            </svg>
+          </motion.div>
+          <motion.div
+            className="absolute top-2/3 left-[22%] text-primary-cyan/25 hidden lg:block"
+            animate={{ y: [0, -12, 0], x: [0, 8, 0] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 1 }}
+          >
+            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </motion.div>
         </section>
 
         {/* Filter Section */}
