@@ -1,27 +1,38 @@
-import { auth } from "@/lib/auth";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export default auth((req) => {
-  const isLoggedIn = !!req.auth;
-  const isOnAdmin = req.nextUrl.pathname.startsWith("/admin");
-  const isOnLogin = req.nextUrl.pathname === "/admin/login";
-  const isApiAuth = req.nextUrl.pathname.startsWith("/api/auth");
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-  // Allow API auth routes
-  if (isApiAuth) {
-    return;
+  // Allow API auth routes to pass through
+  if (pathname.startsWith("/api/auth")) {
+    return NextResponse.next();
   }
+
+  // Check for session token (NextAuth v5 uses authjs.session-token)
+  const sessionToken =
+    request.cookies.get("authjs.session-token")?.value ||
+    request.cookies.get("__Secure-authjs.session-token")?.value ||
+    request.cookies.get("next-auth.session-token")?.value ||
+    request.cookies.get("__Secure-next-auth.session-token")?.value;
+
+  const isLoggedIn = !!sessionToken;
+  const isOnAdmin = pathname.startsWith("/admin");
+  const isOnLogin = pathname === "/admin/login";
 
   // Protect admin routes (except login)
   if (isOnAdmin && !isOnLogin && !isLoggedIn) {
-    return Response.redirect(new URL("/admin/login", req.nextUrl));
+    return NextResponse.redirect(new URL("/admin/login", request.url));
   }
 
   // Redirect to admin dashboard if already logged in and on login page
   if (isOnLogin && isLoggedIn) {
-    return Response.redirect(new URL("/admin", req.nextUrl));
+    return NextResponse.redirect(new URL("/admin", request.url));
   }
-});
+
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/auth/:path*"],
+  matcher: ["/admin/:path*"],
 };
