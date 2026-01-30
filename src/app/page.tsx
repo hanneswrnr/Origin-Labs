@@ -71,6 +71,7 @@ function GoogleReviewsSection() {
   const [overallRating, setOverallRating] = useState(5.0);
   const [totalReviews, setTotalReviews] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState<"left" | "right">("left");
   const [isLoading, setIsLoading] = useState(true);
 
   // Placeholder reviews - replace with API fetch
@@ -113,47 +114,70 @@ function GoogleReviewsSection() {
   ];
 
   useEffect(() => {
-    // Simulate fetching reviews - replace with actual API call
     const fetchReviews = async () => {
       setIsLoading(true);
       try {
-        // TODO: Replace with actual Google Places API call
-        // const response = await fetch('/api/google-reviews');
-        // const data = await response.json();
-        // setReviews(data.reviews);
-        // setOverallRating(data.rating);
-        // setTotalReviews(data.total);
+        const response = await fetch('/api/google-reviews');
 
-        // Using placeholder data
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        if (response.ok) {
+          const data = await response.json();
+          if (data.reviews && data.reviews.length > 0) {
+            setReviews(data.reviews);
+            setOverallRating(data.rating || 5.0);
+            setTotalReviews(data.total || data.reviews.length);
+          } else {
+            // Fallback to placeholder if no reviews returned
+            setReviews(placeholderReviews);
+            setOverallRating(5.0);
+            setTotalReviews(47);
+          }
+        } else {
+          // API not configured - use placeholder data
+          setReviews(placeholderReviews);
+          setOverallRating(5.0);
+          setTotalReviews(47);
+        }
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        // Fallback to placeholder data
         setReviews(placeholderReviews);
         setOverallRating(5.0);
         setTotalReviews(47);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-        setReviews(placeholderReviews);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchReviews();
-
-    // Poll for new reviews every 5 minutes
-    const interval = setInterval(fetchReviews, 5 * 60 * 1000);
-    return () => clearInterval(interval);
+    // No polling needed - Next.js handles server-side caching (4 days)
   }, []);
 
   // Auto-rotate reviews
   useEffect(() => {
     if (reviews.length === 0) return;
     const interval = setInterval(() => {
+      setSlideDirection("left");
       setActiveIndex((prev) => (prev + 1) % reviews.length);
     }, 6000);
     return () => clearInterval(interval);
   }, [reviews.length]);
 
   const displayedReviews = reviews.length > 0 ? reviews : placeholderReviews;
+
+  const goToNext = () => {
+    setSlideDirection("left");
+    setActiveIndex((prev) => (prev + 1) % displayedReviews.length);
+  };
+
+  const goToPrev = () => {
+    setSlideDirection("right");
+    setActiveIndex((prev) => (prev - 1 + displayedReviews.length) % displayedReviews.length);
+  };
+
+  const goToIndex = (index: number) => {
+    setSlideDirection(index > activeIndex ? "left" : "right");
+    setActiveIndex(index);
+  };
 
   return (
     <section id="reviews" className="py-32 bg-white relative overflow-hidden">
@@ -231,42 +255,132 @@ function GoogleReviewsSection() {
           </div>
         </motion.div>
 
-        {/* Reviews Carousel */}
+        {/* Reviews Carousel - Clean Slide Design */}
         <div className="relative">
-          <div className="overflow-hidden">
-            <motion.div
-              className="flex gap-6"
-              animate={{ x: `-${activeIndex * (100 / 3)}%` }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {displayedReviews.map((review, index) => (
-                <motion.div
-                  key={`${review.author_name}-${index}`}
-                  className="min-w-[calc(33.333%-16px)] max-w-[calc(33.333%-16px)] hidden lg:block"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <ReviewCard review={review} />
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
+          {/* Navigation Arrows */}
+          <motion.button
+            onClick={goToPrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-slate-grey/5 flex items-center justify-center text-slate-grey/50 hover:text-primary-blue hover:bg-white hover:shadow-xl transition-all hidden md:flex"
+            whileHover={{ scale: 1.05, x: -2 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Vorherige Bewertung"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </motion.button>
 
-          {/* Mobile/Tablet: Single Review */}
-          <div className="lg:hidden">
-            <AnimatePresence mode="wait">
+          <motion.button
+            onClick={goToNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-slate-grey/5 flex items-center justify-center text-slate-grey/50 hover:text-primary-blue hover:bg-white hover:shadow-xl transition-all hidden md:flex"
+            whileHover={{ scale: 1.05, x: 2 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Nächste Bewertung"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.button>
+
+          {/* Desktop: 3 Cards with Clean Slide Animation */}
+          <div className="hidden lg:block px-20 overflow-hidden">
+            <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
                 key={activeIndex}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.3 }}
+                className="flex justify-center items-center gap-8"
+                initial={{ x: slideDirection === "left" ? 300 : -300, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: slideDirection === "left" ? -300 : 300, opacity: 0 }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.32, 0.72, 0, 1],
+                }}
+              >
+                {[-1, 0, 1].map((offset) => {
+                  const index = (activeIndex + offset + displayedReviews.length) % displayedReviews.length;
+                  const isCenter = offset === 0;
+                  return (
+                    <motion.div
+                      key={`card-${offset}`}
+                      className="w-full max-w-md flex-shrink-0"
+                      style={{
+                        scale: isCenter ? 1 : 0.9,
+                        opacity: isCenter ? 1 : 0.4,
+                        y: isCenter ? 0 : 12,
+                        zIndex: isCenter ? 10 : 0,
+                        cursor: isCenter ? "default" : "pointer",
+                      }}
+                      onClick={() => !isCenter && (offset === -1 ? goToPrev() : goToNext())}
+                    >
+                      <ReviewCard review={displayedReviews[index]} />
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Tablet: Clean Slide */}
+          <div className="hidden md:block lg:hidden px-20 overflow-hidden">
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.div
+                key={activeIndex}
+                className="max-w-lg mx-auto"
+                initial={{ x: slideDirection === "left" ? 200 : -200, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: slideDirection === "left" ? -200 : 200, opacity: 0 }}
+                transition={{
+                  duration: 0.4,
+                  ease: [0.32, 0.72, 0, 1],
+                }}
               >
                 <ReviewCard review={displayedReviews[activeIndex]} />
               </motion.div>
             </AnimatePresence>
+          </div>
+
+          {/* Mobile: Smooth Slide */}
+          <div className="md:hidden overflow-hidden">
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.div
+                key={activeIndex}
+                initial={{ x: slideDirection === "left" ? 100 : -100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: slideDirection === "left" ? -100 : 100, opacity: 0 }}
+                transition={{
+                  duration: 0.4,
+                  ease: [0.32, 0.72, 0, 1],
+                }}
+              >
+                <ReviewCard review={displayedReviews[activeIndex]} />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Mobile Navigation Buttons */}
+            <div className="flex justify-center gap-4 mt-6">
+              <motion.button
+                onClick={goToPrev}
+                className="w-11 h-11 bg-white/90 backdrop-blur-sm rounded-full shadow-md border border-slate-grey/5 flex items-center justify-center text-slate-grey/50"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Vorherige"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </motion.button>
+              <motion.button
+                onClick={goToNext}
+                className="w-11 h-11 bg-white/90 backdrop-blur-sm rounded-full shadow-md border border-slate-grey/5 flex items-center justify-center text-slate-grey/50"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Nächste"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </motion.button>
+            </div>
           </div>
 
           {/* Navigation Dots */}
@@ -274,11 +388,11 @@ function GoogleReviewsSection() {
             {displayedReviews.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setActiveIndex(index)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                onClick={() => goToIndex(index)}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
                   index === activeIndex
                     ? "bg-primary-blue w-8"
-                    : "bg-slate-grey/20 hover:bg-slate-grey/40"
+                    : "bg-slate-grey/20 hover:bg-slate-grey/40 w-2.5"
                 }`}
                 aria-label={`Bewertung ${index + 1} anzeigen`}
               />
@@ -295,7 +409,7 @@ function GoogleReviewsSection() {
           transition={{ delay: 0.4 }}
         >
           <motion.a
-            href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK"
+            href="https://search.google.com/local/reviews?placeid=ChIJ0-7zx3GFpkcRI3L7tC2kRtA"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:text-primary-blue hover:shadow-lg hover:shadow-primary-cyan/10 transition-all"
@@ -560,6 +674,115 @@ export default function Home() {
                 />
               </motion.div>
             </motion.div>
+          </motion.div>
+
+          {/* Decorative Elements - More Visible */}
+          {/* Large rotating square top-left */}
+          <motion.div
+            className="absolute top-24 left-[5%] w-32 h-32 border-2 border-primary-cyan/25 rounded-3xl hidden lg:block"
+            animate={{ rotate: [0, 180, 360], scale: [1, 1.08, 1] }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          />
+          {/* Gradient blob top-right */}
+          <motion.div
+            className="absolute top-28 right-[6%] w-24 h-24 bg-gradient-to-br from-primary-blue/25 to-primary-cyan/15 rounded-full blur-sm hidden md:block"
+            animate={{ scale: [1, 1.25, 1], opacity: [0.4, 0.7, 0.4] }}
+            transition={{ duration: 6, repeat: Infinity }}
+          />
+          {/* Floating dots - larger and more visible */}
+          <motion.div
+            className="absolute top-40 right-[12%] w-5 h-5 bg-primary-cyan/50 rounded-full"
+            animate={{ y: [0, -35, 0], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          />
+          <motion.div
+            className="absolute top-52 left-[10%] w-4 h-4 bg-primary-blue/55 rounded-full"
+            animate={{ y: [0, 25, 0], x: [0, 12, 0] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 1 }}
+          />
+          <motion.div
+            className="absolute bottom-36 left-[8%] w-6 h-6 bg-primary-cyan/45 rounded-full hidden md:block"
+            animate={{ y: [0, -20, 0], scale: [1, 1.3, 1] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
+          />
+          <motion.div
+            className="absolute bottom-28 right-[10%] w-4 h-4 bg-primary-blue/50 rounded-full hidden md:block"
+            animate={{ y: [0, 18, 0], x: [0, -8, 0] }}
+            transition={{ duration: 4, repeat: Infinity, delay: 2 }}
+          />
+          {/* Large ring bottom-right */}
+          <motion.div
+            className="absolute bottom-24 right-[5%] w-28 h-28 border-2 border-primary-blue/20 rounded-full hidden lg:block"
+            animate={{ scale: [1, 1.12, 1], rotate: [0, -120, 0] }}
+            transition={{ duration: 10, repeat: Infinity }}
+          />
+          {/* Side gradient lines - thicker */}
+          <motion.div
+            className="absolute top-1/2 left-[3%] w-2 h-52 bg-gradient-to-b from-transparent via-primary-cyan/35 to-transparent rounded-full hidden xl:block"
+            animate={{ opacity: [0.25, 0.6, 0.25], scaleY: [1, 1.1, 1] }}
+            transition={{ duration: 5, repeat: Infinity }}
+          />
+          <motion.div
+            className="absolute top-1/3 right-[3%] w-2 h-40 bg-gradient-to-b from-transparent via-primary-blue/35 to-transparent rounded-full hidden xl:block"
+            animate={{ opacity: [0.3, 0.65, 0.3], scaleY: [1, 1.12, 1] }}
+            transition={{ duration: 6, repeat: Infinity, delay: 2 }}
+          />
+          {/* Plus signs */}
+          <motion.div
+            className="absolute top-1/3 left-[15%] text-primary-cyan/35 hidden md:block"
+            animate={{ rotate: [0, 90, 0], scale: [1, 1.2, 1] }}
+            transition={{ duration: 8, repeat: Infinity }}
+          >
+            <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </motion.div>
+          <motion.div
+            className="absolute bottom-1/3 right-[18%] text-primary-blue/30 hidden md:block"
+            animate={{ rotate: [0, -90, 0], scale: [1, 1.15, 1] }}
+            transition={{ duration: 7, repeat: Infinity, delay: 2 }}
+          >
+            <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </motion.div>
+
+          {/* Floating Tech Icons - larger and more visible */}
+          <motion.div
+            className="absolute bottom-1/4 left-[12%] text-primary-cyan/30 hidden lg:block"
+            animate={{ y: [0, -18, 0], rotate: [0, 10, 0] }}
+            transition={{ duration: 7, repeat: Infinity }}
+          >
+            <svg className="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </motion.div>
+          <motion.div
+            className="absolute top-1/4 right-[10%] text-primary-blue/25 hidden lg:block"
+            animate={{ y: [0, 15, 0], rotate: [0, -8, 0] }}
+            transition={{ duration: 8, repeat: Infinity, delay: 1 }}
+          >
+            <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </motion.div>
+          <motion.div
+            className="absolute bottom-1/3 right-[14%] text-primary-cyan/22 hidden lg:block"
+            animate={{ y: [0, -12, 0], x: [0, 8, 0] }}
+            transition={{ duration: 6, repeat: Infinity, delay: 3 }}
+          >
+            <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+          </motion.div>
+          <motion.div
+            className="absolute top-2/3 left-[18%] text-primary-blue/20 hidden lg:block"
+            animate={{ y: [0, 10, 0], rotate: [0, -5, 0] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 1.5 }}
+          >
+            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+            </svg>
           </motion.div>
         </section>
 
@@ -1220,7 +1443,7 @@ export default function Home() {
                 transition={{ delay: 0.2 }}
               >
                 <motion.a
-                  href="/contact"
+                  href="/kontakt"
                   className="group relative px-10 py-5 gradient-primary text-white font-heading font-semibold rounded-full overflow-hidden shadow-xl shadow-primary-blue/30"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
@@ -1253,13 +1476,7 @@ export default function Home() {
               </motion.div>
 
               {/* Contact Info Cards */}
-              <motion.div
-                className="grid grid-cols-1 sm:grid-cols-3 gap-6"
-                variants={staggerContainer}
-                initial="initial"
-                whileInView="animate"
-                viewport={{ once: true }}
-              >
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 {[
                   {
                     icon: (
@@ -1290,27 +1507,22 @@ export default function Home() {
                     info: "Deutschland",
                   },
                 ].map((item) => (
-                  <motion.div
+                  <div
                     key={item.title}
-                    className="group bg-white p-8 rounded-3xl border border-slate-grey/5 hover:border-primary-cyan/20 hover:shadow-xl hover:shadow-primary-cyan/5 transition-all duration-500"
-                    variants={fadeInUp}
-                    whileHover={{ y: -5, scale: 1.02 }}
+                    className="group bg-white p-8 rounded-3xl border border-slate-grey/5 hover:border-primary-cyan/20 hover:shadow-xl hover:shadow-primary-cyan/5 hover:-translate-y-1 transition-all duration-300"
                   >
-                    <motion.div
-                      className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-5 text-white shadow-lg shadow-primary-blue/20"
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                    >
+                    <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-5 text-white shadow-lg shadow-primary-blue/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                       {item.icon}
-                    </motion.div>
-                    <h4 className="font-heading font-semibold text-lg text-slate-grey mb-2">
+                    </div>
+                    <h4 className="font-heading font-semibold text-lg text-slate-grey mb-2 text-center">
                       {item.title}
                     </h4>
-                    <p className="font-body text-slate-grey/60">
+                    <p className="font-body text-slate-grey/60 text-center">
                       {item.info}
                     </p>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </section>

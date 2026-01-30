@@ -1,30 +1,87 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
+// Track if header has animated (persists across page navigations)
+let hasHeaderAnimated = false;
+
 const navItems = [
-  { label: "Home", href: "#hero" },
+  { label: "Home", href: "#hero", homeHref: "/" },
   { label: "Über uns", href: "#about" },
   { label: "Leistungen", href: "#services" },
   { label: "Preise", href: "#pricing" },
-  { label: "Projekte", href: "#projects" },
-  { label: "Kontakt", href: "#contact" },
+  { label: "Projekte", href: "/projekte", isPage: true },
+  { label: "Kontakt", href: "/kontakt", isPage: true },
 ];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const [shouldAnimate, setShouldAnimate] = useState(!hasHeaderAnimated);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const navRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLElement | null)[]>([]);
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHomePage = pathname === "/";
+
+  // Mark header as animated after first render
+  useEffect(() => {
+    if (!hasHeaderAnimated) {
+      hasHeaderAnimated = true;
+    }
+  }, []);
+
+  // Close mobile menu on page navigation
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Calculate active indicator position
+  useEffect(() => {
+    const updateIndicator = () => {
+      const activeIndex = navItems.findIndex((item) => {
+        if (item.isPage) return pathname === item.href;
+        return isHomePage && activeSection === item.href.slice(1);
+      });
+
+      if (activeIndex !== -1 && navRef.current && itemRefs.current[activeIndex]) {
+        const navRect = navRef.current.getBoundingClientRect();
+        const activeRect = itemRefs.current[activeIndex]!.getBoundingClientRect();
+        setIndicatorStyle({
+          left: activeRect.left - navRect.left,
+          width: activeRect.width,
+        });
+      }
+    };
+
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(() => {
+      updateIndicator();
+    });
+
+    // Also update on window resize
+    window.addEventListener("resize", updateIndicator);
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [pathname, activeSection, isHomePage]);
 
   useEffect(() => {
+    // Only detect active sections on homepage
+    if (!isHomePage) {
+      setActiveSection("");
+      return;
+    }
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
       // Detect active section
-      const sections = navItems.map((item) => item.href.slice(1));
+      const sections = navItems.filter(item => !item.isPage).map((item) => item.href.slice(1));
       for (const section of [...sections].reverse()) {
         const element = document.getElementById(section);
         if (element) {
@@ -43,11 +100,24 @@ export default function Header() {
     };
 
     window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial check
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage]);
 
-  const scrollToSection = (href: string) => {
+  const handleNavClick = (href: string, homeHref?: string) => {
     setIsMobileMenuOpen(false);
+
+    // If we're not on homepage and it's an anchor link, navigate to homepage first
+    if (!isHomePage && href.startsWith("#")) {
+      if (homeHref) {
+        router.push(homeHref);
+      } else {
+        router.push("/" + href);
+      }
+      return;
+    }
+
+    // On homepage, scroll to section
     if (href === "#hero") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
@@ -63,7 +133,7 @@ export default function Header() {
       {/* Floating Oval Header */}
       <motion.header
         className="fixed top-6 left-1/2 -translate-x-1/2 z-50"
-        initial={{ y: -100, opacity: 0 }}
+        initial={shouldAnimate ? { y: -100, opacity: 0 } : false}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
@@ -96,35 +166,79 @@ export default function Header() {
           <div className="hidden lg:block w-px h-6 bg-gradient-to-b from-transparent via-slate-grey/20 to-transparent mx-2" />
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-0.5">
-            {navItems.map((item) => {
-              const isActive = activeSection === item.href.slice(1);
+          <div ref={navRef} className="hidden lg:flex items-center gap-0.5 relative">
+            {/* Sliding Active Indicator */}
+            {indicatorStyle.width > 0 && (
+              <motion.div
+                className="absolute top-0 h-full bg-gradient-to-r from-primary-cyan/20 to-primary-blue/20 rounded-full pointer-events-none border border-primary-cyan/10"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{
+                  left: indicatorStyle.left,
+                  width: indicatorStyle.width,
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{
+                  left: { type: "spring", stiffness: 300, damping: 25 },
+                  width: { type: "spring", stiffness: 300, damping: 25 },
+                  opacity: { duration: 0.2 },
+                  scale: { duration: 0.2 },
+                }}
+              />
+            )}
+
+            {navItems.map((item, index) => {
+              // Active state: check page route or section anchor on homepage
+              const isPageActive = item.isPage && pathname === item.href;
+              const isSectionActive = !item.isPage && isHomePage && activeSection === item.href.slice(1);
+              const isActive = isPageActive || isSectionActive;
+
+              if (item.isPage) {
+                return (
+                  <Link key={item.href} href={item.href}>
+                    <motion.span
+                      ref={(el) => { itemRefs.current[index] = el; }}
+                      className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden cursor-pointer block"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <motion.span
+                        className="absolute inset-0 bg-slate-grey/5 rounded-full"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: isActive ? 0 : 1 }}
+                        transition={{ duration: 0.2 }}
+                      />
+                      <span className={`relative z-10 transition-colors duration-300 ${
+                        isActive
+                          ? "text-primary-blue font-medium"
+                          : "text-slate-grey/70 hover:text-slate-grey"
+                      }`}>
+                        {item.label}
+                      </span>
+                    </motion.span>
+                  </Link>
+                );
+              }
+
               return (
                 <motion.button
                   key={item.href}
-                  onClick={() => scrollToSection(item.href)}
+                  ref={(el) => { itemRefs.current[index] = el; }}
+                  onClick={() => handleNavClick(item.href, item.homeHref)}
                   className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  {/* Active Background */}
-                  {isActive && (
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-primary-cyan/15 to-primary-blue/15 rounded-full"
-                      layoutId="activeNavBg"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
-                  )}
-
                   {/* Hover Background */}
                   <motion.div
-                    className="absolute inset-0 bg-slate-grey/5 rounded-full opacity-0"
-                    whileHover={{ opacity: 1 }}
+                    className="absolute inset-0 bg-slate-grey/5 rounded-full"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: isActive ? 0 : 1 }}
                     transition={{ duration: 0.2 }}
                   />
 
                   <span
-                    className={`relative z-10 transition-colors duration-200 ${
+                    className={`relative z-10 transition-colors duration-300 ${
                       isActive
                         ? "text-primary-blue font-medium"
                         : "text-slate-grey/70 hover:text-slate-grey"
@@ -132,48 +246,38 @@ export default function Header() {
                   >
                     {item.label}
                   </span>
-
-                  {/* Active Indicator Dot */}
-                  {isActive && (
-                    <motion.div
-                      className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary-cyan rounded-full"
-                      layoutId="activeNavDot"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
-                  )}
                 </motion.button>
               );
             })}
           </div>
 
           {/* CTA Button */}
-          <motion.button
-            onClick={() => scrollToSection("#contact")}
-            className="hidden lg:flex items-center gap-2 ml-2 px-5 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group"
-            whileHover={{ scale: 1.03, y: -1 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            {/* Shimmer Effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
-            />
-            <span className="relative z-10">Projekt starten</span>
-            <motion.svg
-              className="w-4 h-4 relative z-10"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              initial={{ x: 0 }}
-              whileHover={{ x: 3 }}
+          <Link href="/kontakt">
+            <motion.span
+              className="hidden lg:flex items-center gap-2 ml-2 px-5 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group cursor-pointer"
+              whileHover={{ scale: 1.03, y: -1 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              {/* Shimmer Effect */}
+              <motion.span
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
               />
-            </motion.svg>
-          </motion.button>
+              <span className="relative z-10">Projekt starten</span>
+              <svg
+                className="w-4 h-4 relative z-10"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </motion.span>
+          </Link>
 
           {/* Mobile Menu Button */}
           <motion.button
@@ -237,11 +341,62 @@ export default function Header() {
                 {/* Navigation Items */}
                 <div className="flex flex-col gap-1">
                   {navItems.map((item, index) => {
-                    const isActive = activeSection === item.href.slice(1);
+                    // Active state: check page route or section anchor on homepage
+                    const isPageActive = item.isPage && pathname === item.href;
+                    const isSectionActive = !item.isPage && isHomePage && activeSection === item.href.slice(1);
+                    const isActive = isPageActive || isSectionActive;
+
+                    if (item.isPage) {
+                      return (
+                        <Link key={item.href} href={item.href}>
+                          <motion.span
+                            className={`relative flex items-center justify-between font-body text-lg py-3.5 px-5 rounded-2xl text-left transition-all cursor-pointer ${
+                              isActive
+                                ? "bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10 text-primary-blue"
+                                : "text-slate-grey hover:bg-slate-grey/5"
+                            }`}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.04 + 0.1 }}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <span className="flex items-center gap-3">
+                              <motion.span
+                                className="w-1.5 h-1.5 rounded-full"
+                                initial={false}
+                                animate={{
+                                  scale: isActive ? 1 : 0,
+                                  backgroundColor: isActive ? "#2DD4E0" : "transparent",
+                                }}
+                                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                              />
+                              {item.label}
+                            </span>
+                            <motion.svg
+                              className="w-5 h-5 text-primary-blue"
+                              initial={false}
+                              animate={{ opacity: isActive ? 1 : 0 }}
+                              transition={{ duration: 0.2 }}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 5l7 7-7 7"
+                              />
+                            </motion.svg>
+                          </motion.span>
+                        </Link>
+                      );
+                    }
+
                     return (
                       <motion.button
                         key={item.href}
-                        onClick={() => scrollToSection(item.href)}
+                        onClick={() => handleNavClick(item.href, item.homeHref)}
                         className={`relative flex items-center justify-between font-body text-lg py-3.5 px-5 rounded-2xl text-left transition-all ${
                           isActive
                             ? "bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10 text-primary-blue"
@@ -252,18 +407,22 @@ export default function Header() {
                         transition={{ delay: index * 0.04 + 0.1 }}
                       >
                         <span className="flex items-center gap-3">
-                          {isActive && (
-                            <motion.span
-                              className="w-1.5 h-1.5 bg-primary-cyan rounded-full"
-                              layoutId="mobileActiveDot"
-                            />
-                          )}
+                          <motion.span
+                            className="w-1.5 h-1.5 rounded-full"
+                            initial={false}
+                            animate={{
+                              scale: isActive ? 1 : 0,
+                              backgroundColor: isActive ? "#2DD4E0" : "transparent",
+                            }}
+                            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                          />
                           {item.label}
                         </span>
                         <motion.svg
-                          className={`w-5 h-5 transition-all ${
-                            isActive ? "opacity-100 text-primary-blue" : "opacity-0"
-                          }`}
+                          className="w-5 h-5 text-primary-blue"
+                          initial={false}
+                          animate={{ opacity: isActive ? 1 : 0 }}
+                          transition={{ duration: 0.2 }}
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -287,28 +446,25 @@ export default function Header() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <button
-                    onClick={() => scrollToSection("#contact")}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-primary text-white font-heading font-semibold rounded-2xl shadow-lg shadow-primary-blue/25 relative overflow-hidden group"
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
-                    />
-                    <span className="relative z-10">Projekt starten</span>
-                    <svg
-                      className="w-5 h-5 relative z-10"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </button>
+                  <Link href="/kontakt" onClick={() => setIsMobileMenuOpen(false)}>
+                    <span className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-primary text-white font-heading font-semibold rounded-2xl shadow-lg shadow-primary-blue/25 relative overflow-hidden group">
+                      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                      <span className="relative z-10">Projekt starten</span>
+                      <svg
+                        className="w-5 h-5 relative z-10"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </span>
+                  </Link>
                 </motion.div>
               </div>
             </motion.div>
