@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background">
       <div className="flex items-center gap-2">
         {[0, 1, 2].map((i) => (
           <motion.div

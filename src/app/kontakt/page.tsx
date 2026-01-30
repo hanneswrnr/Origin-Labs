@@ -63,7 +63,7 @@ function CustomSelect({ name, value, onChange, options, placeholder, required }:
         onClick={() => setIsOpen(!isOpen)}
         className={`w-full px-4 py-3.5 bg-slate-grey/[0.03] border rounded-xl font-body text-left flex items-center justify-between transition-all duration-300 cursor-pointer ${
           isOpen
-            ? "border-primary-cyan bg-white shadow-lg shadow-primary-cyan/10"
+            ? "border-primary-cyan bg-card-bg shadow-lg shadow-primary-cyan/10"
             : "border-slate-grey/10 hover:border-slate-grey/20"
         }`}
         whileTap={{ scale: 0.995 }}
@@ -91,7 +91,7 @@ function CustomSelect({ name, value, onChange, options, placeholder, required }:
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute z-50 w-full mt-2 bg-white rounded-xl border border-slate-grey/10 shadow-2xl shadow-slate-grey/15 overflow-hidden"
+            className="absolute z-50 w-full mt-2 bg-card-bg rounded-xl border border-divider shadow-2xl shadow-slate-grey/15 overflow-hidden"
           >
             {/* Gradient accent line */}
             <div className="h-0.5 bg-gradient-to-r from-primary-cyan to-primary-blue" />
@@ -564,7 +564,7 @@ export default function ContactPage() {
                                     required
                                     value={formData.name}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-white focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300"
+                                    className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-card-bg focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300"
                                     placeholder="Max Mustermann"
                                   />
                                   <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary-cyan to-primary-blue opacity-0 group-focus-within:opacity-100 -z-10 blur-xl transition-opacity duration-300" />
@@ -580,7 +580,7 @@ export default function ContactPage() {
                                   required
                                   value={formData.email}
                                   onChange={handleChange}
-                                  className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-white focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300"
+                                  className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-card-bg focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300"
                                   placeholder="max@beispiel.de"
                                 />
                               </div>
@@ -597,7 +597,7 @@ export default function ContactPage() {
                                   name="company"
                                   value={formData.company}
                                   onChange={handleChange}
-                                  className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-white focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300"
+                                  className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-card-bg focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300"
                                   placeholder="Firma GmbH"
                                 />
                               </div>
@@ -610,7 +610,7 @@ export default function ContactPage() {
                                   name="phone"
                                   value={formData.phone}
                                   onChange={handleChange}
-                                  className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-white focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300"
+                                  className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-card-bg focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300"
                                   placeholder="+49 123 456789"
                                 />
                               </div>
@@ -656,7 +656,7 @@ export default function ContactPage() {
                                 rows={5}
                                 value={formData.message}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-white focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300 resize-none"
+                                className="w-full px-4 py-3.5 bg-slate-grey/[0.03] border border-slate-grey/10 rounded-xl font-body text-slate-grey placeholder:text-slate-grey/40 focus:outline-none focus:border-primary-cyan focus:bg-card-bg focus:shadow-lg focus:shadow-primary-cyan/10 transition-all duration-300 resize-none"
                                 placeholder="Beschreiben Sie Ihr Projekt..."
                               />
                             </div>
