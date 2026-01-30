@@ -1057,7 +1057,7 @@ export default function Home() {
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-slate-grey text-white font-heading font-semibold rounded-full hover:bg-slate-grey/90 transition-colors shadow-lg shadow-slate-grey/20"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 font-heading font-semibold rounded-full hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors shadow-lg shadow-gray-800/20 dark:shadow-gray-200/20"
                 >
                   Alle Leistungen ansehen
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

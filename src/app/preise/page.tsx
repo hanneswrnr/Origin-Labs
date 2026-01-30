@@ -245,7 +245,7 @@ function PricingCard({ tier, index }: { tier: PricingTier; index: number }) {
               href="/kontakt"
               className={`relative block w-full py-4 px-6 rounded-xl font-heading font-semibold text-center mt-10 overflow-hidden group/btn ${
                 tier.highlighted
-                  ? "bg-white text-slate-grey"
+                  ? "bg-white text-gray-800"
                   : "bg-gradient-to-r from-primary-cyan to-primary-blue text-white shadow-lg shadow-primary-blue/30"
               }`}
               whileHover={{ scale: 1.03 }}

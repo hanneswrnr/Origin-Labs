@@ -857,7 +857,7 @@ export default function ContactPage() {
         </section>
 
         {/* FAQ Section - Modern Accordion */}
-        <section className="py-24 bg-gradient-to-b from-white via-off-white to-white relative overflow-hidden">
+        <section className="py-24 bg-gradient-to-b from-background via-off-white to-background relative overflow-hidden">
           {/* Background decoration */}
           <div className="absolute inset-0">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary-cyan/5 via-transparent to-primary-blue/5 rounded-full blur-3xl" />

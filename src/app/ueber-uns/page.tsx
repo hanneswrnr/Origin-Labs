@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const stats = [
   { number: "50+", label: "Projekte", suffix: "" },
@@ -136,6 +137,9 @@ const technologies = [
 ];
 
 export default function UeberUnsPage() {
+  const { theme, isHydrated } = useTheme();
+  const logoSrc = isHydrated && theme === "dark" ? "/logo-full-dark.png" : "/logo-full.png";
+
   return (
     <>
       <Header />
@@ -425,7 +429,7 @@ export default function UeberUnsPage() {
                     <div className="flex justify-center mb-8">
                       <div className="relative w-64 h-20">
                         <Image
-                          src="/logo-full.png"
+                          src={logoSrc}
                           alt="Origin Labs Logo"
                           fill
                           className="object-contain"

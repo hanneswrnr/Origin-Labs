@@ -487,7 +487,7 @@ export default function ProjektePage() {
                   className={`relative px-6 py-3 font-body text-sm font-medium rounded-full transition-all duration-300 ${
                     activeCategory === category.id
                       ? "text-white"
-                      : "text-slate-grey/70 hover:text-slate-grey bg-slate-grey/5 hover:bg-slate-grey/10"
+                      : "text-foreground/70 hover:text-foreground bg-foreground/5 hover:bg-foreground/10"
                   }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -504,7 +504,7 @@ export default function ProjektePage() {
                     <span className={`px-2 py-0.5 rounded-full text-xs ${
                       activeCategory === category.id
                         ? "bg-white/20"
-                        : "bg-slate-grey/10"
+                        : "bg-foreground/10"
                     }`}>
                       {category.count}
                     </span>
@@ -549,7 +549,7 @@ export default function ProjektePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 bg-gradient-to-b from-white via-off-white to-white relative overflow-hidden">
+        <section className="py-32 bg-gradient-to-b from-background via-off-white to-background relative overflow-hidden">
           {/* Background */}
           <div className="absolute inset-0">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-primary-cyan/8 to-transparent rounded-full blur-3xl" />
