@@ -4,84 +4,143 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import AdminDashboardWrapper from "@/components/admin/AdminDashboardWrapper";
 
-// Stat Card Component
+// Animated Counter Component
+function AnimatedValue({ value }: { value: string }) {
+  return (
+    <motion.span
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
+      className="text-4xl font-bold bg-gradient-to-r from-slate-grey to-slate-grey/80 bg-clip-text text-transparent font-montserrat"
+    >
+      {value}
+    </motion.span>
+  );
+}
+
+// Modern Stat Card Component
 function StatCard({
   title,
   value,
   change,
   icon,
-  color,
+  gradient,
+  delay = 0,
 }: {
   title: string;
   value: string;
   change?: string;
   icon: React.ReactNode;
-  color: string;
+  gradient: string;
+  delay?: number;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4 }}
-      className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-slate-grey/10
-                shadow-lg shadow-slate-grey/5 hover:shadow-xl transition-all duration-300"
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8, scale: 1.02 }}
+      className="group relative bg-white/70 backdrop-blur-2xl rounded-3xl p-6 border border-white/50
+                overflow-hidden shadow-xl shadow-slate-grey/5 hover:shadow-2xl hover:shadow-primary-cyan/10
+                transition-all duration-500"
     >
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-slate-grey/60 text-sm font-medium">{title}</p>
-          <h3 className="text-3xl font-bold text-slate-grey mt-2 font-montserrat">
-            {value}
-          </h3>
+      {/* Gradient Orb Background */}
+      <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full ${gradient} opacity-20
+                      blur-2xl group-hover:opacity-40 group-hover:scale-150 transition-all duration-700`} />
+
+      {/* Shimmer Effect */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent
+                       -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+      </div>
+
+      <div className="relative z-10">
+        <div className="flex items-start justify-between mb-4">
+          <motion.div
+            className={`p-3 rounded-2xl ${gradient} shadow-lg`}
+            whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+            transition={{ duration: 0.5 }}
+          >
+            {icon}
+          </motion.div>
           {change && (
-            <p className="text-sm mt-2 text-green-500 font-medium">{change}</p>
+            <motion.span
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: delay + 0.3 }}
+              className="px-3 py-1.5 text-xs font-semibold bg-green-100 text-green-600 rounded-full
+                        flex items-center gap-1"
+            >
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
+              {change}
+            </motion.span>
           )}
         </div>
-        <div className={`p-3 rounded-xl ${color}`}>{icon}</div>
+
+        <AnimatedValue value={value} />
+        <p className="text-slate-grey/60 text-sm font-medium mt-2">{title}</p>
       </div>
     </motion.div>
   );
 }
 
-// Quick Action Button
+// Modern Quick Action Button
 function QuickAction({
   href,
   icon,
   label,
   description,
+  gradient,
+  delay = 0,
 }: {
   href: string;
   icon: React.ReactNode;
   label: string;
   description: string;
+  gradient: string;
+  delay?: number;
 }) {
   return (
     <Link href={href}>
       <motion.div
-        whileHover={{ scale: 1.02 }}
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={{ x: 8, scale: 1.01 }}
         whileTap={{ scale: 0.98 }}
-        className="flex items-center gap-4 p-4 bg-white/60 hover:bg-white/80 backdrop-blur-xl
-                  rounded-xl border border-slate-grey/10 transition-all duration-200 cursor-pointer"
+        className="group flex items-center gap-4 p-5 bg-white/60 hover:bg-white/90 backdrop-blur-xl
+                  rounded-2xl border border-white/50 hover:border-primary-cyan/30
+                  shadow-lg shadow-slate-grey/5 hover:shadow-xl hover:shadow-primary-cyan/10
+                  transition-all duration-300 cursor-pointer relative overflow-hidden"
       >
-        <div className="p-3 bg-gradient-to-br from-primary-cyan/10 to-primary-blue/10 rounded-xl">
+        {/* Hover Gradient Line */}
+        <div className={`absolute left-0 top-0 bottom-0 w-1 ${gradient} opacity-0
+                        group-hover:opacity-100 transition-opacity duration-300`} />
+
+        <motion.div
+          className={`p-3.5 ${gradient} rounded-xl shadow-lg group-hover:shadow-xl transition-shadow`}
+          whileHover={{ rotate: 5 }}
+        >
           {icon}
-        </div>
-        <div>
-          <h4 className="font-semibold text-slate-grey">{label}</h4>
+        </motion.div>
+        <div className="flex-1">
+          <h4 className="font-semibold text-slate-grey group-hover:text-primary-blue transition-colors">
+            {label}
+          </h4>
           <p className="text-sm text-slate-grey/60">{description}</p>
         </div>
-        <svg
-          className="w-5 h-5 text-slate-grey/40 ml-auto"
+        <motion.svg
+          className="w-5 h-5 text-slate-grey/30 group-hover:text-primary-cyan transition-colors"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
+          animate={{ x: [0, 5, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </motion.svg>
       </motion.div>
     </Link>
   );
@@ -90,106 +149,81 @@ function QuickAction({
 export default function AdminDashboard() {
   return (
     <AdminDashboardWrapper>
-      {/* Header */}
-      <div className="mb-8">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold text-slate-grey font-montserrat"
-        >
-          Dashboard
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="text-slate-grey/60 mt-2"
-        >
-          Willkommen zurück! Hier ist eine Übersicht Ihrer Website.
-        </motion.p>
-      </div>
+      {/* Modern Header with Gradient */}
+      <motion.div
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="mb-10 relative"
+      >
+        <div className="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-br from-primary-cyan/30 to-primary-blue/30
+                       rounded-full blur-3xl opacity-50" />
+        <div className="relative">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10
+                      rounded-full border border-primary-cyan/20 mb-4"
+          >
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-sm font-medium text-primary-blue">System Online</span>
+          </motion.div>
+          <h1 className="text-4xl font-bold text-slate-grey font-montserrat">
+            Willkommen zurück
+          </h1>
+          <p className="text-slate-grey/60 mt-2 text-lg">
+            Hier ist Ihre Übersicht für heute.
+          </p>
+        </div>
+      </motion.div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      {/* Stats Grid with Staggered Animation */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <StatCard
           title="Projekte"
           value="6"
-          change="+2 diesen Monat"
-          color="bg-gradient-to-br from-violet-500/10 to-purple-500/10"
+          change="+2"
+          gradient="bg-gradient-to-br from-violet-500 to-purple-600"
+          delay={0}
           icon={
-            <svg
-              className="w-6 h-6 text-violet-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
-              />
+            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
             </svg>
           }
         />
         <StatCard
           title="Anfragen"
           value="12"
-          change="+5 diese Woche"
-          color="bg-gradient-to-br from-primary-cyan/10 to-primary-blue/10"
+          change="+5"
+          gradient="bg-gradient-to-br from-primary-cyan to-primary-blue"
+          delay={0.1}
           icon={
-            <svg
-              className="w-6 h-6 text-primary-blue"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
+            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           }
         />
         <StatCard
           title="Page Views"
           value="1.2k"
-          change="+18% vs. letzter Monat"
-          color="bg-gradient-to-br from-green-500/10 to-emerald-500/10"
+          change="+18%"
+          gradient="bg-gradient-to-br from-green-500 to-emerald-600"
+          delay={0.2}
           icon={
-            <svg
-              className="w-6 h-6 text-green-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-              />
+            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
             </svg>
           }
         />
         <StatCard
-          title="Google Bewertung"
+          title="Google Rating"
           value="4.9"
-          color="bg-gradient-to-br from-amber-500/10 to-orange-500/10"
+          gradient="bg-gradient-to-br from-amber-500 to-orange-600"
+          delay={0.3}
           icon={
-            <svg
-              className="w-6 h-6 text-amber-500"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
           }
@@ -199,223 +233,187 @@ export default function AdminDashboard() {
       {/* Quick Actions & Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Quick Actions */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <h2 className="text-xl font-bold text-slate-grey mb-4 font-montserrat">
+        <div>
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-xl font-bold text-slate-grey mb-5 font-montserrat flex items-center gap-3"
+          >
+            <span className="p-2 bg-gradient-to-br from-primary-cyan/10 to-primary-blue/10 rounded-xl">
+              <svg className="w-5 h-5 text-primary-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </span>
             Schnellaktionen
-          </h2>
-          <div className="space-y-3">
+          </motion.h2>
+          <div className="space-y-4">
             <QuickAction
               href="/admin/projekte/neu"
-              icon={
-                <svg
-                  className="w-5 h-5 text-primary-blue"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-              }
+              gradient="bg-gradient-to-br from-violet-500 to-purple-600"
+              delay={0.5}
+              icon={<svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>}
               label="Neues Projekt erstellen"
-              description="Fügen Sie ein neues Projekt zur Portfolio-Seite hinzu"
+              description="Portfolio-Seite erweitern"
             />
             <QuickAction
               href="/admin/preise"
-              icon={
-                <svg
-                  className="w-5 h-5 text-primary-blue"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              }
+              gradient="bg-gradient-to-br from-primary-cyan to-primary-blue"
+              delay={0.6}
+              icon={<svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>}
               label="Preise bearbeiten"
-              description="Aktualisieren Sie Ihre Preise und Angebote"
+              description="Angebote aktualisieren"
             />
             <QuickAction
               href="/admin/kontakt"
-              icon={
-                <svg
-                  className="w-5 h-5 text-primary-blue"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-              }
+              gradient="bg-gradient-to-br from-green-500 to-emerald-600"
+              delay={0.7}
+              icon={<svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>}
               label="Kontaktdaten ändern"
-              description="Aktualisieren Sie Ihre Kontaktinformationen"
+              description="Informationen anpassen"
             />
             <QuickAction
               href="/admin/traffic"
-              icon={
-                <svg
-                  className="w-5 h-5 text-primary-blue"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
-                </svg>
-              }
+              gradient="bg-gradient-to-br from-amber-500 to-orange-600"
+              delay={0.8}
+              icon={<svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>}
               label="Traffic analysieren"
-              description="Sehen Sie Ihre Website-Statistiken ein"
+              description="Statistiken einsehen"
             />
           </div>
-        </motion.div>
+        </div>
 
         {/* Recent Activity */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <h2 className="text-xl font-bold text-slate-grey mb-4 font-montserrat">
+        <div>
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-xl font-bold text-slate-grey mb-5 font-montserrat flex items-center gap-3"
+          >
+            <span className="p-2 bg-gradient-to-br from-primary-cyan/10 to-primary-blue/10 rounded-xl">
+              <svg className="w-5 h-5 text-primary-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
             Letzte Anfragen
-          </h2>
-          <div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-slate-grey/10 shadow-lg shadow-slate-grey/5 overflow-hidden">
-            {/* Placeholder for recent submissions */}
-            <div className="divide-y divide-slate-grey/10">
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/50
+                      shadow-xl shadow-slate-grey/5 overflow-hidden"
+          >
+            <div className="divide-y divide-slate-grey/5">
               {[
-                {
-                  name: "Max Mustermann",
-                  email: "max@example.com",
-                  service: "Website",
-                  time: "vor 2 Stunden",
-                },
-                {
-                  name: "Anna Schmidt",
-                  email: "anna@example.com",
-                  service: "Webapp",
-                  time: "vor 5 Stunden",
-                },
-                {
-                  name: "Peter Weber",
-                  email: "peter@example.com",
-                  service: "Mobile App",
-                  time: "gestern",
-                },
+                { name: "Max Mustermann", email: "max@example.com", service: "Website", time: "vor 2 Stunden", gradient: "from-cyan-500 to-blue-500" },
+                { name: "Anna Schmidt", email: "anna@example.com", service: "Webapp", time: "vor 5 Stunden", gradient: "from-violet-500 to-purple-500" },
+                { name: "Peter Weber", email: "peter@example.com", service: "Mobile App", time: "gestern", gradient: "from-green-500 to-emerald-500" },
               ].map((item, i) => (
-                <div
+                <motion.div
                   key={i}
-                  className="p-4 hover:bg-slate-grey/[0.02] transition-colors"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 + i * 0.1 }}
+                  className="p-5 hover:bg-gradient-to-r hover:from-primary-cyan/5 hover:to-transparent
+                            transition-all duration-300 group cursor-pointer"
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-slate-grey">{item.name}</h4>
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.gradient}
+                                   flex items-center justify-center text-white font-bold text-lg
+                                   shadow-lg group-hover:scale-110 transition-transform`}>
+                      {item.name.charAt(0)}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-slate-grey group-hover:text-primary-blue transition-colors">
+                        {item.name}
+                      </h4>
                       <p className="text-sm text-slate-grey/60">{item.email}</p>
                     </div>
                     <div className="text-right">
-                      <span className="inline-block px-3 py-1 text-xs font-medium bg-primary-cyan/10 text-primary-blue rounded-full">
+                      <span className={`inline-block px-3 py-1.5 text-xs font-semibold bg-gradient-to-r ${item.gradient}
+                                       text-white rounded-full shadow-md`}>
                         {item.service}
                       </span>
-                      <p className="text-xs text-slate-grey/40 mt-1">
-                        {item.time}
-                      </p>
+                      <p className="text-xs text-slate-grey/40 mt-2">{item.time}</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
-            {/* View All Link */}
             <Link
               href="/admin/traffic"
-              className="block p-4 text-center text-sm font-medium text-primary-blue hover:bg-primary-cyan/5
-                       border-t border-slate-grey/10 transition-colors"
+              className="block p-5 text-center font-semibold text-primary-blue hover:text-primary-cyan
+                       bg-gradient-to-r from-primary-cyan/5 to-primary-blue/5 hover:from-primary-cyan/10 hover:to-primary-blue/10
+                       border-t border-slate-grey/5 transition-all duration-300 group"
             >
-              Alle Anfragen anzeigen &rarr;
+              <span className="flex items-center justify-center gap-2">
+                Alle Anfragen anzeigen
+                <motion.svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </motion.svg>
+              </span>
             </Link>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Database Status Notice */}
+      {/* Database Status Notice - More Modern */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="mt-8 p-6 bg-amber-50 border border-amber-200 rounded-2xl"
+        transition={{ delay: 0.9 }}
+        className="mt-10 relative overflow-hidden"
       >
-        <div className="flex items-start gap-4">
-          <div className="p-2 bg-amber-100 rounded-lg">
-            <svg
-              className="w-6 h-6 text-amber-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 rounded-3xl" />
+        <div className="relative p-8 border border-amber-200/50 rounded-3xl backdrop-blur-xl">
+          <div className="flex items-start gap-5">
+            <motion.div
+              className="p-4 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl shadow-lg shadow-amber-500/25"
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-          </div>
-          <div>
-            <h3 className="font-semibold text-amber-800">
-              Datenbank-Konfiguration erforderlich
-            </h3>
-            <p className="text-amber-700 mt-1 text-sm">
-              Um das Admin Dashboard vollständig zu nutzen, müssen Sie die
-              Datenbank-Verbindung in der{" "}
-              <code className="px-1.5 py-0.5 bg-amber-100 rounded">.env</code>{" "}
-              Datei konfigurieren. Aktuell werden Placeholder-Daten angezeigt.
-            </p>
-            <ol className="mt-3 text-sm text-amber-700 space-y-1 list-decimal list-inside">
-              <li>
-                Erstellen Sie eine MySQL-Datenbank in Ihrem Hostinger Dashboard
-              </li>
-              <li>
-                Kopieren Sie die Zugangsdaten in die{" "}
-                <code className="px-1.5 py-0.5 bg-amber-100 rounded">
-                  DATABASE_URL
-                </code>{" "}
-                Variable
-              </li>
-              <li>
-                Führen Sie{" "}
-                <code className="px-1.5 py-0.5 bg-amber-100 rounded">
-                  npm run db:push
-                </code>{" "}
-                aus
-              </li>
-              <li>
-                Führen Sie{" "}
-                <code className="px-1.5 py-0.5 bg-amber-100 rounded">
-                  npm run db:seed
-                </code>{" "}
-                aus
-              </li>
-            </ol>
+              <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              </svg>
+            </motion.div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold text-amber-800 font-montserrat">
+                Datenbank einrichten
+              </h3>
+              <p className="text-amber-700 mt-2">
+                Verbinden Sie Ihre MySQL-Datenbank, um alle Funktionen freizuschalten.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                {["MySQL erstellen", "Zugangsdaten kopieren", "db:push ausführen", "db:seed ausführen"].map((step, i) => (
+                  <span key={i} className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 rounded-xl
+                                          text-sm font-medium text-amber-700 border border-amber-200/50">
+                    <span className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-500 to-orange-600
+                                   text-white text-xs flex items-center justify-center font-bold">
+                      {i + 1}
+                    </span>
+                    {step}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>
