@@ -1,10 +1,15 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
+import { PrismaClient } from "@prisma/client";
+
+// Create a new Prisma client for auth (avoid initialization issues)
+const prisma = new PrismaClient();
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
   trustHost: true,
+  debug: process.env.NODE_ENV === "development",
   providers: [
     Credentials({
       name: "credentials",
@@ -13,30 +18,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
-
-        const email = credentials.email as string;
-        const password = credentials.password as string;
-
         try {
-          // Dynamic import to avoid initialization issues
-          const { default: prisma } = await import("./prisma");
+          if (!credentials?.email || !credentials?.password) {
+            return null;
+          }
+
+          const email = credentials.email as string;
+          const password = credentials.password as string;
 
           const user = await prisma.adminUser.findUnique({
             where: { email },
           });
 
           if (!user) {
-            console.log("User not found:", email);
             return null;
           }
 
           const isPasswordValid = await compare(password, user.passwordHash);
 
           if (!isPasswordValid) {
-            console.log("Invalid password for:", email);
             return null;
           }
 
@@ -57,7 +57,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60, // 24 hours
+    maxAge: 24 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -71,22 +71,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.id = token.id as string;
       }
       return session;
-    },
-    async authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isOnAdmin = nextUrl.pathname.startsWith("/admin");
-      const isOnLogin = nextUrl.pathname === "/admin/login";
-
-      if (isOnAdmin && !isOnLogin) {
-        if (isLoggedIn) return true;
-        return false; // Redirect to login
-      }
-
-      if (isOnLogin && isLoggedIn) {
-        return Response.redirect(new URL("/admin", nextUrl));
-      }
-
-      return true;
     },
   },
 });
