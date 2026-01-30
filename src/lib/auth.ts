@@ -1,10 +1,9 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { compare } from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
 
-// Create a new Prisma client for auth (avoid initialization issues)
-const prisma = new PrismaClient();
+// Admin credentials from environment variables (no database needed)
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@origin-labs.de";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
@@ -26,25 +25,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const email = credentials.email as string;
           const password = credentials.password as string;
 
-          const user = await prisma.adminUser.findUnique({
-            where: { email },
-          });
-
-          if (!user) {
-            return null;
+          // Check against environment variables (no database)
+          if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+            return {
+              id: "admin-1",
+              email: ADMIN_EMAIL,
+              name: "Admin",
+            };
           }
 
-          const isPasswordValid = await compare(password, user.passwordHash);
-
-          if (!isPasswordValid) {
-            return null;
-          }
-
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-          };
+          return null;
         } catch (error) {
           console.error("Auth error:", error);
           return null;
