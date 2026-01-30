@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const footerLinks = {
   company: [
@@ -62,12 +63,17 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { theme, isHydrated } = useTheme();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Determine which logo to show based on theme
+  const logoSrc = isHydrated && theme === "dark" ? "/logo-full-dark.png" : "/logo-full.png";
+
   return (
-    <footer className="relative bg-off-white border-t border-slate-grey/10">
+    <footer className="relative bg-off-white border-t border-divider">
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
@@ -82,7 +88,7 @@ export default function Footer() {
             <Link href="/" className="inline-block mb-6 group">
               <motion.div whileHover={{ scale: 1.02 }}>
                 <Image
-                  src="/logo-full.png"
+                  src={logoSrc}
                   alt="Origin Labs"
                   width={280}
                   height={70}
@@ -91,7 +97,7 @@ export default function Footer() {
               </motion.div>
             </Link>
 
-            <p className="font-body text-slate-grey/60 mb-6 max-w-sm text-sm leading-relaxed">
+            <p className="font-body text-text-muted mb-6 max-w-sm text-sm leading-relaxed">
               Wir entwickeln digitale Lösungen, die Unternehmen transformieren.
               Modern, performant und benutzerfreundlich.
             </p>
@@ -104,7 +110,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-xl bg-white border border-slate-grey/10 flex items-center justify-center text-slate-grey/50 hover:text-primary-blue hover:border-primary-cyan/30 hover:shadow-md transition-all"
+                  className="w-9 h-9 rounded-xl bg-card-bg border border-divider flex items-center justify-center text-text-muted hover:text-primary-blue hover:border-primary-cyan/30 hover:shadow-md transition-all"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={social.label}
@@ -131,7 +137,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="font-body text-sm text-slate-grey/60 hover:text-primary-blue transition-colors"
+                    className="font-body text-sm text-text-muted hover:text-primary-blue transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -155,7 +161,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="font-body text-sm text-slate-grey/60 hover:text-primary-blue transition-colors"
+                    className="font-body text-sm text-text-muted hover:text-primary-blue transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -179,7 +185,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="font-body text-sm text-slate-grey/60 hover:text-primary-blue transition-colors"
+                    className="font-body text-sm text-text-muted hover:text-primary-blue transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -191,15 +197,15 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-slate-grey/10">
+      <div className="border-t border-divider">
         <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-            <p className="font-body text-xs text-slate-grey/40">
+            <p className="font-body text-xs text-text-muted">
               &copy; {new Date().getFullYear()} Origin Labs. Alle Rechte vorbehalten.
             </p>
 
             <div className="flex items-center gap-4">
-              <p className="font-body text-xs text-slate-grey/40 flex items-center gap-1">
+              <p className="font-body text-xs text-text-muted flex items-center gap-1">
                 Made with
                 <motion.span
                   className="text-primary-cyan"
@@ -214,7 +220,7 @@ export default function Footer() {
               {/* Back to Top */}
               <motion.button
                 onClick={scrollToTop}
-                className="w-8 h-8 rounded-lg bg-white border border-slate-grey/10 flex items-center justify-center text-slate-grey/40 hover:text-primary-blue hover:border-primary-cyan/30 transition-all"
+                className="w-8 h-8 rounded-lg bg-card-bg border border-divider flex items-center justify-center text-text-muted hover:text-primary-blue hover:border-primary-cyan/30 transition-all"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Nach oben scrollen"

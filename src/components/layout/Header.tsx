@@ -5,6 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import ThemeToggle from "@/components/ThemeToggle";
+import { useTheme } from "@/contexts/ThemeContext";
 
 // Track if header has animated (persists across page navigations)
 let hasHeaderAnimated = false;
@@ -34,6 +36,7 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === "/";
+  const { theme, isHydrated } = useTheme();
 
   // Mark header as animated after first render
   useEffect(() => {
@@ -143,6 +146,9 @@ export default function Header() {
     }
   };
 
+  // Determine which logo to show based on theme
+  const logoSrc = isHydrated && theme === "dark" ? "/logo-full-dark.png" : "/logo-full.png";
+
   return (
     <>
       {/* Floating Oval Header */}
@@ -155,8 +161,8 @@ export default function Header() {
         <motion.nav
           className={`flex items-center gap-1 px-2 py-2 rounded-full transition-all duration-500 ${
             isScrolled
-              ? "bg-white/95 backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] border border-white/80"
-              : "bg-white/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.06)] border border-white/50"
+              ? "bg-nav-bg-scrolled backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] border border-nav-border"
+              : "bg-nav-bg backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.06)] border border-nav-border"
           }`}
           layout
         >
@@ -167,7 +173,7 @@ export default function Header() {
               whileTap={{ scale: 0.97 }}
             >
               <Image
-                src="/logo-full.png"
+                src={logoSrc}
                 alt="Origin Labs"
                 width={300}
                 height={75}
@@ -220,7 +226,7 @@ export default function Header() {
                       whileTap={{ scale: 0.97 }}
                     >
                       <motion.span
-                        className="absolute inset-0 bg-slate-grey/5 rounded-full"
+                        className="absolute inset-0 bg-hover-bg rounded-full"
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: isActive ? 0 : 1 }}
                         transition={{ duration: 0.2 }}
@@ -228,7 +234,7 @@ export default function Header() {
                       <span className={`relative z-10 transition-colors duration-300 ${
                         isActive
                           ? "text-primary-blue font-medium"
-                          : "text-slate-grey/70 hover:text-slate-grey"
+                          : "text-text-muted hover:text-slate-grey"
                       }`}>
                         {item.label}
                       </span>
@@ -248,7 +254,7 @@ export default function Header() {
                 >
                   {/* Hover Background */}
                   <motion.div
-                    className="absolute inset-0 bg-slate-grey/5 rounded-full"
+                    className="absolute inset-0 bg-hover-bg rounded-full"
                     initial={{ opacity: 0 }}
                     whileHover={{ opacity: isActive ? 0 : 1 }}
                     transition={{ duration: 0.2 }}
@@ -258,7 +264,7 @@ export default function Header() {
                     className={`relative z-10 transition-colors duration-300 ${
                       isActive
                         ? "text-primary-blue font-medium"
-                        : "text-slate-grey/70 hover:text-slate-grey"
+                        : "text-text-muted hover:text-slate-grey"
                     }`}
                   >
                     {item.label}
@@ -268,10 +274,15 @@ export default function Header() {
             })}
           </div>
 
+          {/* Theme Toggle - Desktop */}
+          <div className="hidden lg:flex items-center ml-1">
+            <ThemeToggle />
+          </div>
+
           {/* CTA Button */}
           <Link href="/kontakt">
             <motion.span
-              className="hidden lg:flex items-center gap-2 ml-2 px-5 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group cursor-pointer"
+              className="hidden lg:flex items-center gap-2 ml-1 px-5 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group cursor-pointer"
               whileHover={{ scale: 1.03, y: -1 }}
               whileTap={{ scale: 0.97 }}
             >
@@ -298,7 +309,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-grey/5 transition-colors"
+            className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-hover-bg transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileTap={{ scale: 0.9 }}
             aria-label="Menü"
@@ -354,7 +365,7 @@ export default function Header() {
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="bg-white/98 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/80 p-3 overflow-hidden">
+              <div className="bg-mobile-menu-bg backdrop-blur-2xl rounded-3xl shadow-2xl border border-nav-border p-3 overflow-hidden">
                 {/* Navigation Items */}
                 <div className="flex flex-col gap-1">
                   {navItems.map((item, index) => {
@@ -370,7 +381,7 @@ export default function Header() {
                             className={`relative flex items-center justify-between font-body text-lg py-3.5 px-5 rounded-2xl text-left transition-all cursor-pointer ${
                               isActive
                                 ? "bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10 text-primary-blue"
-                                : "text-slate-grey hover:bg-slate-grey/5"
+                                : "text-slate-grey hover:bg-hover-bg"
                             }`}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -417,7 +428,7 @@ export default function Header() {
                         className={`relative flex items-center justify-between font-body text-lg py-3.5 px-5 rounded-2xl text-left transition-all ${
                           isActive
                             ? "bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10 text-primary-blue"
-                            : "text-slate-grey hover:bg-slate-grey/5"
+                            : "text-slate-grey hover:bg-hover-bg"
                         }`}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -456,9 +467,20 @@ export default function Header() {
                   })}
                 </div>
 
+                {/* Theme Toggle - Mobile */}
+                <motion.div
+                  className="flex items-center justify-between px-5 py-3 mt-2 border-t border-divider"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.25 }}
+                >
+                  <span className="font-body text-sm text-text-muted">Erscheinungsbild</span>
+                  <ThemeToggle />
+                </motion.div>
+
                 {/* CTA Button */}
                 <motion.div
-                  className="mt-3 pt-3 border-t border-slate-grey/10"
+                  className="mt-2 pt-3 border-t border-divider"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}

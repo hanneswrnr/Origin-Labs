@@ -3,6 +3,8 @@ import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import AdminShortcut from "@/components/AdminShortcut";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ThemeScript } from "@/components/ThemeScript";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -30,12 +32,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de">
+    <html lang="de" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
       <body
-        className={`${montserrat.variable} ${inter.variable} font-body antialiased bg-white text-foreground`}
+        className={`${montserrat.variable} ${inter.variable} font-body antialiased bg-background text-foreground`}
       >
-        <AdminShortcut />
-        <SmoothScroll>{children}</SmoothScroll>
+        <ThemeProvider>
+          <AdminShortcut />
+          <SmoothScroll>{children}</SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );
