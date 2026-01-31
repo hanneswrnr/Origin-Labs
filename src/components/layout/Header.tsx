@@ -225,20 +225,32 @@ export default function Header() {
                   <Link key={item.href} href={item.href}>
                     <motion.span
                       ref={(el) => { itemRefs.current[index] = el; }}
-                      className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden cursor-pointer block whitespace-nowrap"
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
+                      className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden cursor-pointer block whitespace-nowrap group/nav"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                     >
+                      {/* Modern Hover Background with Gradient */}
                       <motion.span
-                        className="absolute inset-0 bg-hover-bg rounded-full"
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: isActive ? 0 : 1 }}
-                        transition={{ duration: 0.2 }}
+                        className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-cyan/10 via-primary-blue/10 to-primary-cyan/10
+                                   dark:from-primary-cyan/15 dark:via-primary-blue/15 dark:to-primary-cyan/15
+                                   opacity-0 group-hover/nav:opacity-100 transition-opacity duration-300"
                       />
-                      <span className={`relative z-10 transition-colors duration-300 ${
+                      {/* Subtle glow effect */}
+                      <motion.span
+                        className="absolute inset-0 rounded-full shadow-[inset_0_0_12px_rgba(45,212,224,0.15)]
+                                   dark:shadow-[inset_0_0_12px_rgba(45,212,224,0.25)]
+                                   opacity-0 group-hover/nav:opacity-100 transition-opacity duration-300"
+                      />
+                      {/* Bottom accent line */}
+                      <motion.span
+                        className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-primary-cyan to-primary-blue rounded-full
+                                   group-hover/nav:w-4 transition-all duration-300 ease-out"
+                        style={{ display: isActive ? 'none' : 'block' }}
+                      />
+                      <span className={`relative z-10 transition-all duration-300 ${
                         isActive
-                          ? "text-primary-blue font-medium"
-                          : "text-text-muted hover:text-slate-grey"
+                          ? "text-primary-blue font-semibold"
+                          : "text-text-muted group-hover/nav:text-primary-blue dark:group-hover/nav:text-primary-cyan"
                       }`}>
                         {item.label}
                       </span>
@@ -252,23 +264,34 @@ export default function Header() {
                   key={item.href}
                   ref={(el) => { itemRefs.current[index] = el; }}
                   onClick={() => handleNavClick(item.href, item.homeHref)}
-                  className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden whitespace-nowrap"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
+                  className="relative px-4 py-2 font-body text-sm rounded-full overflow-hidden whitespace-nowrap group/nav"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  {/* Hover Background */}
+                  {/* Modern Hover Background with Gradient */}
                   <motion.div
-                    className="absolute inset-0 bg-hover-bg rounded-full"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: isActive ? 0 : 1 }}
-                    transition={{ duration: 0.2 }}
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-cyan/10 via-primary-blue/10 to-primary-cyan/10
+                               dark:from-primary-cyan/15 dark:via-primary-blue/15 dark:to-primary-cyan/15
+                               opacity-0 group-hover/nav:opacity-100 transition-opacity duration-300"
+                  />
+                  {/* Subtle glow effect */}
+                  <motion.div
+                    className="absolute inset-0 rounded-full shadow-[inset_0_0_12px_rgba(45,212,224,0.15)]
+                               dark:shadow-[inset_0_0_12px_rgba(45,212,224,0.25)]
+                               opacity-0 group-hover/nav:opacity-100 transition-opacity duration-300"
+                  />
+                  {/* Bottom accent line */}
+                  <motion.div
+                    className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-primary-cyan to-primary-blue rounded-full
+                               group-hover/nav:w-4 transition-all duration-300 ease-out"
+                    style={{ display: isActive ? 'none' : 'block' }}
                   />
 
                   <span
-                    className={`relative z-10 transition-colors duration-300 ${
+                    className={`relative z-10 transition-all duration-300 ${
                       isActive
-                        ? "text-primary-blue font-medium"
-                        : "text-text-muted hover:text-slate-grey"
+                        ? "text-primary-blue font-semibold"
+                        : "text-text-muted group-hover/nav:text-primary-blue dark:group-hover/nav:text-primary-cyan"
                     }`}
                   >
                     {item.label}
