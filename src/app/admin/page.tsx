@@ -11,7 +11,7 @@ function AnimatedValue({ value }: { value: string }) {
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-      className="text-4xl font-bold bg-gradient-to-r from-slate-grey to-slate-grey/80 from-slate-100 to-slate-200 bg-clip-text text-transparent font-montserrat"
+      className="text-4xl font-bold text-white font-montserrat"
     >
       {value}
     </motion.span>
@@ -47,11 +47,6 @@ function StatCard({
       <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full ${gradient} opacity-20
                       blur-2xl group-hover:opacity-40 group-hover:scale-150 transition-all duration-700`} />
 
-      {/* Shimmer Effect */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent
-                       -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-      </div>
 
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-4">
@@ -75,7 +70,7 @@ function StatCard({
         </div>
 
         <AnimatedValue value={value} />
-        <p className="text-slate-300/70 text-sm font-medium mt-2">{title}</p>
+        <p className="text-white/80 text-sm font-medium mt-2">{title}</p>
       </div>
     </motion.div>
   );
@@ -311,7 +306,7 @@ export default function AdminDashboard() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                   </svg>
                 </div>
-                <p className="text-slate-400 font-medium">Keine Anfragen vorhanden</p>
+                <p className="text-white/70 font-medium">Keine Anfragen vorhanden</p>
               </motion.div>
             </div>
 
