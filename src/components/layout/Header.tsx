@@ -171,7 +171,7 @@ export default function Header() {
           layout
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center group pl-2 pr-3 flex-shrink-0">
+          <Link href="/" className="flex items-center group pl-1 pr-3 flex-shrink-0">
             <motion.div
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -310,7 +310,7 @@ export default function Header() {
           {/* CTA Button */}
           <Link href="/kontakt">
             <motion.span
-              className="hidden xl:flex items-center gap-2 ml-2 mr-2 px-5 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group cursor-pointer"
+              className="hidden xl:flex items-center gap-1.5 ml-2 mr-1 px-4 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group cursor-pointer whitespace-nowrap"
               whileHover={{ scale: 1.03, y: -1 }}
               whileTap={{ scale: 0.97 }}
             >
@@ -318,11 +318,9 @@ export default function Header() {
               <motion.span
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
               />
-              {/* Left spacer for visual balance */}
-              <span className="w-4 relative z-10" />
               <span className="relative z-10">{t("common.startProject")}</span>
               <svg
-                className="w-4 h-4 relative z-10"
+                className="w-4 h-4 relative z-10 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
