@@ -897,7 +897,7 @@ export default function Home() {
                   transition={{ duration: 0.2 }}
                 >
                   <Link
-                    href="/about"
+                    href="/ueber-uns"
                     className="group inline-flex items-center gap-3 font-heading font-semibold text-primary-blue"
                   >
                     <span className="relative">
@@ -1054,7 +1054,7 @@ export default function Home() {
             >
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Link
-                  href="/services"
+                  href="/leistungen"
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 font-heading font-semibold rounded-full hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors shadow-lg shadow-gray-800/20 dark:shadow-gray-200/20"
                 >
                   {t("common.viewAllServices")}

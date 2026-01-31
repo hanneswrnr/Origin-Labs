@@ -690,7 +690,7 @@ export default function ContactPage() {
 
                             <p className="font-body text-xs text-slate-grey/50 text-center">
                               Mit dem Absenden stimmen Sie unserer{" "}
-                              <a href="/privacy" className="text-primary-blue hover:underline">
+                              <a href="/datenschutz" className="text-primary-blue hover:underline">
                                 Datenschutzerklärung
                               </a>{" "}
                               zu.
