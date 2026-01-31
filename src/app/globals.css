@@ -21,6 +21,7 @@
   --hover-bg: rgba(75, 85, 99, 0.05);
   --text-muted: rgba(75, 85, 99, 0.7);
   --divider: rgba(75, 85, 99, 0.1);
+  --flag-ring: #000000;
 
   /* Admin Dashboard Colors - Light mode uses dark cards */
   --admin-bg: #0a0a0a;
@@ -51,6 +52,7 @@
   --hover-bg: rgba(255, 255, 255, 0.1);
   --text-muted: rgba(255, 255, 255, 0.85);
   --divider: rgba(255, 255, 255, 0.1);
+  --flag-ring: #ffffff;
 
   /* Admin Dashboard Colors - Dark mode uses dark cards (same as light mode for consistency) */
   --admin-bg: #0f0f0f;
@@ -82,6 +84,7 @@
   --color-hover-bg: var(--hover-bg);
   --color-text-muted: var(--text-muted);
   --color-divider: var(--divider);
+  --color-flag-ring: var(--flag-ring);
 
   /* Admin Dashboard Colors */
   --color-admin-bg: var(--admin-bg);

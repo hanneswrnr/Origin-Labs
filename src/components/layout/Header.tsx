@@ -163,7 +163,7 @@ export default function Header() {
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         <motion.nav
-          className={`flex items-center gap-1 px-2 py-2 rounded-full transition-all duration-500 ${
+          className={`flex items-center gap-1 px-4 py-2 rounded-full transition-all duration-500 ${
             isScrolled
               ? "bg-nav-bg-scrolled backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] border border-nav-border"
               : "bg-nav-bg backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.06)] border border-nav-border"
@@ -171,7 +171,7 @@ export default function Header() {
           layout
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center group px-3 flex-shrink-0">
+          <Link href="/" className="flex items-center group pl-2 pr-3 flex-shrink-0">
             <motion.div
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -310,7 +310,7 @@ export default function Header() {
           {/* CTA Button */}
           <Link href="/kontakt">
             <motion.span
-              className="hidden xl:flex items-center gap-2 ml-1 px-5 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group cursor-pointer"
+              className="hidden xl:flex items-center gap-2 ml-2 mr-2 px-5 py-2.5 gradient-primary text-white font-heading font-semibold text-sm rounded-full shadow-lg shadow-primary-blue/25 relative overflow-hidden group cursor-pointer"
               whileHover={{ scale: 1.03, y: -1 }}
               whileTap={{ scale: 0.97 }}
             >

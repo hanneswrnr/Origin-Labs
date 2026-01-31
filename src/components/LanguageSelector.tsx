@@ -61,7 +61,7 @@ export default function LanguageSelector({ className = "" }: LanguageSelectorPro
           alt={currentLanguage.nativeName}
           width={24}
           height={24}
-          className="w-6 h-6 rounded-full object-cover ring-2 ring-black dark:ring-white"
+          className="w-6 h-6 rounded-full object-cover ring-2 ring-flag-ring"
         />
       </motion.button>
 
@@ -94,7 +94,7 @@ export default function LanguageSelector({ className = "" }: LanguageSelectorPro
                   alt={lang.nativeName}
                   width={20}
                   height={20}
-                  className="w-5 h-5 rounded-full object-cover ring-2 ring-black dark:ring-white"
+                  className="w-5 h-5 rounded-full object-cover ring-2 ring-flag-ring"
                 />
                 <span className="font-body text-sm">{lang.nativeName}</span>
                 {language === lang.code && (

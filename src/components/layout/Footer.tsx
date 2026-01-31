@@ -4,24 +4,28 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const footerLinks = {
-  company: [
-    { label: "Über uns", href: "/about" },
-    { label: "Projekte", href: "/projects" },
-    { label: "Karriere", href: "/career" },
-  ],
-  services: [
-    { label: "Websites", href: "/services#websites" },
-    { label: "Webapps", href: "/services#webapps" },
-    { label: "Mobile Apps", href: "/services#mobile" },
-  ],
-  legal: [
-    { label: "Impressum", href: "/imprint" },
-    { label: "Datenschutz", href: "/privacy" },
-    { label: "AGB", href: "/terms" },
-  ],
-};
+// Function to get translated footer links
+function getFooterLinks(t: (key: string) => string) {
+  return {
+    company: [
+      { label: t("footer.aboutUs"), href: "/about" },
+      { label: t("footer.projects"), href: "/projects" },
+      { label: t("footer.career"), href: "/career" },
+    ],
+    services: [
+      { label: t("footer.websites"), href: "/services#websites" },
+      { label: t("footer.webapps"), href: "/services#webapps" },
+      { label: t("footer.mobileApps"), href: "/services#mobile" },
+    ],
+    legal: [
+      { label: t("footer.imprint"), href: "/imprint" },
+      { label: t("footer.privacy"), href: "/privacy" },
+      { label: t("footer.terms"), href: "/terms" },
+    ],
+  };
+}
 
 const socialLinks = [
   {
@@ -64,6 +68,8 @@ const socialLinks = [
 
 export default function Footer() {
   const { theme, isHydrated } = useTheme();
+  const { t } = useTranslation();
+  const footerLinks = getFooterLinks(t);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -98,8 +104,7 @@ export default function Footer() {
             </Link>
 
             <p className="font-body text-text-muted mb-6 max-w-sm text-sm leading-relaxed">
-              Wir entwickeln digitale Lösungen, die Unternehmen transformieren.
-              Modern, performant und benutzerfreundlich.
+              {t("footer.description")}
             </p>
 
             {/* Social Links */}
@@ -130,7 +135,7 @@ export default function Footer() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <h4 className="font-heading font-semibold text-sm text-slate-grey mb-4">
-              Unternehmen
+              {t("footer.company")}
             </h4>
             <ul className="space-y-2.5">
               {footerLinks.company.map((link) => (
@@ -154,7 +159,7 @@ export default function Footer() {
             transition={{ duration: 0.5, delay: 0.15 }}
           >
             <h4 className="font-heading font-semibold text-sm text-slate-grey mb-4">
-              Leistungen
+              {t("footer.servicesTitle")}
             </h4>
             <ul className="space-y-2.5">
               {footerLinks.services.map((link) => (
@@ -178,7 +183,7 @@ export default function Footer() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h4 className="font-heading font-semibold text-sm text-slate-grey mb-4">
-              Rechtliches
+              {t("footer.legal")}
             </h4>
             <ul className="space-y-2.5">
               {footerLinks.legal.map((link) => (
@@ -201,12 +206,12 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <p className="font-body text-xs text-text-muted">
-              &copy; {new Date().getFullYear()} Origin Labs. Alle Rechte vorbehalten.
+              &copy; {new Date().getFullYear()} Origin Labs. {t("footer.copyright")}
             </p>
 
             <div className="flex items-center gap-4">
               <p className="font-body text-xs text-text-muted flex items-center gap-1">
-                Made with
+                {t("footer.madeWith")}
                 <motion.span
                   className="text-primary-cyan"
                   animate={{ scale: [1, 1.2, 1] }}
@@ -214,7 +219,7 @@ export default function Footer() {
                 >
                   ♥
                 </motion.span>
-                in Germany
+                {t("footer.inGermany")}
               </p>
 
               {/* Back to Top */}
@@ -223,7 +228,7 @@ export default function Footer() {
                 className="w-8 h-8 rounded-lg bg-card-bg border border-divider flex items-center justify-center text-text-muted hover:text-primary-blue hover:border-primary-cyan/30 transition-all"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                aria-label="Nach oben scrollen"
+                aria-label={t("footer.scrollToTop")}
               >
                 <svg
                   className="w-4 h-4"
