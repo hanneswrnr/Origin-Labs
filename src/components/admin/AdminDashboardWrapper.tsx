@@ -8,7 +8,7 @@ export default function AdminDashboardWrapper({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-admin-bg dark:via-[#121212] dark:to-admin-surface relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-admin-bg via-[#0d0d0d] to-admin-surface relative overflow-hidden">
       {/* Background Grid Pattern */}
       <div
         className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03] dark:invert"

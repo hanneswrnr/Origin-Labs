@@ -22,10 +22,13 @@
   --text-muted: rgba(75, 85, 99, 0.7);
   --divider: rgba(75, 85, 99, 0.1);
 
-  /* Admin Dashboard Colors */
-  --admin-bg: #f8fafc;
-  --admin-surface: #ffffff;
-  --admin-surface-hover: #f1f5f9;
+  /* Admin Dashboard Colors - Light mode uses dark cards */
+  --admin-bg: #0a0a0a;
+  --admin-surface: #171717;
+  --admin-surface-hover: #252525;
+  --admin-text: #ffffff;
+  --admin-text-muted: rgba(255, 255, 255, 0.7);
+  --admin-border: rgba(255, 255, 255, 0.1);
 }
 
 .dark {
@@ -49,10 +52,13 @@
   --text-muted: rgba(255, 255, 255, 0.85);
   --divider: rgba(255, 255, 255, 0.1);
 
-  /* Admin Dashboard Colors */
+  /* Admin Dashboard Colors - Dark mode uses dark cards (same as light mode for consistency) */
   --admin-bg: #0f0f0f;
   --admin-surface: #1a1a1a;
   --admin-surface-hover: #252525;
+  --admin-text: #ffffff;
+  --admin-text-muted: rgba(255, 255, 255, 0.7);
+  --admin-border: rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {

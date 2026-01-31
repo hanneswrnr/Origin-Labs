@@ -56,7 +56,7 @@ export default function AdminProjektePage() {
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold text-slate-grey dark:text-white font-montserrat"
+            className="text-3xl font-bold text-white font-montserrat"
           >
             Projekte verwalten
           </motion.h1>
@@ -64,7 +64,7 @@ export default function AdminProjektePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-slate-grey/60 dark:text-slate-300/70 mt-2"
+            className="text-slate-300/70 mt-2"
           >
             {projects.length} Projekte insgesamt, {projects.filter(p => p.published).length} veröffentlicht
           </motion.p>
@@ -96,7 +96,7 @@ export default function AdminProjektePage() {
                       whitespace-nowrap transition-all duration-300
                       ${filter === tab.value
                         ? "text-white gradient-primary"
-                        : "bg-white/90 dark:bg-admin-surface/90 text-slate-grey dark:text-slate-200 border-2 border-slate-grey/10 dark:border-white/10 hover:border-primary-cyan/30"
+                        : "bg-admin-surface/90 text-slate-200 border-2 border-white/10 hover:border-primary-cyan/30"
                       }`}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -115,8 +115,8 @@ export default function AdminProjektePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="relative bg-white/95 dark:bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10 dark:border-white/10
-                       shadow-xl shadow-slate-grey/5 dark:shadow-black/20 overflow-hidden group hover:shadow-2xl hover:border-primary-cyan/30 transition-all duration-300"
+            className="relative bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-white/10
+                       shadow-xl shadow-black/20 overflow-hidden group hover:shadow-2xl hover:border-primary-cyan/30 transition-all duration-300"
           >
 
               {/* Project Color Header */}
@@ -145,10 +145,10 @@ export default function AdminProjektePage() {
               <div className="relative p-6 bg-white dark:bg-admin-surface">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="font-bold text-slate-grey dark:text-white text-xl">
+                    <h3 className="font-bold text-white text-xl">
                       {project.title}
                     </h3>
-                    <p className="text-slate-grey/60 dark:text-slate-300/70 text-sm mt-1">{project.subtitle}</p>
+                    <p className="text-slate-300/70 text-sm mt-1">{project.subtitle}</p>
                   </div>
                   <span className="px-3 py-1.5 text-xs font-bold bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10
                              text-primary-blue rounded-xl border border-primary-cyan/20">

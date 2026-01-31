@@ -6,7 +6,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut } from "@/app/admin/actions";
-import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const navItems = [
@@ -74,7 +73,7 @@ const navItems = [
 
 export default function AdminSidebar() {
   const pathname = usePathname();
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -97,10 +96,10 @@ export default function AdminSidebar() {
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-white/90 dark:bg-admin-surface/90 backdrop-blur-2xl rounded-2xl
-                   shadow-xl shadow-slate-grey/10 dark:shadow-black/30 border border-white/50 dark:border-white/10 hover:bg-white dark:hover:bg-admin-surface-hover transition-colors"
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-admin-surface/90 backdrop-blur-2xl rounded-2xl
+                   shadow-xl shadow-black/30 border border-white/10 hover:bg-admin-surface-hover transition-colors"
       >
-        <svg className="w-6 h-6 text-slate-grey dark:text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-6 h-6 text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           {isMobileOpen ? (
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           ) : (
@@ -134,7 +133,7 @@ export default function AdminSidebar() {
                    lg:translate-x-0 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
         {/* Glass Background */}
-        <div className="absolute inset-0 bg-white/70 dark:bg-admin-surface/80 backdrop-blur-2xl border-r border-white/50 dark:border-white/10" />
+        <div className="absolute inset-0 bg-admin-surface/90 backdrop-blur-2xl border-r border-white/10" />
 
         {/* Decorative Gradient Orbs */}
         <div className="absolute top-20 -right-10 w-40 h-40 bg-gradient-to-br from-primary-cyan/20 to-primary-blue/20 rounded-full blur-3xl" />
@@ -193,7 +192,7 @@ export default function AdminSidebar() {
                 <motion.svg
                   animate={{ rotate: isCollapsed ? 180 : 0 }}
                   transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                  className="w-5 h-5 text-slate-grey/60 dark:text-slate-300/60"
+                  className="w-5 h-5 text-slate-300/60"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -243,7 +242,7 @@ export default function AdminSidebar() {
                     transition={{ delay: index * 0.05 }}
                     className={`relative flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300
                               ${isCollapsed ? "justify-center px-3" : ""}
-                              ${active ? "text-white" : "text-slate-grey dark:text-slate-200 hover:text-slate-grey dark:hover:text-white"}`}
+                              ${active ? "text-white" : "text-slate-300 hover:text-white"}`}
                   >
                     {/* Active Background - Always visible for active item */}
                     {active && (
@@ -267,7 +266,7 @@ export default function AdminSidebar() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className="absolute inset-0 rounded-2xl bg-slate-grey/5 dark:bg-white/10"
+                          className="absolute inset-0 rounded-2xl bg-white/10"
                           transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         />
                       )}
@@ -311,14 +310,14 @@ export default function AdminSidebar() {
           {/* Bottom Section */}
           <div className="p-4 mt-auto">
             {/* Divider */}
-            <div className="h-px bg-gradient-to-r from-transparent via-slate-grey/10 dark:via-white/10 to-transparent mb-4" />
+            <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4" />
 
             {/* View Website Link */}
             <motion.a
               href="/"
               whileHover={{ x: 4 }}
-              className={`flex items-center gap-3 px-4 py-3 text-slate-grey/70 dark:text-slate-300/70 hover:text-primary-blue
-                         bg-slate-grey/5 dark:bg-white/5 hover:bg-primary-cyan/10 rounded-xl transition-all duration-300
+              className={`flex items-center gap-3 px-4 py-3 text-slate-300/70 hover:text-primary-cyan
+                         bg-white/5 hover:bg-primary-cyan/10 rounded-xl transition-all duration-300
                          ${isCollapsed ? "justify-center px-3" : ""}`}
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -339,13 +338,25 @@ export default function AdminSidebar() {
             </motion.a>
 
             {/* Theme Toggle */}
-            <motion.div
+            <motion.button
+              onClick={toggleTheme}
               whileHover={{ x: 4 }}
-              className={`flex items-center gap-3 px-4 py-2 mt-2 text-slate-grey/70 dark:text-slate-300/70
-                         bg-slate-grey/5 dark:bg-white/5 hover:bg-primary-cyan/10 rounded-xl transition-all duration-300
+              className={`w-full flex items-center gap-3 px-4 py-3 mt-2 text-slate-300/70
+                         bg-white/5 hover:bg-primary-cyan/10 rounded-xl transition-all duration-300 cursor-pointer
                          ${isCollapsed ? "justify-center px-3" : ""}`}
             >
-              <ThemeToggle className="!w-8 !h-8" />
+              <div className="w-8 h-8 flex items-center justify-center">
+                {theme === "light" ? (
+                  <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5 text-primary-blue" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  </svg>
+                )}
+              </div>
               <AnimatePresence>
                 {!isCollapsed && (
                   <motion.span
@@ -358,7 +369,7 @@ export default function AdminSidebar() {
                   </motion.span>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </motion.button>
 
             {/* Sign Out Button */}
             <motion.button

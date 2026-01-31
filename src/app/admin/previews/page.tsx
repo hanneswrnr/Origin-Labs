@@ -212,7 +212,7 @@ export default function PreviewsPage() {
   `;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-admin-bg dark:to-admin-surface">
+    <div className="min-h-screen bg-gradient-to-br from-admin-bg to-admin-surface">
       <AdminSidebar />
 
       <main className="lg:pl-72 min-h-screen">
@@ -223,8 +223,8 @@ export default function PreviewsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">E-Mail Previews</h1>
-            <p className="text-slate-500 dark:text-slate-300 mt-2">
+            <h1 className="text-3xl font-bold text-white">E-Mail Previews</h1>
+            <p className="text-slate-300 mt-2">
               Vorschau der E-Mail-Templates für das Kontaktformular
             </p>
           </motion.div>
@@ -234,14 +234,14 @@ export default function PreviewsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white dark:bg-admin-surface rounded-2xl shadow-sm border border-slate-200/60 dark:border-white/10 p-2 inline-flex gap-2 mb-6"
+            className="bg-admin-surface rounded-2xl shadow-sm border border-white/10 p-2 inline-flex gap-2 mb-6"
           >
             <button
               onClick={() => setActiveTemplate("notification")}
               className={`px-6 py-3 rounded-xl font-medium text-sm transition-all ${
                 activeTemplate === "notification"
                   ? "bg-gradient-to-r from-primary-cyan to-primary-blue text-white shadow-lg shadow-primary-blue/25"
-                  : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+                  : "text-slate-300 hover:bg-white/5"
               }`}
             >
               Benachrichtigung (An Origin Labs)
@@ -251,7 +251,7 @@ export default function PreviewsPage() {
               className={`px-6 py-3 rounded-xl font-medium text-sm transition-all ${
                 activeTemplate === "confirmation"
                   ? "bg-gradient-to-r from-primary-cyan to-primary-blue text-white shadow-lg shadow-primary-blue/25"
-                  : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+                  : "text-slate-300 hover:bg-white/5"
               }`}
             >
               Bestätigung (An Kunde)
@@ -263,7 +263,7 @@ export default function PreviewsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white dark:bg-admin-surface rounded-2xl shadow-sm border border-slate-200/60 dark:border-white/10 p-6 mb-6"
+            className="bg-admin-surface rounded-2xl shadow-sm border border-white/10 p-6 mb-6"
           >
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-gradient-to-br from-primary-cyan to-primary-blue rounded-xl flex items-center justify-center text-white">
@@ -272,19 +272,19 @@ export default function PreviewsPage() {
                 </svg>
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+                <h2 className="text-lg font-semibold text-white">
                   {activeTemplate === "notification"
                     ? "Benachrichtigungs-E-Mail"
                     : "Bestätigungs-E-Mail"}
                 </h2>
-                <p className="text-slate-500 dark:text-slate-300 text-sm mt-1">
+                <p className="text-slate-300 text-sm mt-1">
                   {activeTemplate === "notification"
                     ? "Diese E-Mail wird an info@origin-labs.de gesendet, wenn jemand das Kontaktformular ausfüllt."
                     : "Diese E-Mail wird automatisch an den Kunden gesendet, um den Eingang seiner Anfrage zu bestätigen."}
                 </p>
                 <div className="flex flex-wrap items-center gap-4 mt-3">
                   <div className="flex items-center gap-2 text-sm text-slate-500">
-                    <span className="font-medium text-slate-700 dark:text-slate-200">Von:</span>
+                    <span className="font-medium text-slate-200">Von:</span>
                     <code className="bg-slate-100 px-2 py-1 rounded text-xs">
                       {activeTemplate === "notification"
                         ? '"Origin Labs Website" <info@origin-labs.de>'
@@ -292,7 +292,7 @@ export default function PreviewsPage() {
                     </code>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-slate-500">
-                    <span className="font-medium text-slate-700 dark:text-slate-200">An:</span>
+                    <span className="font-medium text-slate-200">An:</span>
                     <code className="bg-slate-100 px-2 py-1 rounded text-xs">
                       {activeTemplate === "notification"
                         ? "info@origin-labs.de"
@@ -310,14 +310,14 @@ export default function PreviewsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="bg-white dark:bg-admin-surface rounded-2xl shadow-sm border border-slate-200/60 dark:border-white/10 overflow-hidden">
-              <div className="bg-slate-50 dark:bg-admin-surface-hover border-b border-slate-200 dark:border-white/10 px-6 py-3 flex items-center gap-2">
+            <div className="bg-admin-surface rounded-2xl shadow-sm border border-white/10 overflow-hidden">
+              <div className="bg-admin-surface-hover border-b border-white/10 px-6 py-3 flex items-center gap-2">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-red-400" />
                   <div className="w-3 h-3 rounded-full bg-yellow-400" />
                   <div className="w-3 h-3 rounded-full bg-green-400" />
                 </div>
-                <span className="text-sm text-slate-500 dark:text-slate-300 ml-4">E-Mail Vorschau</span>
+                <span className="text-sm text-slate-300 ml-4">E-Mail Vorschau</span>
               </div>
               <iframe
                 srcDoc={activeTemplate === "notification" ? notificationHtml : confirmationHtml}

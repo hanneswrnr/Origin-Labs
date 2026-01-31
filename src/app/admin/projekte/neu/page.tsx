@@ -83,9 +83,9 @@ export default function NeuProjektPage() {
       <div className="flex items-center gap-4 mb-8">
         <Link
           href="/admin/projekte"
-          className="p-2 hover:bg-slate-grey/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+          className="p-2 hover:bg-white/5 rounded-lg transition-colors"
         >
-          <svg className="w-5 h-5 text-slate-grey/60 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
@@ -93,7 +93,7 @@ export default function NeuProjektPage() {
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold text-slate-grey dark:text-white font-montserrat"
+            className="text-3xl font-bold text-white font-montserrat"
           >
             Neues Projekt
           </motion.h1>
@@ -101,7 +101,7 @@ export default function NeuProjektPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-slate-grey/60 dark:text-slate-300/70 mt-1"
+            className="text-slate-300/70 mt-1"
           >
             Erstellen Sie ein neues Projekt für die Portfolio-Seite.
           </motion.p>
@@ -116,11 +116,11 @@ export default function NeuProjektPage() {
           onSubmit={handleSubmit}
           className="space-y-6"
         >
-          <div className="bg-white/80 dark:bg-admin-surface/80 backdrop-blur-xl rounded-2xl border border-slate-grey/10 dark:border-white/10
-                        shadow-lg shadow-slate-grey/5 dark:shadow-black/20 p-6 space-y-5">
+          <div className="bg-admin-surface/80 backdrop-blur-xl rounded-2xl border border-white/10
+                        shadow-lg shadow-black/20 p-6 space-y-5">
             {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-slate-200 mb-2">
                 Titel <span className="text-primary-cyan">*</span>
               </label>
               <input
@@ -128,16 +128,16 @@ export default function NeuProjektPage() {
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
                 required
-                className="w-full px-4 py-3 bg-slate-grey/[0.03] dark:bg-white/[0.03] border border-slate-grey/10 dark:border-white/10 rounded-xl
-                         focus:outline-none focus:border-primary-cyan focus:bg-white dark:focus:bg-admin-surface focus:shadow-lg
-                         focus:shadow-primary-cyan/10 transition-all duration-300 dark:text-white"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl
+                         focus:outline-none focus:border-primary-cyan focus:bg-admin-surface focus:shadow-lg
+                         focus:shadow-primary-cyan/10 transition-all duration-300 text-white"
                 placeholder="z.B. E-Commerce Platform"
               />
             </div>
 
             {/* Subtitle */}
             <div>
-              <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-slate-200 mb-2">
                 Untertitel <span className="text-primary-cyan">*</span>
               </label>
               <input
@@ -145,16 +145,16 @@ export default function NeuProjektPage() {
                 value={form.subtitle}
                 onChange={(e) => setForm({ ...form, subtitle: e.target.value })}
                 required
-                className="w-full px-4 py-3 bg-slate-grey/[0.03] dark:bg-white/[0.03] border border-slate-grey/10 dark:border-white/10 rounded-xl
-                         focus:outline-none focus:border-primary-cyan focus:bg-white dark:focus:bg-admin-surface focus:shadow-lg
-                         focus:shadow-primary-cyan/10 transition-all duration-300 dark:text-white"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl
+                         focus:outline-none focus:border-primary-cyan focus:bg-admin-surface focus:shadow-lg
+                         focus:shadow-primary-cyan/10 transition-all duration-300 text-white"
                 placeholder="z.B. Online Shop für Mode & Lifestyle"
               />
             </div>
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-slate-200 mb-2">
                 Beschreibung <span className="text-primary-cyan">*</span>
               </label>
               <textarea
@@ -162,9 +162,9 @@ export default function NeuProjektPage() {
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
                 required
                 rows={3}
-                className="w-full px-4 py-3 bg-slate-grey/[0.03] dark:bg-white/[0.03] border border-slate-grey/10 dark:border-white/10 rounded-xl
-                         focus:outline-none focus:border-primary-cyan focus:bg-white dark:focus:bg-admin-surface focus:shadow-lg
-                         focus:shadow-primary-cyan/10 transition-all duration-300 resize-none dark:text-white"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl
+                         focus:outline-none focus:border-primary-cyan focus:bg-admin-surface focus:shadow-lg
+                         focus:shadow-primary-cyan/10 transition-all duration-300 resize-none text-white"
                 placeholder="Beschreiben Sie das Projekt..."
               />
             </div>
@@ -172,14 +172,14 @@ export default function NeuProjektPage() {
             {/* Category & Year */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">
+                <label className="block text-sm font-medium text-slate-200 mb-2">
                   Kategorie <span className="text-primary-cyan">*</span>
                 </label>
                 <select
                   value={form.category}
                   onChange={(e) => setForm({ ...form, category: e.target.value as ProjectForm["category"] })}
-                  className="w-full px-4 py-3 bg-slate-grey/[0.03] dark:bg-white/[0.03] border border-slate-grey/10 dark:border-white/10 rounded-xl
-                           focus:outline-none focus:border-primary-cyan focus:bg-white dark:focus:bg-admin-surface transition-all duration-300 dark:text-white"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl
+                           focus:outline-none focus:border-primary-cyan focus:bg-admin-surface transition-all duration-300 text-white"
                 >
                   <option value="websites">Website</option>
                   <option value="webapps">Webapp</option>
@@ -187,7 +187,7 @@ export default function NeuProjektPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">
+                <label className="block text-sm font-medium text-slate-200 mb-2">
                   Jahr <span className="text-primary-cyan">*</span>
                 </label>
                 <input
@@ -195,8 +195,8 @@ export default function NeuProjektPage() {
                   value={form.year}
                   onChange={(e) => setForm({ ...form, year: e.target.value })}
                   required
-                  className="w-full px-4 py-3 bg-slate-grey/[0.03] dark:bg-white/[0.03] border border-slate-grey/10 dark:border-white/10 rounded-xl
-                           focus:outline-none focus:border-primary-cyan focus:bg-white dark:focus:bg-admin-surface transition-all duration-300 dark:text-white"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl
+                           focus:outline-none focus:border-primary-cyan focus:bg-admin-surface transition-all duration-300 text-white"
                   placeholder="2024"
                 />
               </div>
@@ -204,7 +204,7 @@ export default function NeuProjektPage() {
 
             {/* Tags */}
             <div>
-              <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-slate-200 mb-2">
                 Tags / Technologien
               </label>
               <div className="flex items-center gap-2">
@@ -213,8 +213,8 @@ export default function NeuProjektPage() {
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  className="flex-1 px-4 py-3 bg-slate-grey/[0.03] dark:bg-white/[0.03] border border-slate-grey/10 dark:border-white/10 rounded-xl
-                           focus:outline-none focus:border-primary-cyan focus:bg-white dark:focus:bg-admin-surface transition-all duration-300 dark:text-white"
+                  className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl
+                           focus:outline-none focus:border-primary-cyan focus:bg-admin-surface transition-all duration-300 text-white"
                   placeholder="z.B. Next.js"
                 />
                 <button
@@ -232,7 +232,7 @@ export default function NeuProjektPage() {
                     <span
                       key={tag}
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-grey/5 dark:bg-white/5
-                               text-slate-grey dark:text-slate-200 text-sm rounded-lg"
+                               text-slate-200 text-sm rounded-lg"
                     >
                       {tag}
                       <button
@@ -252,7 +252,7 @@ export default function NeuProjektPage() {
 
             {/* Color */}
             <div>
-              <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-slate-200 mb-2">
                 Farbschema
               </label>
               <div className="grid grid-cols-4 gap-2">
@@ -280,7 +280,7 @@ export default function NeuProjektPage() {
 
             {/* Link */}
             <div>
-              <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-slate-200 mb-2">
                 Projekt-Link (optional)
               </label>
               <input
@@ -294,10 +294,10 @@ export default function NeuProjektPage() {
             </div>
 
             {/* Published Toggle */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-grey/10 dark:border-white/10">
+            <div className="flex items-center justify-between pt-4 border-t border-white/10">
               <div>
-                <p className="font-medium text-slate-grey dark:text-white">Sofort veröffentlichen</p>
-                <p className="text-sm text-slate-grey/60 dark:text-slate-300/70">Das Projekt wird direkt auf der Website angezeigt</p>
+                <p className="font-medium text-white">Sofort veröffentlichen</p>
+                <p className="text-sm text-slate-300/70">Das Projekt wird direkt auf der Website angezeigt</p>
               </div>
               <button
                 type="button"
@@ -319,7 +319,7 @@ export default function NeuProjektPage() {
           <div className="flex items-center justify-end gap-3">
             <Link
               href="/admin/projekte"
-              className="px-6 py-3 text-slate-grey/60 dark:text-slate-400 hover:text-slate-grey dark:hover:text-white font-medium
+              className="px-6 py-3 text-slate-400 hover:text-slate-grey dark:hover:text-white font-medium
                        transition-colors"
             >
               Abbrechen
@@ -361,13 +361,13 @@ export default function NeuProjektPage() {
           transition={{ delay: 0.2 }}
           className="lg:sticky lg:top-8"
         >
-          <h2 className="text-lg font-bold text-slate-grey dark:text-white mb-4 font-montserrat">
+          <h2 className="text-lg font-bold text-white mb-4 font-montserrat">
             Live-Vorschau
           </h2>
 
           {/* Preview Card - matches projekte/page.tsx style */}
-          <div className="bg-white/80 dark:bg-admin-surface/80 backdrop-blur-xl rounded-2xl border border-slate-grey/10 dark:border-white/10
-                        shadow-lg shadow-slate-grey/5 dark:shadow-black/20 overflow-hidden">
+          <div className="bg-admin-surface/80 backdrop-blur-xl rounded-2xl border border-white/10
+                        shadow-lg shadow-black/20 overflow-hidden">
             {/* Project Color Header */}
             <div className={`h-32 bg-gradient-to-br ${form.color} relative`}>
               {/* Status Badge */}
@@ -393,10 +393,10 @@ export default function NeuProjektPage() {
             <div className="p-6">
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-bold text-slate-grey dark:text-white text-xl">
+                  <h3 className="font-bold text-white text-xl">
                     {form.title || "Projekttitel"}
                   </h3>
-                  <p className="text-slate-grey/60 dark:text-slate-300/70 text-sm mt-1">
+                  <p className="text-slate-300/70 text-sm mt-1">
                     {form.subtitle || "Untertitel des Projekts"}
                   </p>
                 </div>
@@ -415,7 +415,7 @@ export default function NeuProjektPage() {
                   {form.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs bg-slate-grey/5 dark:bg-white/5 text-slate-grey/60 dark:text-slate-400 rounded-md"
+                      className="px-2 py-0.5 text-xs bg-slate-grey/5 dark:bg-white/5 text-slate-400 rounded-md"
                     >
                       {tag}
                     </span>

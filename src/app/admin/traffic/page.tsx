@@ -54,21 +54,21 @@ function StatCard({ label, value, change, positive, index, icon }: {
 }) {
   return (
     <Card delay={index * 0.1}>
-      <div className="relative bg-white/95 dark:bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10 dark:border-white/10
-                 shadow-xl shadow-slate-grey/5 dark:shadow-black/20 p-6 overflow-hidden group">
+      <div className="relative bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-white/10
+                 shadow-xl shadow-black/20 p-6 overflow-hidden group">
         {/* Background effect */}
         <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br from-primary-cyan/10 to-primary-blue/10 blur-2xl opacity-20" />
 
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-3">
-            <p className="text-slate-grey/60 dark:text-slate-300/70 text-sm font-medium">{label}</p>
+            <p className="text-slate-300/70 text-sm font-medium">{label}</p>
             <div className="p-2 bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10 rounded-xl">
               {icon}
             </div>
           </div>
 
           <div className="flex items-end justify-between">
-            <span className="text-4xl font-bold text-slate-grey dark:text-white font-montserrat">
+            <span className="text-4xl font-bold text-white font-montserrat">
               {value}
             </span>
 
@@ -126,7 +126,7 @@ export default function AdminTrafficPage() {
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold text-slate-grey dark:text-white font-montserrat"
+            className="text-3xl font-bold text-white font-montserrat"
           >
             Traffic & Analytics
           </motion.h1>
@@ -134,7 +134,7 @@ export default function AdminTrafficPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-slate-grey/60 dark:text-slate-300/70 mt-2"
+            className="text-slate-300/70 mt-2"
           >
             Übersicht über Ihre Website-Besucher und Anfragen.
           </motion.p>
@@ -144,8 +144,8 @@ export default function AdminTrafficPage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="flex items-center gap-2 bg-white/90 dark:bg-admin-surface/90 backdrop-blur-2xl rounded-2xl p-2
-                    border-2 border-slate-grey/10 dark:border-white/10 shadow-lg shadow-slate-grey/5 dark:shadow-black/20"
+          className="flex items-center gap-2 bg-admin-surface/90 backdrop-blur-2xl rounded-2xl p-2
+                    border-2 border-white/10 shadow-lg shadow-black/20"
         >
           {[
             { value: "7d", label: "7 Tage" },
@@ -160,7 +160,7 @@ export default function AdminTrafficPage() {
               className={`relative px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden
                         ${timeRange === range.value
                           ? "text-white shadow-lg shadow-primary-blue/30"
-                          : "text-slate-grey dark:text-slate-200 hover:bg-slate-grey/5 dark:hover:bg-white/5"
+                          : "text-slate-grey text-slate-200 hover:bg-slate-grey/5 hover:bg-white/5"
                         }`}
             >
               {timeRange === range.value && (
@@ -215,8 +215,8 @@ export default function AdminTrafficPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         {/* Page Views Chart */}
         <Card delay={0.2} className="lg:col-span-2">
-          <div className="bg-white/95 dark:bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10 dark:border-white/10
-                       shadow-xl shadow-slate-grey/5 dark:shadow-black/20 p-8 overflow-hidden group">
+          <div className="bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-white/10
+                       shadow-xl shadow-black/20 p-8 overflow-hidden group">
             {/* Decorative background */}
             <motion.div
               className="absolute top-0 right-0 w-64 h-64 rounded-full bg-gradient-to-br from-primary-cyan/5 to-primary-blue/5 blur-3xl"
@@ -224,7 +224,7 @@ export default function AdminTrafficPage() {
               transition={{ duration: 20, repeat: Infinity }}
             />
 
-            <h2 className="relative z-10 text-xl font-bold text-slate-grey dark:text-white mb-8 font-montserrat flex items-center gap-3">
+            <h2 className="relative z-10 text-xl font-bold text-white mb-8 font-montserrat flex items-center gap-3">
               <div className="p-2 bg-gradient-to-r from-primary-cyan to-primary-blue rounded-xl shadow-lg shadow-primary-cyan/30">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -292,9 +292,9 @@ export default function AdminTrafficPage() {
 
         {/* Top Referrers */}
         <Card delay={0.3}>
-          <div className="bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
-                       shadow-xl shadow-slate-grey/5 p-8 overflow-hidden">
-            <h2 className="text-xl font-bold text-slate-grey dark:text-white mb-8 font-montserrat flex items-center gap-3">
+          <div className="bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-white/10
+                       shadow-xl shadow-black/20 p-8 overflow-hidden">
+            <h2 className="text-xl font-bold text-white mb-8 font-montserrat flex items-center gap-3">
               <div className="p-2 bg-gradient-to-r from-violet-500 to-purple-500 rounded-xl shadow-lg shadow-violet-500/30">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -313,15 +313,15 @@ export default function AdminTrafficPage() {
                   className="group cursor-default"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-grey font-semibold flex items-center gap-2">
+                    <span className="text-sm text-slate-grey text-slate-200 font-semibold flex items-center gap-2">
                       <span className="text-lg">{ref.icon}</span>
                       {ref.source}
                     </span>
-                    <span className="text-sm text-slate-grey/60 font-bold">
+                    <span className="text-sm text-slate-grey/60 text-slate-400 font-bold">
                       {ref.visits}
                     </span>
                   </div>
-                  <div className="h-3 bg-slate-grey/10 rounded-full overflow-hidden">
+                  <div className="h-3 bg-slate-grey/10 bg-white/10 rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${(ref.visits / referrers[0].visits) * 100}%` }}
@@ -347,10 +347,10 @@ export default function AdminTrafficPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Top Pages */}
         <Card delay={0.4}>
-          <div className="bg-white/95 dark:bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10 dark:border-white/10
-                       shadow-xl shadow-slate-grey/5 dark:shadow-black/20 overflow-hidden">
+          <div className="bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-white/10
+                       shadow-xl shadow-black/20 overflow-hidden">
             <div className="p-6 border-b-2 border-slate-grey/5 dark:border-white/10">
-              <h2 className="text-xl font-bold text-slate-grey dark:text-white font-montserrat flex items-center gap-3">
+              <h2 className="text-xl font-bold text-white font-montserrat flex items-center gap-3">
                 <div className="p-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl shadow-lg shadow-amber-500/30">
                   <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -360,7 +360,7 @@ export default function AdminTrafficPage() {
               </h2>
             </div>
 
-            <div className="divide-y-2 divide-slate-grey/5 dark:divide-white/10">
+            <div className="divide-y-2 divide-slate-grey/5 divide-white/10">
               {topPages.map((page, i) => (
                 <motion.div
                   key={page.path}
@@ -421,10 +421,10 @@ export default function AdminTrafficPage() {
 
         {/* Recent Form Submissions */}
         <Card delay={0.5}>
-          <div className="bg-white/95 dark:bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10 dark:border-white/10
-                       shadow-xl shadow-slate-grey/5 dark:shadow-black/20 overflow-hidden">
+          <div className="bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-white/10
+                       shadow-xl shadow-black/20 overflow-hidden">
             <div className="p-6 border-b-2 border-slate-grey/5 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-grey dark:text-white font-montserrat flex items-center gap-3">
+              <h2 className="text-xl font-bold text-white font-montserrat flex items-center gap-3">
                 <div className="p-2 bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl shadow-lg shadow-pink-500/30">
                   <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />

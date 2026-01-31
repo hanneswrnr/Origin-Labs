@@ -28,10 +28,39 @@ export default function AdminPreisePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
 
   const handleEdit = (tier: PricingTier) => {
     setEditingTier(tier.id);
     setEditForm({ ...tier });
+  };
+
+  const handleCreateNew = () => {
+    const newTier: PricingTier = {
+      id: `tier-${Date.now()}`,
+      name: "Neues Paket",
+      description: "Beschreibung des Pakets",
+      price: "0€",
+      priceNote: "einmalig",
+      features: ["Feature 1"],
+      highlighted: false,
+      ctaText: "Anfragen",
+      discountBadge: null,
+      discountActive: false,
+      order: pricingTiers.length,
+    };
+    setPricingTiers([...pricingTiers, newTier]);
+    setEditingTier(newTier.id);
+    setEditForm(newTier);
+    setIsCreating(true);
+  };
+
+  const handleDelete = (tierId: string) => {
+    setPricingTiers((prev) => prev.filter((t) => t.id !== tierId));
+    if (editingTier === tierId) {
+      setEditingTier(null);
+      setEditForm(null);
+    }
   };
 
   const handleSave = async () => {
@@ -47,6 +76,7 @@ export default function AdminPreisePage() {
     setEditingTier(null);
     setEditForm(null);
     setIsSaving(false);
+    setIsCreating(false);
   };
 
   const handleCancel = () => {
@@ -85,7 +115,7 @@ export default function AdminPreisePage() {
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold text-slate-grey dark:text-white font-montserrat"
+            className="text-3xl font-bold text-white font-montserrat"
           >
             Preise verwalten
           </motion.h1>
@@ -93,32 +123,41 @@ export default function AdminPreisePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-slate-grey/60 dark:text-slate-300/70 mt-2"
+            className="text-slate-300/70 mt-2"
           >
             Bearbeiten Sie Ihre Preise, Features und Rabattaktionen.
           </motion.p>
         </div>
 
-        <motion.button
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          onClick={() => setShowPreview(!showPreview)}
-          className="relative flex items-center gap-2 px-5 py-3 bg-white/90 dark:bg-admin-surface/90 backdrop-blur-xl rounded-2xl
-                   border border-slate-grey/10 dark:border-white/10 text-slate-grey dark:text-slate-200 font-medium overflow-hidden group hover:border-primary-cyan/30 transition-all"
-        >
-          {/* Animated gradient border on hover */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            <div className="absolute inset-[-2px] bg-gradient-to-r from-primary-cyan via-primary-blue to-violet-500 rounded-2xl animate-spin-slow"
-                 style={{ animationDuration: '3s' }} />
-            <div className="absolute inset-[1px] bg-white dark:bg-admin-surface rounded-2xl" />
-          </div>
+        <div className="flex items-center gap-3">
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            onClick={() => setShowPreview(!showPreview)}
+            className="relative flex items-center gap-2 px-5 py-3 bg-admin-surface/90 backdrop-blur-xl rounded-2xl
+                     border border-white/10 text-slate-200 font-medium overflow-hidden group hover:border-primary-cyan/30 transition-all"
+          >
+            <svg className="w-5 h-5 relative z-10 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <span className="relative z-10">{showPreview ? "Editor anzeigen" : "Vorschau anzeigen"}</span>
+          </motion.button>
 
-          <svg className="w-5 h-5 relative z-10 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-          <span className="relative z-10">{showPreview ? "Editor anzeigen" : "Vorschau anzeigen"}</span>
-        </motion.button>
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1 }}
+            onClick={handleCreateNew}
+            className="flex items-center gap-2 px-5 py-3 gradient-primary text-white font-semibold rounded-2xl
+                     shadow-lg shadow-primary-blue/30 hover:shadow-xl hover:shadow-primary-blue/40 transition-all"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Neues Paket</span>
+          </motion.button>
+        </div>
       </div>
 
       {/* Preview Mode */}
@@ -134,10 +173,10 @@ export default function AdminPreisePage() {
             {pricingTiers.map((tier) => (
               <div key={tier.id}>
                 <div
-                  className={`relative bg-white/90 dark:bg-admin-surface/90 backdrop-blur-2xl rounded-3xl p-8 border-2 transition-all duration-500
+                  className={`relative bg-admin-surface/90 backdrop-blur-2xl rounded-3xl p-8 border-2 transition-all duration-500
                             ${tier.highlighted
                               ? "border-primary-cyan/50 shadow-2xl shadow-primary-cyan/20"
-                              : "border-slate-grey/10 dark:border-white/10 shadow-xl shadow-slate-grey/5 dark:shadow-black/20 hover:border-primary-blue/30 hover:shadow-2xl hover:shadow-primary-blue/10"
+                              : "border-white/10 shadow-xl shadow-black/20 hover:border-primary-blue/30 hover:shadow-2xl hover:shadow-primary-blue/10"
                             }`}
                 >
 
@@ -152,8 +191,8 @@ export default function AdminPreisePage() {
                     </motion.span>
                   )}
 
-                  <h3 className="text-2xl font-bold text-slate-grey dark:text-white">{tier.name}</h3>
-                  <p className="text-slate-grey/60 dark:text-slate-300/70 text-sm mt-3 leading-relaxed">{tier.description}</p>
+                  <h3 className="text-2xl font-bold text-white">{tier.name}</h3>
+                  <p className="text-slate-300/70 text-sm mt-3 leading-relaxed">{tier.description}</p>
 
                   <div className="mt-6 flex items-baseline gap-2">
                     <span className="text-4xl font-bold bg-gradient-to-r from-primary-cyan to-primary-blue bg-clip-text text-transparent">
@@ -185,7 +224,7 @@ export default function AdminPreisePage() {
                     className={`w-full mt-8 py-4 rounded-2xl font-semibold transition-all duration-300
                               ${tier.highlighted
                                 ? "gradient-primary text-white shadow-xl shadow-primary-blue/30"
-                                : "bg-slate-grey/5 dark:bg-white/5 text-slate-grey dark:text-slate-200 hover:bg-slate-grey/10 dark:hover:bg-white/10"
+                                : "bg-slate-grey/5 dark:bg-white/5 text-slate-200 hover:bg-slate-grey/10 dark:hover:bg-white/10"
                               }`}
                   >
                     {tier.ctaText}
@@ -202,6 +241,32 @@ export default function AdminPreisePage() {
             exit={{ opacity: 0, y: -20 }}
             className="space-y-6"
           >
+            {pricingTiers.length === 0 ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center justify-center py-20 bg-admin-surface/95 backdrop-blur-2xl rounded-3xl
+                         border-2 border-dashed border-slate-grey/20 border-white/20"
+              >
+                <div className="p-4 bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10 rounded-2xl mb-4">
+                  <svg className="w-12 h-12 text-primary-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Keine Preispakete vorhanden</h3>
+                <p className="text-slate-grey/60 dark:text-slate-400 mb-6">Erstellen Sie Ihr erstes Preispaket, um loszulegen.</p>
+                <button
+                  onClick={handleCreateNew}
+                  className="flex items-center gap-2 px-6 py-3 gradient-primary text-white font-semibold rounded-xl
+                           shadow-lg shadow-primary-blue/30 hover:shadow-xl hover:shadow-primary-blue/40 transition-all"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  Neues Paket erstellen
+                </button>
+              </motion.div>
+            ) : null}
             {pricingTiers.map((tier, index) => (
               <motion.div
                 key={tier.id}
@@ -216,15 +281,15 @@ export default function AdminPreisePage() {
                 <div className={`absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-primary-cyan via-primary-blue to-violet-500 opacity-0 transition-opacity duration-500
                                ${hoveredCard === tier.id ? "opacity-100" : ""}`} />
 
-                <div className="relative bg-white/95 dark:bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border border-slate-grey/10 dark:border-white/10
-                             shadow-xl shadow-slate-grey/5 dark:shadow-black/20 overflow-hidden">
+                <div className="relative bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border border-white/10
+                             shadow-xl shadow-black/20 overflow-hidden">
                   {/* Tier Header */}
-                  <div className="flex items-center justify-between p-6 border-b border-slate-grey/10 dark:border-white/10">
+                  <div className="flex items-center justify-between p-6 border-b border-white/10">
                     <div className="flex items-center gap-4">
                       <div className={`w-4 h-4 rounded-full ${tier.highlighted ? "gradient-primary" : "bg-slate-grey/20"}`} />
                       <div>
-                        <h3 className="font-bold text-slate-grey dark:text-white text-lg">{tier.name}</h3>
-                        <p className="text-slate-grey/60 dark:text-slate-300/70 text-sm">{tier.price} {tier.priceNote}</p>
+                        <h3 className="font-bold text-white text-lg">{tier.name}</h3>
+                        <p className="text-slate-300/70 text-sm">{tier.price} {tier.priceNote}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -243,10 +308,20 @@ export default function AdminPreisePage() {
                         className="p-3 hover:bg-gradient-to-r hover:from-primary-cyan/10 hover:to-primary-blue/10
                                  rounded-xl transition-all duration-300 group/btn"
                       >
-                        <svg className="w-5 h-5 text-slate-grey/60 group-hover/btn:text-primary-blue transition-colors"
+                        <svg className="w-5 h-5 text-slate-grey/60 dark:text-slate-400 group-hover/btn:text-primary-blue transition-colors"
                              fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => handleDelete(tier.id)}
+                        className="p-3 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all duration-300 group/del"
+                      >
+                        <svg className="w-5 h-5 text-slate-grey/60 dark:text-slate-400 group-hover/del:text-red-500 transition-colors"
+                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
                       </button>
                     </div>
@@ -265,25 +340,25 @@ export default function AdminPreisePage() {
                           {/* Basic Info */}
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="group/input">
-                              <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">Name</label>
+                              <label className="block text-sm font-medium text-slate-200 mb-2">Name</label>
                               <input
                                 type="text"
                                 value={editForm.name}
                                 onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                                className="w-full px-4 py-3 bg-white dark:bg-admin-surface border-2 border-slate-grey/10 dark:border-white/10 rounded-xl
+                                className="w-full px-4 py-3 bg-admin-surface border-2 border-white/10 rounded-xl
                                          focus:outline-none focus:border-primary-cyan focus:shadow-lg focus:shadow-primary-cyan/10
-                                         transition-all duration-300 group-hover/input:border-slate-grey/20 dark:text-white"
+                                         transition-all duration-300 group-hover/input:border-slate-grey/20 text-white"
                               />
                             </div>
                             <div className="group/input">
-                              <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">Preis</label>
+                              <label className="block text-sm font-medium text-slate-200 mb-2">Preis</label>
                               <input
                                 type="text"
                                 value={editForm.price}
                                 onChange={(e) => setEditForm({ ...editForm, price: e.target.value })}
-                                className="w-full px-4 py-3 bg-white dark:bg-admin-surface border-2 border-slate-grey/10 dark:border-white/10 rounded-xl
+                                className="w-full px-4 py-3 bg-admin-surface border-2 border-white/10 rounded-xl
                                          focus:outline-none focus:border-primary-cyan focus:shadow-lg focus:shadow-primary-cyan/10
-                                         transition-all duration-300 group-hover/input:border-slate-grey/20 dark:text-white"
+                                         transition-all duration-300 group-hover/input:border-slate-grey/20 text-white"
                               />
                             </div>
                           </div>
@@ -294,15 +369,15 @@ export default function AdminPreisePage() {
                               value={editForm.description}
                               onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
                               rows={2}
-                              className="w-full px-4 py-3 bg-white dark:bg-admin-surface border-2 border-slate-grey/10 dark:border-white/10 rounded-xl
+                              className="w-full px-4 py-3 bg-admin-surface border-2 border-white/10 rounded-xl
                                        focus:outline-none focus:border-primary-cyan focus:shadow-lg focus:shadow-primary-cyan/10
-                                       transition-all duration-300 resize-none group-hover/input:border-slate-grey/20 dark:text-white"
+                                       transition-all duration-300 resize-none group-hover/input:border-slate-grey/20 text-white"
                             />
                           </div>
 
                           {/* Features */}
                           <div>
-                            <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-3">Features</label>
+                            <label className="block text-sm font-medium text-slate-200 mb-3">Features</label>
                             <div className="space-y-3">
                               {editForm.features.map((feature, i) => (
                                 <motion.div
@@ -316,9 +391,9 @@ export default function AdminPreisePage() {
                                     type="text"
                                     value={feature}
                                     onChange={(e) => updateFeature(i, e.target.value)}
-                                    className="flex-1 px-4 py-3 bg-white dark:bg-admin-surface border-2 border-slate-grey/10 dark:border-white/10 rounded-xl
+                                    className="flex-1 px-4 py-3 bg-admin-surface border-2 border-white/10 rounded-xl
                                              focus:outline-none focus:border-primary-cyan focus:shadow-lg focus:shadow-primary-cyan/10
-                                             transition-all duration-300 text-sm group-hover/feature:border-slate-grey/20 dark:text-white"
+                                             transition-all duration-300 text-sm group-hover/feature:border-slate-grey/20 text-white"
                                     placeholder="Feature..."
                                   />
                                   <button
@@ -347,7 +422,7 @@ export default function AdminPreisePage() {
 
                           {/* Options */}
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <label className="flex items-center gap-3 p-4 bg-white dark:bg-admin-surface rounded-xl border-2 border-slate-grey/10 dark:border-white/10
+                            <label className="flex items-center gap-3 p-4 bg-admin-surface rounded-xl border-2 border-white/10
                                            hover:border-primary-cyan/30 transition-all duration-300 cursor-pointer group/check">
                               <input
                                 type="checkbox"
@@ -356,11 +431,11 @@ export default function AdminPreisePage() {
                                 className="w-5 h-5 rounded-lg border-slate-grey/20 text-primary-cyan
                                          focus:ring-primary-cyan/20 transition-all"
                               />
-                              <span className="text-sm text-slate-grey dark:text-slate-200 group-hover/check:text-primary-blue transition-colors">
+                              <span className="text-sm text-slate-200 group-hover/check:text-primary-blue transition-colors">
                                 Als hervorgehoben markieren
                               </span>
                             </label>
-                            <label className="flex items-center gap-3 p-4 bg-white dark:bg-admin-surface rounded-xl border-2 border-slate-grey/10 dark:border-white/10
+                            <label className="flex items-center gap-3 p-4 bg-admin-surface rounded-xl border-2 border-white/10
                                            hover:border-primary-cyan/30 transition-all duration-300 cursor-pointer group/check">
                               <input
                                 type="checkbox"
@@ -369,7 +444,7 @@ export default function AdminPreisePage() {
                                 className="w-5 h-5 rounded-lg border-slate-grey/20 text-primary-cyan
                                          focus:ring-primary-cyan/20 transition-all"
                               />
-                              <span className="text-sm text-slate-grey dark:text-slate-200 group-hover/check:text-primary-blue transition-colors">
+                              <span className="text-sm text-slate-200 group-hover/check:text-primary-blue transition-colors">
                                 Rabatt-Badge anzeigen
                               </span>
                             </label>
@@ -381,27 +456,27 @@ export default function AdminPreisePage() {
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
                             >
-                              <label className="block text-sm font-medium text-slate-grey dark:text-slate-200 mb-2">
+                              <label className="block text-sm font-medium text-slate-200 mb-2">
                                 Rabatt-Badge Text
                               </label>
                               <input
                                 type="text"
                                 value={editForm.discountBadge || ""}
                                 onChange={(e) => setEditForm({ ...editForm, discountBadge: e.target.value })}
-                                className="w-full px-4 py-3 bg-white dark:bg-admin-surface border-2 border-slate-grey/10 dark:border-white/10 rounded-xl
+                                className="w-full px-4 py-3 bg-admin-surface border-2 border-white/10 rounded-xl
                                          focus:outline-none focus:border-primary-cyan focus:shadow-lg focus:shadow-primary-cyan/10
-                                         transition-all duration-300 dark:text-white"
+                                         transition-all duration-300 text-white"
                                 placeholder="z.B. 20% Rabatt"
                               />
                             </motion.div>
                           )}
 
                           {/* Actions */}
-                          <div className="flex items-center justify-end gap-4 pt-6 border-t border-slate-grey/10 dark:border-white/10">
+                          <div className="flex items-center justify-end gap-4 pt-6 border-t border-white/10">
                             <button
                               onClick={handleCancel}
-                              className="px-6 py-3 text-slate-grey/60 dark:text-slate-400 hover:text-slate-grey dark:hover:text-white font-medium
-                                       rounded-xl hover:bg-slate-grey/5 dark:hover:bg-white/5 transition-all duration-300"
+                              className="px-6 py-3 text-slate-grey/60 dark:text-slate-400 hover:text-slate-grey hover:text-white font-medium
+                                       rounded-xl hover:bg-slate-grey/5 hover:bg-white/5 transition-all duration-300"
                             >
                               Abbrechen
                             </button>

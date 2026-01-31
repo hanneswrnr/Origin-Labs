@@ -11,7 +11,7 @@ function AnimatedValue({ value }: { value: string }) {
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-      className="text-4xl font-bold bg-gradient-to-r from-slate-grey to-slate-grey/80 dark:from-slate-100 dark:to-slate-200 bg-clip-text text-transparent font-montserrat"
+      className="text-4xl font-bold bg-gradient-to-r from-slate-grey to-slate-grey/80 from-slate-100 to-slate-200 bg-clip-text text-transparent font-montserrat"
     >
       {value}
     </motion.span>
@@ -39,8 +39,8 @@ function StatCard({
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-white/70 dark:bg-admin-surface/70 backdrop-blur-2xl rounded-3xl p-6 border border-white/50 dark:border-white/10
-                overflow-hidden shadow-xl shadow-slate-grey/5 dark:shadow-black/20 hover:shadow-2xl hover:shadow-primary-cyan/10
+      className="group relative bg-admin-surface/70 backdrop-blur-2xl rounded-3xl p-6 border border-white/10
+                overflow-hidden shadow-xl shadow-black/20 hover:shadow-2xl hover:shadow-primary-cyan/10
                 transition-all duration-500"
     >
       {/* Gradient Orb Background */}
@@ -75,7 +75,7 @@ function StatCard({
         </div>
 
         <AnimatedValue value={value} />
-        <p className="text-slate-grey/60 dark:text-slate-300/70 text-sm font-medium mt-2">{title}</p>
+        <p className="text-slate-300/70 text-sm font-medium mt-2">{title}</p>
       </div>
     </motion.div>
   );
@@ -103,9 +103,9 @@ function QuickAction({
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-        className="group flex items-center gap-4 p-5 bg-white/60 dark:bg-admin-surface/60 hover:bg-white/90 dark:hover:bg-admin-surface-hover/90 backdrop-blur-xl
-                  rounded-2xl border border-white/50 dark:border-white/10 hover:border-primary-cyan/30
-                  shadow-lg shadow-slate-grey/5 dark:shadow-black/20 hover:shadow-xl hover:shadow-primary-cyan/10
+        className="group flex items-center gap-4 p-5 bg-admin-surface/60 hover:bg-admin-surface-hover/90 backdrop-blur-xl
+                  rounded-2xl border border-white/10 hover:border-primary-cyan/30
+                  shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-primary-cyan/10
                   transition-all duration-300 cursor-pointer relative overflow-hidden"
       >
         {/* Hover Gradient Line */}
@@ -116,13 +116,13 @@ function QuickAction({
           {icon}
         </div>
         <div className="flex-1">
-          <h4 className="font-semibold text-slate-grey dark:text-slate-100 group-hover:text-primary-blue transition-colors">
+          <h4 className="font-semibold text-slate-100 group-hover:text-primary-blue transition-colors">
             {label}
           </h4>
-          <p className="text-sm text-slate-grey/60 dark:text-slate-300/60">{description}</p>
+          <p className="text-sm text-slate-300/60">{description}</p>
         </div>
         <svg
-          className="w-5 h-5 text-slate-grey/30 dark:text-slate-500 group-hover:text-primary-cyan transition-colors"
+          className="w-5 h-5 text-slate-500 group-hover:text-primary-cyan transition-colors"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -157,10 +157,10 @@ export default function AdminDashboard() {
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             <span className="text-sm font-medium text-primary-blue">System Online</span>
           </motion.div>
-          <h1 className="text-4xl font-bold text-slate-grey dark:text-white font-montserrat">
+          <h1 className="text-4xl font-bold text-white font-montserrat">
             Willkommen zurück
           </h1>
-          <p className="text-slate-grey/60 dark:text-slate-300/70 mt-2 text-lg">
+          <p className="text-slate-300/70 mt-2 text-lg">
             Hier ist Ihre Übersicht für heute.
           </p>
         </div>
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xl font-bold text-slate-grey dark:text-white mb-5 font-montserrat flex items-center gap-3"
+            className="text-xl font-bold text-white mb-5 font-montserrat flex items-center gap-3"
           >
             <span className="p-2 bg-gradient-to-br from-primary-cyan/10 to-primary-blue/10 rounded-xl">
               <svg className="w-5 h-5 text-primary-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -282,7 +282,7 @@ export default function AdminDashboard() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xl font-bold text-slate-grey dark:text-white mb-5 font-montserrat flex items-center gap-3"
+            className="text-xl font-bold text-white mb-5 font-montserrat flex items-center gap-3"
           >
             <span className="p-2 bg-gradient-to-br from-primary-cyan/10 to-primary-blue/10 rounded-xl">
               <svg className="w-5 h-5 text-primary-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -295,23 +295,23 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="bg-white/70 dark:bg-admin-surface/70 backdrop-blur-2xl rounded-3xl border border-white/50 dark:border-white/10
-                      shadow-xl shadow-slate-grey/5 dark:shadow-black/20 overflow-hidden"
+            className="bg-admin-surface/70 backdrop-blur-2xl rounded-3xl border border-white/10
+                      shadow-xl shadow-black/20 overflow-hidden"
           >
-            <div className="divide-y divide-slate-grey/5 dark:divide-white/10">
+            <div className="divide-y divide-white/10">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
                 className="p-10 text-center"
               >
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-slate-grey/10 to-slate-grey/5 dark:from-white/10 dark:to-white/5
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-white/10 to-white/5
                                flex items-center justify-center">
-                  <svg className="w-8 h-8 text-slate-grey/30 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-8 h-8 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                   </svg>
                 </div>
-                <p className="text-slate-grey/50 dark:text-slate-400 font-medium">Keine Anfragen vorhanden</p>
+                <p className="text-slate-400 font-medium">Keine Anfragen vorhanden</p>
               </motion.div>
             </div>
 
@@ -319,7 +319,7 @@ export default function AdminDashboard() {
               href="/admin/traffic"
               className="block p-5 text-center font-semibold text-primary-blue hover:text-primary-cyan
                        bg-gradient-to-r from-primary-cyan/5 to-primary-blue/5 hover:from-primary-cyan/10 hover:to-primary-blue/10
-                       border-t border-slate-grey/5 dark:border-white/10 transition-all duration-300 group"
+                       border-t border-white/10 transition-all duration-300 group"
             >
               <span className="flex items-center justify-center gap-2">
                 Alle Anfragen anzeigen
