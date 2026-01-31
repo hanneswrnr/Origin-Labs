@@ -1,0 +1,71 @@
+{
+  "common": {
+    "home": "Home",
+    "aboutUs": "Chi siamo",
+    "services": "Servizi",
+    "pricing": "Prezzi",
+    "projects": "Progetti",
+    "contact": "Contatti",
+    "startProject": "Inizia progetto",
+    "appearance": "Aspetto",
+    "language": "Lingua",
+    "menu": "Menu",
+    "learnMore": "Scopri di più",
+    "viewAll": "Vedi tutto",
+    "viewAllProjects": "Vedi tutti i progetti",
+    "viewAllServices": "Vedi tutti i servizi"
+  },
+  "hero": {
+    "tagline": "Agenzia di sviluppo web",
+    "title": "Soluzioni digitali",
+    "titleHighlight": "che ispirano",
+    "subtitle": "Sviluppiamo siti web, applicazioni web e app mobili moderne per aziende che vogliono digitalizzarsi.",
+    "cta": "Consulenza gratuita",
+    "ctaSecondary": "Vedi progetti"
+  },
+  "services": {
+    "title": "I nostri servizi",
+    "subtitle": "Dall'idea al prodotto finito – vi accompagniamo in ogni fase.",
+    "websites": "Siti web",
+    "websitesDesc": "Siti web moderni e responsive che ispirano",
+    "webapps": "Applicazioni web",
+    "webappsDesc": "Applicazioni web personalizzate per il vostro business",
+    "mobileApps": "App mobili",
+    "mobileAppsDesc": "App native e cross-platform per iOS e Android"
+  },
+  "reviews": {
+    "title": "Testimonianze",
+    "heading": "Cosa dicono i nostri",
+    "headingHighlight": "Clienti",
+    "subtitle": "Recensioni reali da clienti reali – direttamente da Google.",
+    "googleReviews": "Recensioni Google",
+    "reviews": "Recensioni",
+    "live": "Live",
+    "previousReview": "Recensione precedente",
+    "nextReview": "Recensione successiva",
+    "showReview": "Mostra recensione"
+  },
+  "cta": {
+    "title": "Pronti per il vostro prossimo progetto?",
+    "subtitle": "Realizziamo insieme la vostra visione digitale.",
+    "button": "Contattaci"
+  },
+  "footer": {
+    "company": "Azienda",
+    "servicesTitle": "Servizi",
+    "legal": "Note legali",
+    "copyright": "Tutti i diritti riservati.",
+    "madeWith": "Fatto con",
+    "inGermany": "in Germania",
+    "scrollToTop": "Torna su",
+    "aboutUs": "Chi siamo",
+    "projects": "Progetti",
+    "career": "Carriera",
+    "websites": "Siti web",
+    "webapps": "Applicazioni web",
+    "mobileApps": "App mobili",
+    "imprint": "Impronta",
+    "privacy": "Privacy",
+    "terms": "Termini"
+  }
+}

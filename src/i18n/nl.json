@@ -1,0 +1,71 @@
+{
+  "common": {
+    "home": "Home",
+    "aboutUs": "Over ons",
+    "services": "Diensten",
+    "pricing": "Prijzen",
+    "projects": "Projecten",
+    "contact": "Contact",
+    "startProject": "Project starten",
+    "appearance": "Uiterlijk",
+    "language": "Taal",
+    "menu": "Menu",
+    "learnMore": "Meer informatie",
+    "viewAll": "Alles bekijken",
+    "viewAllProjects": "Alle projecten bekijken",
+    "viewAllServices": "Alle diensten bekijken"
+  },
+  "hero": {
+    "tagline": "Webontwikkelingsbureau",
+    "title": "Digitale oplossingen",
+    "titleHighlight": "die inspireren",
+    "subtitle": "Wij ontwikkelen moderne websites, webapps en mobiele apps voor bedrijven die digitaal willen groeien.",
+    "cta": "Gratis consultatie",
+    "ctaSecondary": "Bekijk projecten"
+  },
+  "services": {
+    "title": "Onze diensten",
+    "subtitle": "Van idee tot eindproduct – wij begeleiden u bij elke stap.",
+    "websites": "Websites",
+    "websitesDesc": "Moderne, responsieve websites die inspireren",
+    "webapps": "Webapps",
+    "webappsDesc": "Maatwerkwebapplicaties voor uw bedrijf",
+    "mobileApps": "Mobiele apps",
+    "mobileAppsDesc": "Native en cross-platform apps voor iOS en Android"
+  },
+  "reviews": {
+    "title": "Getuigenissen",
+    "heading": "Wat onze",
+    "headingHighlight": "Klanten zeggen",
+    "subtitle": "Echte beoordelingen van echte klanten – rechtstreeks van Google.",
+    "googleReviews": "Google Beoordelingen",
+    "reviews": "Beoordelingen",
+    "live": "Live",
+    "previousReview": "Vorige beoordeling",
+    "nextReview": "Volgende beoordeling",
+    "showReview": "Toon beoordeling"
+  },
+  "cta": {
+    "title": "Klaar voor uw volgende project?",
+    "subtitle": "Laten we samen uw digitale visie realiseren.",
+    "button": "Neem contact op"
+  },
+  "footer": {
+    "company": "Bedrijf",
+    "servicesTitle": "Diensten",
+    "legal": "Juridisch",
+    "copyright": "Alle rechten voorbehouden.",
+    "madeWith": "Gemaakt met",
+    "inGermany": "in Duitsland",
+    "scrollToTop": "Naar boven scrollen",
+    "aboutUs": "Over ons",
+    "projects": "Projecten",
+    "career": "Carrière",
+    "websites": "Websites",
+    "webapps": "Webapps",
+    "mobileApps": "Mobiele apps",
+    "imprint": "Impressum",
+    "privacy": "Privacybeleid",
+    "terms": "Voorwaarden"
+  }
+}

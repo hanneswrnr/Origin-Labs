@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Google Review Type
 interface GoogleReview {
@@ -67,6 +68,7 @@ function StarRating({ rating, size = "w-5 h-5" }: { rating: number; size?: strin
 
 // Google Reviews Section Component
 function GoogleReviewsSection() {
+  const { t } = useTranslation();
   const [reviews, setReviews] = useState<GoogleReview[]>([]);
   const [overallRating, setOverallRating] = useState(5.0);
   const [totalReviews, setTotalReviews] = useState(0);
@@ -197,13 +199,13 @@ function GoogleReviewsSection() {
           transition={{ duration: 0.6 }}
         >
           <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
-            Kundenstimmen
+            {t("reviews.title")}
           </span>
           <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6">
-            Das sagen unsere <span className="gradient-text">Kunden</span>
+            {t("reviews.heading")} <span className="gradient-text">{t("reviews.headingHighlight")}</span>
           </h2>
           <p className="font-body text-lg text-slate-grey/60 max-w-2xl mx-auto">
-            Echte Bewertungen von echten Kunden – direkt von Google.
+            {t("reviews.subtitle")}
           </p>
         </motion.div>
 
@@ -225,7 +227,7 @@ function GoogleReviewsSection() {
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
               <div>
-                <p className="font-body text-sm text-slate-grey/60">Google Bewertungen</p>
+                <p className="font-body text-sm text-slate-grey/60">{t("reviews.googleReviews")}</p>
                 <div className="flex items-center gap-2">
                   <span className="font-heading text-3xl font-bold text-slate-grey">
                     {overallRating.toFixed(1)}
@@ -241,7 +243,7 @@ function GoogleReviewsSection() {
             {/* Total Reviews */}
             <div className="text-center">
               <p className="font-heading text-3xl font-bold text-slate-grey">{totalReviews}</p>
-              <p className="font-body text-sm text-slate-grey/60">Bewertungen</p>
+              <p className="font-body text-sm text-slate-grey/60">{t("reviews.reviews")}</p>
             </div>
 
             {/* Live Indicator */}
@@ -250,7 +252,7 @@ function GoogleReviewsSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
               </span>
-              <span className="font-body text-xs text-green-600 font-medium">Live</span>
+              <span className="font-body text-xs text-green-600 font-medium">{t("reviews.live")}</span>
             </div>
           </div>
         </motion.div>
@@ -488,6 +490,7 @@ function ReviewCard({ review }: { review: GoogleReview }) {
 }
 
 export default function Home() {
+  const { t } = useTranslation();
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -577,9 +580,9 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              Digitale Lösungen,
+              {t("hero.title")},
               <br />
-              <span className="gradient-text">die begeistern</span>
+              <span className="gradient-text">{t("hero.titleHighlight")}</span>
             </motion.h1>
 
             <motion.p
@@ -588,8 +591,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
             >
-              Wir entwickeln Websites, Webapps und Mobile Apps, die Ihr
-              Unternehmen nach vorne bringen.
+              {t("hero.subtitle")}
             </motion.p>
 
             <motion.div
@@ -605,7 +607,7 @@ export default function Home() {
                 whileTap={{ scale: 0.98 }}
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  Projekt starten
+                  {t("common.startProject")}
                   <motion.svg
                     className="w-5 h-5"
                     fill="none"
@@ -637,7 +639,7 @@ export default function Home() {
                 whileTap={{ scale: 0.98 }}
               >
                 <span className="flex items-center justify-center gap-2">
-                  Mehr erfahren
+                  {t("common.learnMore")}
                   <svg
                     className="w-5 h-5 text-slate-grey/50 group-hover:text-primary-blue transition-colors"
                     fill="none"

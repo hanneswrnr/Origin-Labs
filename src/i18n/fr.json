@@ -1,0 +1,71 @@
+{
+  "common": {
+    "home": "Accueil",
+    "aboutUs": "À propos",
+    "services": "Services",
+    "pricing": "Tarifs",
+    "projects": "Projets",
+    "contact": "Contact",
+    "startProject": "Démarrer un projet",
+    "appearance": "Apparence",
+    "language": "Langue",
+    "menu": "Menu",
+    "learnMore": "En savoir plus",
+    "viewAll": "Voir tout",
+    "viewAllProjects": "Voir tous les projets",
+    "viewAllServices": "Voir tous les services"
+  },
+  "hero": {
+    "tagline": "Agence de développement web",
+    "title": "Solutions digitales",
+    "titleHighlight": "qui inspirent",
+    "subtitle": "Nous développons des sites web, applications web et applications mobiles modernes pour les entreprises qui veulent se digitaliser.",
+    "cta": "Consultation gratuite",
+    "ctaSecondary": "Voir les projets"
+  },
+  "services": {
+    "title": "Nos services",
+    "subtitle": "De l'idée au produit fini – nous vous accompagnons à chaque étape.",
+    "websites": "Sites web",
+    "websitesDesc": "Sites web modernes et responsives qui inspirent",
+    "webapps": "Applications web",
+    "webappsDesc": "Applications web sur mesure pour votre entreprise",
+    "mobileApps": "Applications mobiles",
+    "mobileAppsDesc": "Applications natives et multiplateformes pour iOS et Android"
+  },
+  "reviews": {
+    "title": "Témoignages",
+    "heading": "Ce que disent nos",
+    "headingHighlight": "Clients",
+    "subtitle": "De vrais avis de vrais clients – directement de Google.",
+    "googleReviews": "Avis Google",
+    "reviews": "Avis",
+    "live": "En direct",
+    "previousReview": "Avis précédent",
+    "nextReview": "Avis suivant",
+    "showReview": "Afficher l'avis"
+  },
+  "cta": {
+    "title": "Prêt pour votre prochain projet?",
+    "subtitle": "Réalisons ensemble votre vision digitale.",
+    "button": "Nous contacter"
+  },
+  "footer": {
+    "company": "Entreprise",
+    "servicesTitle": "Services",
+    "legal": "Mentions légales",
+    "copyright": "Tous droits réservés.",
+    "madeWith": "Fait avec",
+    "inGermany": "en Allemagne",
+    "scrollToTop": "Retour en haut",
+    "aboutUs": "À propos",
+    "projects": "Projets",
+    "career": "Carrière",
+    "websites": "Sites web",
+    "webapps": "Applications web",
+    "mobileApps": "Applications mobiles",
+    "imprint": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "terms": "CGV"
+  }
+}

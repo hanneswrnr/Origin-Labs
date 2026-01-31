@@ -1,0 +1,71 @@
+{
+  "common": {
+    "home": "Strona główna",
+    "aboutUs": "O nas",
+    "services": "Usługi",
+    "pricing": "Cennik",
+    "projects": "Projekty",
+    "contact": "Kontakt",
+    "startProject": "Rozpocznij projekt",
+    "appearance": "Wygląd",
+    "language": "Język",
+    "menu": "Menu",
+    "learnMore": "Dowiedz się więcej",
+    "viewAll": "Zobacz wszystko",
+    "viewAllProjects": "Zobacz wszystkie projekty",
+    "viewAllServices": "Zobacz wszystkie usługi"
+  },
+  "hero": {
+    "tagline": "Agencja tworzenia stron",
+    "title": "Rozwiązania cyfrowe",
+    "titleHighlight": "które inspirują",
+    "subtitle": "Tworzymy nowoczesne strony internetowe, aplikacje webowe i mobilne dla firm, które chcą się rozwijać cyfrowo.",
+    "cta": "Bezpłatna konsultacja",
+    "ctaSecondary": "Zobacz projekty"
+  },
+  "services": {
+    "title": "Nasze usługi",
+    "subtitle": "Od pomysłu do gotowego produktu – towarzyszymy Ci na każdym kroku.",
+    "websites": "Strony internetowe",
+    "websitesDesc": "Nowoczesne, responsywne strony, które inspirują",
+    "webapps": "Aplikacje webowe",
+    "webappsDesc": "Niestandardowe aplikacje webowe dla Twojego biznesu",
+    "mobileApps": "Aplikacje mobilne",
+    "mobileAppsDesc": "Natywne i wieloplatformowe aplikacje na iOS i Android"
+  },
+  "reviews": {
+    "title": "Opinie",
+    "heading": "Co mówią nasi",
+    "headingHighlight": "Klienci",
+    "subtitle": "Prawdziwe opinie od prawdziwych klientów – bezpośrednio z Google.",
+    "googleReviews": "Opinie Google",
+    "reviews": "Opinie",
+    "live": "Na żywo",
+    "previousReview": "Poprzednia opinia",
+    "nextReview": "Następna opinia",
+    "showReview": "Pokaż opinię"
+  },
+  "cta": {
+    "title": "Gotowy na swój następny projekt?",
+    "subtitle": "Razem zrealizujemy Twoją cyfrową wizję.",
+    "button": "Skontaktuj się"
+  },
+  "footer": {
+    "company": "Firma",
+    "servicesTitle": "Usługi",
+    "legal": "Informacje prawne",
+    "copyright": "Wszelkie prawa zastrzeżone.",
+    "madeWith": "Stworzone z",
+    "inGermany": "w Niemczech",
+    "scrollToTop": "Przewiń do góry",
+    "aboutUs": "O nas",
+    "projects": "Projekty",
+    "career": "Kariera",
+    "websites": "Strony internetowe",
+    "webapps": "Aplikacje webowe",
+    "mobileApps": "Aplikacje mobilne",
+    "imprint": "Impressum",
+    "privacy": "Polityka prywatności",
+    "terms": "Regulamin"
+  }
+}

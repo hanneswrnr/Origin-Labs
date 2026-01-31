@@ -6,7 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
+import LanguageSelector from "@/components/LanguageSelector";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Track if header has animated (persists across page navigations)
 let hasHeaderAnimated = false;
@@ -15,13 +17,13 @@ let hasHeaderAnimated = false;
 let previousIndicatorStyle = { left: 0, width: 0 };
 let hasInitialPosition = false;
 
-const navItems = [
-  { label: "Home", href: "#hero", homeHref: "/" },
-  { label: "Über uns", href: "/ueber-uns", isPage: true },
-  { label: "Leistungen", href: "/leistungen", isPage: true },
-  { label: "Preise", href: "/preise", isPage: true },
-  { label: "Projekte", href: "/projekte", isPage: true },
-  { label: "Kontakt", href: "/kontakt", isPage: true },
+const getNavItems = (t: (key: string) => string) => [
+  { label: t("common.home"), href: "#hero", homeHref: "/" },
+  { label: t("common.aboutUs"), href: "/ueber-uns", isPage: true },
+  { label: t("common.services"), href: "/leistungen", isPage: true },
+  { label: t("common.pricing"), href: "/preise", isPage: true },
+  { label: t("common.projects"), href: "/projekte", isPage: true },
+  { label: t("common.contact"), href: "/kontakt", isPage: true },
 ];
 
 export default function Header() {
@@ -37,6 +39,8 @@ export default function Header() {
   const router = useRouter();
   const isHomePage = pathname === "/";
   const { theme, isHydrated } = useTheme();
+  const { t } = useTranslation();
+  const navItems = getNavItems(t);
 
   // Mark header as animated after first render
   useEffect(() => {
@@ -274,9 +278,10 @@ export default function Header() {
             })}
           </div>
 
-          {/* Theme Toggle - Desktop */}
-          <div className="hidden xl:flex items-center ml-1">
+          {/* Theme Toggle & Language Selector - Desktop */}
+          <div className="hidden xl:flex items-center gap-1 ml-1">
             <ThemeToggle />
+            <LanguageSelector />
           </div>
 
           {/* CTA Button */}
@@ -292,7 +297,7 @@ export default function Header() {
               />
               {/* Left spacer for visual balance */}
               <span className="w-4 relative z-10" />
-              <span className="relative z-10">Projekt starten</span>
+              <span className="relative z-10">{t("common.startProject")}</span>
               <svg
                 className="w-4 h-4 relative z-10"
                 fill="none"
@@ -476,8 +481,19 @@ export default function Header() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.25 }}
                 >
-                  <span className="font-body text-sm text-text-muted">Erscheinungsbild</span>
+                  <span className="font-body text-sm text-text-muted">{t("common.appearance")}</span>
                   <ThemeToggle />
+                </motion.div>
+
+                {/* Language Selector - Mobile */}
+                <motion.div
+                  className="flex items-center justify-between px-5 py-3 border-t border-divider"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <span className="font-body text-sm text-text-muted">{t("common.language")}</span>
+                  <LanguageSelector />
                 </motion.div>
 
                 {/* CTA Button */}
@@ -485,14 +501,14 @@ export default function Header() {
                   className="mt-2 pt-3 border-t border-divider"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.35 }}
                 >
                   <Link href="/kontakt" onClick={() => setIsMobileMenuOpen(false)}>
                     <span className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-primary text-white font-heading font-semibold rounded-2xl shadow-lg shadow-primary-blue/25 relative overflow-hidden group">
                       <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                       {/* Left spacer for visual balance */}
                       <span className="w-5 relative z-10" />
-                      <span className="relative z-10">Projekt starten</span>
+                      <span className="relative z-10">{t("common.startProject")}</span>
                       <svg
                         className="w-5 h-5 relative z-10"
                         fill="none"

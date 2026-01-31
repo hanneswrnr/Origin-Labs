@@ -4,6 +4,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import AdminShortcut from "@/components/AdminShortcut";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeScript } from "@/components/ThemeScript";
 
 const montserrat = Montserrat({
@@ -40,8 +41,10 @@ export default function RootLayout({
         className={`${montserrat.variable} ${inter.variable} font-body antialiased bg-background text-foreground`}
       >
         <ThemeProvider>
-          <AdminShortcut />
-          <SmoothScroll>{children}</SmoothScroll>
+          <LanguageProvider>
+            <AdminShortcut />
+            <SmoothScroll>{children}</SmoothScroll>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

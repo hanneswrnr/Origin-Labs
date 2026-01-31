@@ -1,0 +1,71 @@
+{
+  "common": {
+    "home": "Home",
+    "aboutUs": "Über uns",
+    "services": "Leistungen",
+    "pricing": "Preise",
+    "projects": "Projekte",
+    "contact": "Kontakt",
+    "startProject": "Projekt starten",
+    "appearance": "Erscheinungsbild",
+    "language": "Sprache",
+    "menu": "Menü",
+    "learnMore": "Mehr erfahren",
+    "viewAll": "Alle ansehen",
+    "viewAllProjects": "Alle Projekte ansehen",
+    "viewAllServices": "Alle Leistungen ansehen"
+  },
+  "hero": {
+    "tagline": "Web Development Agency",
+    "title": "Digitale Lösungen",
+    "titleHighlight": "die begeistern",
+    "subtitle": "Wir entwickeln moderne Websites, Webapps und Mobile Apps für Unternehmen, die digital durchstarten wollen.",
+    "cta": "Kostenlose Beratung",
+    "ctaSecondary": "Projekte ansehen"
+  },
+  "services": {
+    "title": "Unsere Leistungen",
+    "subtitle": "Von der Idee bis zum fertigen Produkt – wir begleiten Sie auf dem gesamten Weg.",
+    "websites": "Websites",
+    "websitesDesc": "Moderne, responsive Websites die begeistern",
+    "webapps": "Webapps",
+    "webappsDesc": "Maßgeschneiderte Webanwendungen für Ihr Business",
+    "mobileApps": "Mobile Apps",
+    "mobileAppsDesc": "Native und Cross-Platform Apps für iOS und Android"
+  },
+  "reviews": {
+    "title": "Kundenstimmen",
+    "heading": "Das sagen unsere",
+    "headingHighlight": "Kunden",
+    "subtitle": "Echte Bewertungen von echten Kunden – direkt von Google.",
+    "googleReviews": "Google Bewertungen",
+    "reviews": "Bewertungen",
+    "live": "Live",
+    "previousReview": "Vorherige Bewertung",
+    "nextReview": "Nächste Bewertung",
+    "showReview": "Bewertung anzeigen"
+  },
+  "cta": {
+    "title": "Bereit für Ihr nächstes Projekt?",
+    "subtitle": "Lassen Sie uns gemeinsam Ihre digitale Vision verwirklichen.",
+    "button": "Jetzt Kontakt aufnehmen"
+  },
+  "footer": {
+    "company": "Unternehmen",
+    "servicesTitle": "Leistungen",
+    "legal": "Rechtliches",
+    "copyright": "Alle Rechte vorbehalten.",
+    "madeWith": "Made with",
+    "inGermany": "in Germany",
+    "scrollToTop": "Nach oben scrollen",
+    "aboutUs": "Über uns",
+    "projects": "Projekte",
+    "career": "Karriere",
+    "websites": "Websites",
+    "webapps": "Webapps",
+    "mobileApps": "Mobile Apps",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "terms": "AGB"
+  }
+}
