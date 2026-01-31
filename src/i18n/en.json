@@ -13,25 +13,118 @@
     "learnMore": "Learn More",
     "viewAll": "View All",
     "viewAllProjects": "View All Projects",
-    "viewAllServices": "View All Services"
+    "viewAllServices": "View All Services",
+    "viewAllReviews": "View All Reviews on Google",
+    "caseStudy": "View Case Study",
+    "contactUs": "Contact Us",
+    "callNow": "Call Now",
+    "responseTime": "Response within 24h"
   },
   "hero": {
-    "tagline": "Web Development Agency",
+    "badge": "Your Partner for Digital Excellence",
     "title": "Digital Solutions",
     "titleHighlight": "that inspire",
-    "subtitle": "We develop modern websites, web apps and mobile apps for companies that want to go digital.",
-    "cta": "Free Consultation",
-    "ctaSecondary": "View Projects"
+    "subtitle": "We develop modern websites, web apps and mobile apps for companies that want to go digital."
+  },
+  "about": {
+    "label": "About Us",
+    "title": "Innovation meets",
+    "titleHighlight": "Passion",
+    "description1": "We are a team of creative minds and technical experts working together on one vision: Creating digital products that make a real difference.",
+    "description2": "With passion for design and technology, we transform your ideas into impressive digital experiences.",
+    "learnMore": "Learn more about us",
+    "teamLabel": "Our Team",
+    "experienceYears": "Years Experience",
+    "projectsCompleted": "Projects"
   },
   "services": {
-    "title": "Our Services",
-    "subtitle": "From idea to finished product – we accompany you every step of the way.",
-    "websites": "Websites",
-    "websitesDesc": "Modern, responsive websites that inspire",
-    "webapps": "Web Apps",
-    "webappsDesc": "Custom web applications for your business",
-    "mobileApps": "Mobile Apps",
-    "mobileAppsDesc": "Native and cross-platform apps for iOS and Android"
+    "label": "Services",
+    "title": "What we",
+    "titleHighlight": "offer",
+    "subtitle": "From the first idea to the finished product – we accompany you every step of the way.",
+    "websites": {
+      "title": "Websites",
+      "description": "Modern, responsive websites with first-class design and optimal performance."
+    },
+    "webapps": {
+      "title": "Web Apps",
+      "description": "Powerful web applications that simplify complex processes."
+    },
+    "mobileApps": {
+      "title": "Mobile Apps",
+      "description": "Native and cross-platform apps for iOS and Android that delight users."
+    }
+  },
+  "pricing": {
+    "label": "Pricing",
+    "title": "Individual",
+    "titleHighlight": "Solutions",
+    "subtitle": "We develop websites, web apps and mobile apps – tailored to your requirements. Since every project is unique, we create an individual offer for you.",
+    "finalPrice": "Final price based on your requirements",
+    "websites": {
+      "name": "Websites",
+      "description": "Professional web presence for your company",
+      "price": "from €800",
+      "features": "Responsive Design,SEO Optimization,CMS on request,Fast Loading,SSL Encryption"
+    },
+    "webapps": {
+      "name": "Web Apps",
+      "description": "Complex web applications for your processes",
+      "price": "from €8,000",
+      "features": "Custom Features,Database Integration,API Connections,User Management,Cloud Hosting"
+    },
+    "mobileApps": {
+      "name": "Mobile Apps",
+      "description": "Native & Cross-Platform Apps",
+      "price": "from €15,000",
+      "features": "iOS & Android,Offline Functionality,Push Notifications,App Store Publishing,Regular Updates"
+    },
+    "cta": {
+      "badge": "Non-binding & Free",
+      "title": "Ready to start your project?",
+      "subtitle": "Tell us about your idea and we'll create a tailored offer for you – transparent and fair.",
+      "button": "Free Initial Consultation"
+    }
+  },
+  "projects": {
+    "label": "Projects",
+    "title": "Our",
+    "titleHighlight": "Work",
+    "subtitle": "Discover a selection of our successfully completed projects.",
+    "ecommerce": {
+      "title": "E-Commerce Platform",
+      "subtitle": "Next-Gen Online Shopping",
+      "description": "Modern online shop with real-time inventory, personalized recommendations and seamless checkout experience."
+    },
+    "corporate": {
+      "title": "Corporate Website",
+      "subtitle": "Digital Corporate Identity",
+      "description": "Elegant corporate website focused on storytelling, performance and conversion optimization."
+    },
+    "fitness": {
+      "title": "Fitness App",
+      "subtitle": "Health in Your Pocket",
+      "description": "Native mobile app with workout tracking, nutrition planning and social features."
+    },
+    "saas": {
+      "title": "SaaS Dashboard",
+      "subtitle": "Business Intelligence",
+      "description": "Complex analytics dashboard with real-time data, interactive visualizations and team collaboration."
+    }
+  },
+  "cta": {
+    "title": "Have a project in mind?",
+    "subtitle": "We look forward to hearing from you and creating something great together."
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Let's",
+    "titleHighlight": "work together",
+    "subtitle": "Have a project in mind? We look forward to hearing from you and creating something great together.",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "locationInfo": "Germany"
   },
   "reviews": {
     "title": "Testimonials",
@@ -44,11 +137,6 @@
     "previousReview": "Previous review",
     "nextReview": "Next review",
     "showReview": "Show review"
-  },
-  "cta": {
-    "title": "Ready for your next project?",
-    "subtitle": "Let's bring your digital vision to life together.",
-    "button": "Get in Touch"
   },
   "footer": {
     "company": "Company",

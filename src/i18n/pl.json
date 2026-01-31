@@ -13,25 +13,118 @@
     "learnMore": "Dowiedz się więcej",
     "viewAll": "Zobacz wszystko",
     "viewAllProjects": "Zobacz wszystkie projekty",
-    "viewAllServices": "Zobacz wszystkie usługi"
+    "viewAllServices": "Zobacz wszystkie usługi",
+    "viewAllReviews": "Zobacz wszystkie opinie na Google",
+    "caseStudy": "Zobacz case study",
+    "contactUs": "Skontaktuj się",
+    "callNow": "Zadzwoń teraz",
+    "responseTime": "Odpowiedź w ciągu 24h"
   },
   "hero": {
-    "tagline": "Agencja tworzenia stron",
+    "badge": "Twój partner w cyfrowej doskonałości",
     "title": "Rozwiązania cyfrowe",
     "titleHighlight": "które inspirują",
-    "subtitle": "Tworzymy nowoczesne strony internetowe, aplikacje webowe i mobilne dla firm, które chcą się rozwijać cyfrowo.",
-    "cta": "Bezpłatna konsultacja",
-    "ctaSecondary": "Zobacz projekty"
+    "subtitle": "Tworzymy nowoczesne strony internetowe, aplikacje webowe i mobilne dla firm, które chcą się rozwijać cyfrowo."
+  },
+  "about": {
+    "label": "O nas",
+    "title": "Innowacja spotyka",
+    "titleHighlight": "pasję",
+    "description1": "Jesteśmy zespołem kreatywnych umysłów i ekspertów technicznych pracujących razem nad jedną wizją: Tworzeniem produktów cyfrowych, które naprawdę robią różnicę.",
+    "description2": "Z pasją do designu i technologii przekształcamy Twoje pomysły w imponujące doświadczenia cyfrowe.",
+    "learnMore": "Dowiedz się więcej o nas",
+    "teamLabel": "Nasz zespół",
+    "experienceYears": "Lat doświadczenia",
+    "projectsCompleted": "Projektów"
   },
   "services": {
-    "title": "Nasze usługi",
-    "subtitle": "Od pomysłu do gotowego produktu – towarzyszymy Ci na każdym kroku.",
-    "websites": "Strony internetowe",
-    "websitesDesc": "Nowoczesne, responsywne strony, które inspirują",
-    "webapps": "Aplikacje webowe",
-    "webappsDesc": "Niestandardowe aplikacje webowe dla Twojego biznesu",
-    "mobileApps": "Aplikacje mobilne",
-    "mobileAppsDesc": "Natywne i wieloplatformowe aplikacje na iOS i Android"
+    "label": "Usługi",
+    "title": "Co",
+    "titleHighlight": "oferujemy",
+    "subtitle": "Od pierwszego pomysłu do gotowego produktu – towarzyszymy Ci na każdym kroku.",
+    "websites": {
+      "title": "Strony internetowe",
+      "description": "Nowoczesne, responsywne strony z pierwszorzędnym designem i optymalną wydajnością."
+    },
+    "webapps": {
+      "title": "Aplikacje webowe",
+      "description": "Potężne aplikacje webowe, które upraszczają złożone procesy."
+    },
+    "mobileApps": {
+      "title": "Aplikacje mobilne",
+      "description": "Natywne i wieloplatformowe aplikacje na iOS i Android, które zachwycają użytkowników."
+    }
+  },
+  "pricing": {
+    "label": "Cennik",
+    "title": "Indywidualne",
+    "titleHighlight": "rozwiązania",
+    "subtitle": "Tworzymy strony internetowe, aplikacje webowe i mobilne – dostosowane do Twoich wymagań. Ponieważ każdy projekt jest wyjątkowy, tworzymy dla Ciebie indywidualną ofertę.",
+    "finalPrice": "Cena końcowa według Twoich wymagań",
+    "websites": {
+      "name": "Strony internetowe",
+      "description": "Profesjonalna obecność w sieci dla Twojej firmy",
+      "price": "od 800€",
+      "features": "Responsywny design,Optymalizacja SEO,CMS na życzenie,Szybkie ładowanie,Certyfikat SSL"
+    },
+    "webapps": {
+      "name": "Aplikacje webowe",
+      "description": "Złożone aplikacje webowe dla Twoich procesów",
+      "price": "od 8 000€",
+      "features": "Funkcje na zamówienie,Integracja bazy danych,Połączenia API,Zarządzanie użytkownikami,Hosting w chmurze"
+    },
+    "mobileApps": {
+      "name": "Aplikacje mobilne",
+      "description": "Aplikacje natywne i cross-platform",
+      "price": "od 15 000€",
+      "features": "iOS & Android,Funkcjonalność offline,Powiadomienia push,Publikacja w App Store,Regularne aktualizacje"
+    },
+    "cta": {
+      "badge": "Niezobowiązująco & Bezpłatnie",
+      "title": "Gotowy rozpocząć swój projekt?",
+      "subtitle": "Opowiedz nam o swoim pomyśle, a my stworzymy dla Ciebie ofertę na miarę – przejrzystą i uczciwą.",
+      "button": "Bezpłatna rozmowa wstępna"
+    }
+  },
+  "projects": {
+    "label": "Projekty",
+    "title": "Nasze",
+    "titleHighlight": "prace",
+    "subtitle": "Odkryj wybór naszych pomyślnie zrealizowanych projektów.",
+    "ecommerce": {
+      "title": "Platforma E-Commerce",
+      "subtitle": "Zakupy online nowej generacji",
+      "description": "Nowoczesny sklep internetowy z inwentarzem w czasie rzeczywistym, spersonalizowanymi rekomendacjami i płynnym procesem zakupowym."
+    },
+    "corporate": {
+      "title": "Strona firmowa",
+      "subtitle": "Cyfrowa tożsamość firmy",
+      "description": "Elegancka strona firmowa skupiona na storytellingu, wydajności i optymalizacji konwersji."
+    },
+    "fitness": {
+      "title": "Aplikacja Fitness",
+      "subtitle": "Zdrowie w kieszeni",
+      "description": "Natywna aplikacja mobilna ze śledzeniem treningów, planowaniem żywienia i funkcjami społecznościowymi."
+    },
+    "saas": {
+      "title": "Dashboard SaaS",
+      "subtitle": "Business Intelligence",
+      "description": "Złożony dashboard analityczny z danymi w czasie rzeczywistym, interaktywnymi wizualizacjami i współpracą zespołową."
+    }
+  },
+  "cta": {
+    "title": "Masz projekt w głowie?",
+    "subtitle": "Nie możemy się doczekać, aby usłyszeć od Ciebie i wspólnie stworzyć coś wielkiego."
+  },
+  "contact": {
+    "label": "Kontakt",
+    "title": "Pracujmy",
+    "titleHighlight": "razem",
+    "subtitle": "Masz projekt w głowie? Nie możemy się doczekać, aby usłyszeć od Ciebie i wspólnie stworzyć coś wielkiego.",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "location": "Lokalizacja",
+    "locationInfo": "Niemcy"
   },
   "reviews": {
     "title": "Opinie",
@@ -44,11 +137,6 @@
     "previousReview": "Poprzednia opinia",
     "nextReview": "Następna opinia",
     "showReview": "Pokaż opinię"
-  },
-  "cta": {
-    "title": "Gotowy na swój następny projekt?",
-    "subtitle": "Razem zrealizujemy Twoją cyfrową wizję.",
-    "button": "Skontaktuj się"
   },
   "footer": {
     "company": "Firma",

@@ -13,25 +13,118 @@
     "learnMore": "Mehr erfahren",
     "viewAll": "Alle ansehen",
     "viewAllProjects": "Alle Projekte ansehen",
-    "viewAllServices": "Alle Leistungen ansehen"
+    "viewAllServices": "Alle Leistungen ansehen",
+    "viewAllReviews": "Alle Bewertungen auf Google ansehen",
+    "caseStudy": "Case Study ansehen",
+    "contactUs": "Kontakt aufnehmen",
+    "callNow": "Jetzt anrufen",
+    "responseTime": "Antwort innerhalb von 24h"
   },
   "hero": {
-    "tagline": "Web Development Agency",
+    "badge": "Ihr Partner für digitale Exzellenz",
     "title": "Digitale Lösungen",
     "titleHighlight": "die begeistern",
-    "subtitle": "Wir entwickeln moderne Websites, Webapps und Mobile Apps für Unternehmen, die digital durchstarten wollen.",
-    "cta": "Kostenlose Beratung",
-    "ctaSecondary": "Projekte ansehen"
+    "subtitle": "Wir entwickeln moderne Websites, Webapps und Mobile Apps für Unternehmen, die digital durchstarten wollen."
+  },
+  "about": {
+    "label": "Über uns",
+    "title": "Innovation trifft",
+    "titleHighlight": "Leidenschaft",
+    "description1": "Wir sind ein Team aus kreativen Köpfen und technischen Experten, die gemeinsam an einer Vision arbeiten: Digitale Produkte zu schaffen, die einen echten Unterschied machen.",
+    "description2": "Mit Leidenschaft für Design und Technologie verwandeln wir Ihre Ideen in beeindruckende digitale Erlebnisse.",
+    "learnMore": "Mehr über uns erfahren",
+    "teamLabel": "Unser Team",
+    "experienceYears": "Jahre Erfahrung",
+    "projectsCompleted": "Projekte"
   },
   "services": {
-    "title": "Unsere Leistungen",
-    "subtitle": "Von der Idee bis zum fertigen Produkt – wir begleiten Sie auf dem gesamten Weg.",
-    "websites": "Websites",
-    "websitesDesc": "Moderne, responsive Websites die begeistern",
-    "webapps": "Webapps",
-    "webappsDesc": "Maßgeschneiderte Webanwendungen für Ihr Business",
-    "mobileApps": "Mobile Apps",
-    "mobileAppsDesc": "Native und Cross-Platform Apps für iOS und Android"
+    "label": "Leistungen",
+    "title": "Was wir",
+    "titleHighlight": "bieten",
+    "subtitle": "Von der ersten Idee bis zum fertigen Produkt – wir begleiten Sie auf dem gesamten Weg.",
+    "websites": {
+      "title": "Websites",
+      "description": "Moderne, responsive Websites mit erstklassigem Design und optimaler Performance."
+    },
+    "webapps": {
+      "title": "Webapps",
+      "description": "Leistungsstarke Webanwendungen, die komplexe Prozesse vereinfachen."
+    },
+    "mobileApps": {
+      "title": "Mobile Apps",
+      "description": "Native und Cross-Platform Apps für iOS und Android, die Nutzer begeistern."
+    }
+  },
+  "pricing": {
+    "label": "Preise",
+    "title": "Individuelle",
+    "titleHighlight": "Lösungen",
+    "subtitle": "Wir entwickeln Websites, Webapps und Mobile Apps – maßgeschneidert auf Ihre Anforderungen. Da jedes Projekt einzigartig ist, erstellen wir Ihnen ein individuelles Angebot.",
+    "finalPrice": "Endpreis nach Ihren Anforderungen",
+    "websites": {
+      "name": "Websites",
+      "description": "Professionelle Webauftritte für Ihr Unternehmen",
+      "price": "ab 800€",
+      "features": "Responsive Design,SEO-Optimierung,CMS auf Wunsch,Schnelle Ladezeiten,SSL-Verschlüsselung"
+    },
+    "webapps": {
+      "name": "Webapps",
+      "description": "Komplexe Webanwendungen für Ihre Prozesse",
+      "price": "ab 8.000€",
+      "features": "Individuelle Funktionen,Datenbank-Integration,API-Anbindungen,Benutzerverwaltung,Cloud-Hosting"
+    },
+    "mobileApps": {
+      "name": "Mobile Apps",
+      "description": "Native & Cross-Platform Apps",
+      "price": "ab 15.000€",
+      "features": "iOS & Android,Offline-Funktionalität,Push-Benachrichtigungen,App Store Veröffentlichung,Regelmäßige Updates"
+    },
+    "cta": {
+      "badge": "Unverbindlich & Kostenlos",
+      "title": "Bereit, Ihr Projekt zu starten?",
+      "subtitle": "Erzählen Sie uns von Ihrer Idee und wir erstellen Ihnen ein maßgeschneidertes Angebot – transparent und fair.",
+      "button": "Kostenloses Erstgespräch"
+    }
+  },
+  "projects": {
+    "label": "Projekte",
+    "title": "Unsere",
+    "titleHighlight": "Arbeiten",
+    "subtitle": "Entdecken Sie eine Auswahl unserer erfolgreich umgesetzten Projekte.",
+    "ecommerce": {
+      "title": "E-Commerce Platform",
+      "subtitle": "Next-Gen Online Shopping",
+      "description": "Moderner Online-Shop mit Echtzeit-Inventar, personalisierten Empfehlungen und nahtloser Checkout-Experience."
+    },
+    "corporate": {
+      "title": "Corporate Website",
+      "subtitle": "Digitale Unternehmensidentität",
+      "description": "Elegante Unternehmenswebsite mit Fokus auf Storytelling, Performance und Conversion-Optimierung."
+    },
+    "fitness": {
+      "title": "Fitness App",
+      "subtitle": "Gesundheit in der Hosentasche",
+      "description": "Native Mobile App mit Workout-Tracking, Ernährungsplanung und Social Features."
+    },
+    "saas": {
+      "title": "SaaS Dashboard",
+      "subtitle": "Business Intelligence",
+      "description": "Komplexes Analytics-Dashboard mit Echtzeit-Daten, interaktiven Visualisierungen und Team-Kollaboration."
+    }
+  },
+  "cta": {
+    "title": "Haben Sie ein Projekt im Kopf?",
+    "subtitle": "Wir freuen uns darauf, von Ihnen zu hören und gemeinsam Großartiges zu schaffen."
+  },
+  "contact": {
+    "label": "Kontakt",
+    "title": "Lassen Sie uns",
+    "titleHighlight": "zusammenarbeiten",
+    "subtitle": "Haben Sie ein Projekt im Kopf? Wir freuen uns darauf, von Ihnen zu hören und gemeinsam Großartiges zu schaffen.",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "location": "Standort",
+    "locationInfo": "Deutschland"
   },
   "reviews": {
     "title": "Kundenstimmen",
@@ -44,11 +137,6 @@
     "previousReview": "Vorherige Bewertung",
     "nextReview": "Nächste Bewertung",
     "showReview": "Bewertung anzeigen"
-  },
-  "cta": {
-    "title": "Bereit für Ihr nächstes Projekt?",
-    "subtitle": "Lassen Sie uns gemeinsam Ihre digitale Vision verwirklichen.",
-    "button": "Jetzt Kontakt aufnehmen"
   },
   "footer": {
     "company": "Unternehmen",

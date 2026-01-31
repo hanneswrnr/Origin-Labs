@@ -13,25 +13,118 @@
     "learnMore": "Meer informatie",
     "viewAll": "Alles bekijken",
     "viewAllProjects": "Alle projecten bekijken",
-    "viewAllServices": "Alle diensten bekijken"
+    "viewAllServices": "Alle diensten bekijken",
+    "viewAllReviews": "Alle beoordelingen op Google bekijken",
+    "caseStudy": "Bekijk case study",
+    "contactUs": "Neem contact op",
+    "callNow": "Bel nu",
+    "responseTime": "Antwoord binnen 24 uur"
   },
   "hero": {
-    "tagline": "Webontwikkelingsbureau",
+    "badge": "Uw partner voor digitale excellentie",
     "title": "Digitale oplossingen",
     "titleHighlight": "die inspireren",
-    "subtitle": "Wij ontwikkelen moderne websites, webapps en mobiele apps voor bedrijven die digitaal willen groeien.",
-    "cta": "Gratis consultatie",
-    "ctaSecondary": "Bekijk projecten"
+    "subtitle": "Wij ontwikkelen moderne websites, webapps en mobiele apps voor bedrijven die digitaal willen groeien."
+  },
+  "about": {
+    "label": "Over ons",
+    "title": "Innovatie ontmoet",
+    "titleHighlight": "passie",
+    "description1": "Wij zijn een team van creatieve geesten en technische experts die samenwerken aan één visie: Digitale producten creëren die echt het verschil maken.",
+    "description2": "Met passie voor design en technologie transformeren wij uw ideeën in indrukwekkende digitale ervaringen.",
+    "learnMore": "Meer over ons",
+    "teamLabel": "Ons team",
+    "experienceYears": "Jaar ervaring",
+    "projectsCompleted": "Projecten"
   },
   "services": {
-    "title": "Onze diensten",
-    "subtitle": "Van idee tot eindproduct – wij begeleiden u bij elke stap.",
-    "websites": "Websites",
-    "websitesDesc": "Moderne, responsieve websites die inspireren",
-    "webapps": "Webapps",
-    "webappsDesc": "Maatwerkwebapplicaties voor uw bedrijf",
-    "mobileApps": "Mobiele apps",
-    "mobileAppsDesc": "Native en cross-platform apps voor iOS en Android"
+    "label": "Diensten",
+    "title": "Wat wij",
+    "titleHighlight": "bieden",
+    "subtitle": "Van het eerste idee tot het eindproduct – wij begeleiden u bij elke stap.",
+    "websites": {
+      "title": "Websites",
+      "description": "Moderne, responsieve websites met eersteklas design en optimale prestaties."
+    },
+    "webapps": {
+      "title": "Webapps",
+      "description": "Krachtige webapplicaties die complexe processen vereenvoudigen."
+    },
+    "mobileApps": {
+      "title": "Mobiele apps",
+      "description": "Native en cross-platform apps voor iOS en Android die gebruikers enthousiasmeren."
+    }
+  },
+  "pricing": {
+    "label": "Prijzen",
+    "title": "Individuele",
+    "titleHighlight": "oplossingen",
+    "subtitle": "Wij ontwikkelen websites, webapps en mobiele apps – op maat gemaakt voor uw eisen. Omdat elk project uniek is, maken wij een individuele offerte voor u.",
+    "finalPrice": "Eindprijs op basis van uw wensen",
+    "websites": {
+      "name": "Websites",
+      "description": "Professionele webpresentie voor uw bedrijf",
+      "price": "vanaf €800",
+      "features": "Responsive design,SEO-optimalisatie,CMS op aanvraag,Snelle laadtijd,SSL-certificaat"
+    },
+    "webapps": {
+      "name": "Webapps",
+      "description": "Complexe webapplicaties voor uw processen",
+      "price": "vanaf €8.000",
+      "features": "Aangepaste functies,Database-integratie,API-koppelingen,Gebruikersbeheer,Cloud hosting"
+    },
+    "mobileApps": {
+      "name": "Mobiele apps",
+      "description": "Native & cross-platform apps",
+      "price": "vanaf €15.000",
+      "features": "iOS & Android,Offline functionaliteit,Push-notificaties,App Store publicatie,Regelmatige updates"
+    },
+    "cta": {
+      "badge": "Vrijblijvend & Gratis",
+      "title": "Klaar om uw project te starten?",
+      "subtitle": "Vertel ons over uw idee en wij maken een offerte op maat – transparant en eerlijk.",
+      "button": "Gratis kennismakingsgesprek"
+    }
+  },
+  "projects": {
+    "label": "Projecten",
+    "title": "Ons",
+    "titleHighlight": "werk",
+    "subtitle": "Ontdek een selectie van onze succesvol afgeronde projecten.",
+    "ecommerce": {
+      "title": "E-Commerce Platform",
+      "subtitle": "Next-gen online winkelen",
+      "description": "Moderne webshop met realtime inventaris, gepersonaliseerde aanbevelingen en naadloze checkout-ervaring."
+    },
+    "corporate": {
+      "title": "Corporate Website",
+      "subtitle": "Digitale bedrijfsidentiteit",
+      "description": "Elegante bedrijfswebsite gericht op storytelling, prestaties en conversie-optimalisatie."
+    },
+    "fitness": {
+      "title": "Fitness App",
+      "subtitle": "Gezondheid in uw zak",
+      "description": "Native mobiele app met workout-tracking, voedingsplanning en sociale functies."
+    },
+    "saas": {
+      "title": "SaaS Dashboard",
+      "subtitle": "Business Intelligence",
+      "description": "Complex analytics-dashboard met realtime data, interactieve visualisaties en teamsamenwerking."
+    }
+  },
+  "cta": {
+    "title": "Heeft u een project in gedachten?",
+    "subtitle": "Wij kijken ernaar uit van u te horen en samen iets groots te creëren."
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Laten we",
+    "titleHighlight": "samenwerken",
+    "subtitle": "Heeft u een project in gedachten? Wij kijken ernaar uit van u te horen en samen iets groots te creëren.",
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "location": "Locatie",
+    "locationInfo": "Duitsland"
   },
   "reviews": {
     "title": "Getuigenissen",
@@ -44,11 +137,6 @@
     "previousReview": "Vorige beoordeling",
     "nextReview": "Volgende beoordeling",
     "showReview": "Toon beoordeling"
-  },
-  "cta": {
-    "title": "Klaar voor uw volgende project?",
-    "subtitle": "Laten we samen uw digitale visie realiseren.",
-    "button": "Neem contact op"
   },
   "footer": {
     "company": "Bedrijf",

@@ -265,7 +265,7 @@ function GoogleReviewsSection() {
             className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-card-bg/90 backdrop-blur-sm rounded-full shadow-lg border border-divider flex items-center justify-center text-slate-grey/50 hover:text-primary-blue hover:bg-card-bg hover:shadow-xl transition-all hidden md:flex"
             whileHover={{ scale: 1.05, x: -2 }}
             whileTap={{ scale: 0.95 }}
-            aria-label="Vorherige Bewertung"
+            aria-label={t("reviews.previousReview")}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -277,7 +277,7 @@ function GoogleReviewsSection() {
             className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-card-bg/90 backdrop-blur-sm rounded-full shadow-lg border border-divider flex items-center justify-center text-slate-grey/50 hover:text-primary-blue hover:bg-card-bg hover:shadow-xl transition-all hidden md:flex"
             whileHover={{ scale: 1.05, x: 2 }}
             whileTap={{ scale: 0.95 }}
-            aria-label="Nächste Bewertung"
+            aria-label={t("reviews.nextReview")}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -365,7 +365,7 @@ function GoogleReviewsSection() {
                 className="w-11 h-11 bg-card-bg/90 backdrop-blur-sm rounded-full shadow-md border border-divider flex items-center justify-center text-slate-grey/50"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                aria-label="Vorherige"
+                aria-label={t("reviews.previousReview")}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -376,7 +376,7 @@ function GoogleReviewsSection() {
                 className="w-11 h-11 bg-card-bg/90 backdrop-blur-sm rounded-full shadow-md border border-divider flex items-center justify-center text-slate-grey/50"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                aria-label="Nächste"
+                aria-label={t("reviews.nextReview")}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -396,7 +396,7 @@ function GoogleReviewsSection() {
                     ? "bg-primary-blue w-8"
                     : "bg-slate-grey/20 hover:bg-slate-grey/40 w-2.5"
                 }`}
-                aria-label={`Bewertung ${index + 1} anzeigen`}
+                aria-label={`${t("reviews.showReview")} ${index + 1}`}
               />
             ))}
           </div>
@@ -424,7 +424,7 @@ function GoogleReviewsSection() {
               <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
               <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
-            Alle Bewertungen auf Google ansehen
+            {t("common.viewAllReviews")}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
@@ -570,7 +570,7 @@ export default function Home() {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-cyan" />
               </span>
               <span className="font-body text-sm text-slate-grey font-medium">
-                Ihr Partner für digitale Exzellenz
+                {t("hero.badge")}
               </span>
             </motion.div>
 
@@ -856,7 +856,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="font-heading text-2xl font-bold text-slate-grey">50+</p>
-                        <p className="font-body text-sm text-slate-grey/60">Projekte</p>
+                        <p className="font-body text-sm text-slate-grey/60">{t("about.projectsCompleted")}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -878,21 +878,18 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                 >
-                  Über uns
+                  {t("about.label")}
                 </motion.span>
                 <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mt-4 mb-8 leading-tight">
-                  Innovation trifft
+                  {t("about.title")}
                   <br />
-                  <span className="gradient-text">Leidenschaft</span>
+                  <span className="gradient-text">{t("about.titleHighlight")}</span>
                 </h2>
                 <p className="font-body text-lg text-slate-grey/70 mb-6 leading-relaxed">
-                  Wir sind ein Team aus kreativen Köpfen und technischen
-                  Experten, die gemeinsam an einer Vision arbeiten: Digitale
-                  Produkte zu schaffen, die einen echten Unterschied machen.
+                  {t("about.description1")}
                 </p>
                 <p className="font-body text-lg text-slate-grey/70 mb-10 leading-relaxed">
-                  Mit Leidenschaft für Design und Technologie verwandeln wir
-                  Ihre Ideen in beeindruckende digitale Erlebnisse.
+                  {t("about.description2")}
                 </p>
 
                 <motion.div
@@ -904,7 +901,7 @@ export default function Home() {
                     className="group inline-flex items-center gap-3 font-heading font-semibold text-primary-blue"
                   >
                     <span className="relative">
-                      Mehr über uns erfahren
+                      {t("about.learnMore")}
                       <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary-cyan/30 group-hover:bg-primary-cyan transition-colors" />
                     </span>
                     <motion.div
@@ -943,14 +940,13 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
-                Leistungen
+                {t("services.label")}
               </span>
               <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6">
-                Was wir <span className="gradient-text">bieten</span>
+                {t("services.title")} <span className="gradient-text">{t("services.titleHighlight")}</span>
               </h2>
               <p className="font-body text-lg text-slate-grey/60 max-w-2xl mx-auto">
-                Von der ersten Idee bis zum fertigen Produkt – wir begleiten Sie
-                auf dem gesamten Weg.
+                {t("services.subtitle")}
               </p>
             </motion.div>
 
@@ -969,8 +965,8 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   ),
-                  title: "Websites",
-                  description: "Moderne, responsive Websites mit erstklassigem Design und optimaler Performance.",
+                  title: t("services.websites.title"),
+                  description: t("services.websites.description"),
                   link: "/services#websites",
                 },
                 {
@@ -979,8 +975,8 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
                     </svg>
                   ),
-                  title: "Webapps",
-                  description: "Leistungsstarke Webanwendungen, die komplexe Prozesse vereinfachen.",
+                  title: t("services.webapps.title"),
+                  description: t("services.webapps.description"),
                   link: "/services#webapps",
                 },
                 {
@@ -989,8 +985,8 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                   ),
-                  title: "Mobile Apps",
-                  description: "Native und Cross-Platform Apps für iOS und Android, die Nutzer begeistern.",
+                  title: t("services.mobileApps.title"),
+                  description: t("services.mobileApps.description"),
                   link: "/services#mobile",
                 },
               ].map((service, index) => (
@@ -1032,7 +1028,7 @@ export default function Home() {
                         href={service.link}
                         className="inline-flex items-center gap-2 font-body text-sm font-semibold text-primary-blue group/link"
                       >
-                        <span>Mehr erfahren</span>
+                        <span>{t("common.learnMore")}</span>
                         <motion.svg
                           className="w-4 h-4"
                           fill="none"
@@ -1061,7 +1057,7 @@ export default function Home() {
                   href="/services"
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 font-heading font-semibold rounded-full hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors shadow-lg shadow-gray-800/20 dark:shadow-gray-200/20"
                 >
-                  Alle Leistungen ansehen
+                  {t("common.viewAllServices")}
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -1087,14 +1083,13 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
-                Preise
+                {t("pricing.label")}
               </span>
               <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6">
-                Individuelle <span className="gradient-text">Lösungen</span>
+                {t("pricing.title")} <span className="gradient-text">{t("pricing.titleHighlight")}</span>
               </h2>
               <p className="font-body text-lg text-slate-grey/60 max-w-3xl mx-auto">
-                Wir entwickeln Websites, Webapps und Mobile Apps – maßgeschneidert auf Ihre Anforderungen.
-                Da jedes Projekt einzigartig ist, erstellen wir Ihnen ein individuelles Angebot.
+                {t("pricing.subtitle")}
               </p>
             </motion.div>
 
@@ -1106,10 +1101,10 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   ),
-                  name: "Websites",
-                  description: "Professionelle Webauftritte für Ihr Unternehmen",
-                  price: "ab 800€",
-                  features: ["Responsive Design", "SEO-Optimierung", "CMS auf Wunsch", "Schnelle Ladezeiten", "SSL-Verschlüsselung"],
+                  name: t("pricing.websites.name"),
+                  description: t("pricing.websites.description"),
+                  price: t("pricing.websites.price"),
+                  features: t("pricing.websites.features").split(","),
                 },
                 {
                   icon: (
@@ -1117,10 +1112,10 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
                     </svg>
                   ),
-                  name: "Webapps",
-                  description: "Komplexe Webanwendungen für Ihre Prozesse",
-                  price: "ab 8.000€",
-                  features: ["Individuelle Funktionen", "Datenbank-Integration", "API-Anbindungen", "Benutzerverwaltung", "Cloud-Hosting"],
+                  name: t("pricing.webapps.name"),
+                  description: t("pricing.webapps.description"),
+                  price: t("pricing.webapps.price"),
+                  features: t("pricing.webapps.features").split(","),
                 },
                 {
                   icon: (
@@ -1128,10 +1123,10 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                   ),
-                  name: "Mobile Apps",
-                  description: "Native & Cross-Platform Apps",
-                  price: "ab 15.000€",
-                  features: ["iOS & Android", "Offline-Funktionalität", "Push-Benachrichtigungen", "App Store Veröffentlichung", "Regelmäßige Updates"],
+                  name: t("pricing.mobileApps.name"),
+                  description: t("pricing.mobileApps.description"),
+                  price: t("pricing.mobileApps.price"),
+                  features: t("pricing.mobileApps.features").split(","),
                 },
               ].map((service, index) => (
                 <motion.div
@@ -1187,7 +1182,7 @@ export default function Home() {
                         {service.price}
                       </p>
                       <p className="font-body text-sm text-slate-grey/50">
-                        Endpreis nach Ihren Anforderungen
+                        {t("pricing.finalPrice")}
                       </p>
                     </div>
                   </motion.div>
@@ -1241,15 +1236,14 @@ export default function Home() {
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
                       </span>
-                      <span className="font-body text-sm text-white/90">Unverbindlich & Kostenlos</span>
+                      <span className="font-body text-sm text-white/90">{t("pricing.cta.badge")}</span>
                     </motion.div>
 
                     <h3 className="font-heading text-3xl lg:text-4xl font-bold text-white mb-4">
-                      Bereit, Ihr Projekt zu starten?
+                      {t("pricing.cta.title")}
                     </h3>
                     <p className="font-body text-white/70 max-w-xl text-lg">
-                      Erzählen Sie uns von Ihrer Idee und wir erstellen Ihnen ein
-                      maßgeschneidertes Angebot – transparent und fair.
+                      {t("pricing.cta.subtitle")}
                     </p>
                   </div>
 
@@ -1268,7 +1262,7 @@ export default function Home() {
                         transition={{ duration: 0.3 }}
                       />
                       <span className="relative z-10 flex items-center gap-2">
-                        Kostenloses Erstgespräch
+                        {t("pricing.cta.button")}
                         <svg
                           className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                           fill="none"
@@ -1284,7 +1278,7 @@ export default function Home() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      Antwort innerhalb von 24h
+                      {t("common.responseTime")}
                     </p>
                   </div>
                 </div>
@@ -1307,14 +1301,13 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
-                Projekte
+                {t("projects.label")}
               </span>
               <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6">
-                Unsere <span className="gradient-text">Arbeiten</span>
+                {t("projects.title")} <span className="gradient-text">{t("projects.titleHighlight")}</span>
               </h2>
               <p className="font-body text-lg text-slate-grey/60 max-w-2xl mx-auto">
-                Entdecken Sie eine Auswahl unserer erfolgreich umgesetzten
-                Projekte.
+                {t("projects.subtitle")}
               </p>
             </motion.div>
 
@@ -1322,36 +1315,36 @@ export default function Home() {
             <div className="space-y-24 lg:space-y-32">
               {[
                 {
-                  title: "E-Commerce Platform",
-                  subtitle: "Online Shopping neu definiert",
-                  description: "Moderner Online-Shop mit Echtzeit-Inventar, personalisierten Empfehlungen und nahtloser Checkout-Experience.",
+                  title: t("projects.ecommerce.title"),
+                  subtitle: t("projects.ecommerce.subtitle"),
+                  description: t("projects.ecommerce.description"),
                   category: "Web App",
                   tags: ["Next.js", "Stripe", "PostgreSQL", "Redis"],
                   color: "from-violet-500 to-purple-600",
                   year: "2024",
                 },
                 {
-                  title: "Corporate Website",
-                  subtitle: "Digitale Unternehmensidentität",
-                  description: "Elegante Unternehmenswebsite mit Fokus auf Storytelling, Performance und Conversion-Optimierung.",
+                  title: t("projects.corporate.title"),
+                  subtitle: t("projects.corporate.subtitle"),
+                  description: t("projects.corporate.description"),
                   category: "Website",
                   tags: ["React", "Tailwind CSS", "Framer Motion", "Sanity"],
                   color: "from-blue-500 to-cyan-500",
                   year: "2024",
                 },
                 {
-                  title: "Fitness Tracker App",
-                  subtitle: "Gesundheit in der Hosentasche",
-                  description: "Native Mobile App mit Workout-Tracking, Ernährungsplanung und Social Features.",
+                  title: t("projects.fitness.title"),
+                  subtitle: t("projects.fitness.subtitle"),
+                  description: t("projects.fitness.description"),
                   category: "Mobile App",
                   tags: ["React Native", "Firebase", "HealthKit", "Charts"],
                   color: "from-green-500 to-emerald-500",
                   year: "2024",
                 },
                 {
-                  title: "SaaS Dashboard",
-                  subtitle: "Daten, die Geschichten erzählen",
-                  description: "Komplexes Analytics-Dashboard mit Echtzeit-Daten, interaktiven Visualisierungen und Team-Kollaboration.",
+                  title: t("projects.saas.title"),
+                  subtitle: t("projects.saas.subtitle"),
+                  description: t("projects.saas.description"),
                   category: "Web App",
                   tags: ["TypeScript", "D3.js", "WebSocket", "GraphQL"],
                   color: "from-orange-500 to-red-500",
@@ -1529,7 +1522,7 @@ export default function Home() {
                             whileHover={{ scale: 1.03, y: -2 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            <span>Case Study ansehen</span>
+                            <span>{t("common.caseStudy")}</span>
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
@@ -1554,7 +1547,7 @@ export default function Home() {
                   href="/projekte"
                   className="inline-flex items-center gap-3 px-8 py-4 border-2 border-slate-grey/10 text-slate-grey font-heading font-semibold rounded-full hover:border-primary-cyan/30 hover:text-primary-blue hover:shadow-lg hover:shadow-primary-cyan/10 transition-all"
                 >
-                  Alle Projekte ansehen
+                  {t("common.viewAllProjects")}
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -1580,16 +1573,15 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block font-body text-primary-blue font-semibold tracking-wide uppercase text-sm mb-4">
-                Kontakt
+                {t("contact.label")}
               </span>
               <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-slate-grey mb-6 leading-tight">
-                Lassen Sie uns
+                {t("contact.title")}
                 <br />
-                <span className="gradient-text">zusammenarbeiten</span>
+                <span className="gradient-text">{t("contact.titleHighlight")}</span>
               </h2>
               <p className="font-body text-lg text-slate-grey/60 max-w-xl mx-auto mb-12">
-                Haben Sie ein Projekt im Kopf? Wir freuen uns darauf, von Ihnen
-                zu hören und gemeinsam Großartiges zu schaffen.
+                {t("contact.subtitle")}
               </p>
 
               <motion.div
@@ -1606,7 +1598,7 @@ export default function Home() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
-                    Kontakt aufnehmen
+                    {t("common.contactUs")}
                     <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -1628,7 +1620,7 @@ export default function Home() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  Jetzt anrufen
+                  {t("common.callNow")}
                 </motion.a>
               </motion.div>
 
@@ -1641,8 +1633,9 @@ export default function Home() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     ),
-                    title: "E-Mail",
+                    title: t("contact.email"),
                     info: "info@origin-labs.de",
+                    key: "email",
                   },
                   {
                     icon: (
@@ -1650,8 +1643,9 @@ export default function Home() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                       </svg>
                     ),
-                    title: "Telefon",
+                    title: t("contact.phone"),
                     info: "+49 152 03037738",
+                    key: "phone",
                   },
                   {
                     icon: (
@@ -1660,12 +1654,13 @@ export default function Home() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     ),
-                    title: "Standort",
-                    info: "Deutschland",
+                    title: t("contact.location"),
+                    info: t("contact.locationInfo"),
+                    key: "location",
                   },
                 ].map((item) => (
                   <div
-                    key={item.title}
+                    key={item.key}
                     className="group bg-card-bg p-8 rounded-3xl border border-divider hover:border-primary-cyan/20 hover:shadow-xl hover:shadow-primary-cyan/5 hover:-translate-y-1 transition-all duration-300"
                   >
                     <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-5 text-white shadow-lg shadow-primary-blue/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">

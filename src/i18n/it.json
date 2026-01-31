@@ -13,25 +13,118 @@
     "learnMore": "Scopri di più",
     "viewAll": "Vedi tutto",
     "viewAllProjects": "Vedi tutti i progetti",
-    "viewAllServices": "Vedi tutti i servizi"
+    "viewAllServices": "Vedi tutti i servizi",
+    "viewAllReviews": "Vedi tutte le recensioni su Google",
+    "caseStudy": "Vedi caso studio",
+    "contactUs": "Contattaci",
+    "callNow": "Chiama ora",
+    "responseTime": "Risposta entro 24h"
   },
   "hero": {
-    "tagline": "Agenzia di sviluppo web",
+    "badge": "Il vostro partner per l'eccellenza digitale",
     "title": "Soluzioni digitali",
     "titleHighlight": "che ispirano",
-    "subtitle": "Sviluppiamo siti web, applicazioni web e app mobili moderne per aziende che vogliono digitalizzarsi.",
-    "cta": "Consulenza gratuita",
-    "ctaSecondary": "Vedi progetti"
+    "subtitle": "Sviluppiamo siti web, applicazioni web e app mobili moderne per aziende che vogliono digitalizzarsi."
+  },
+  "about": {
+    "label": "Chi siamo",
+    "title": "L'innovazione incontra",
+    "titleHighlight": "la passione",
+    "description1": "Siamo un team di menti creative ed esperti tecnici che lavorano insieme su una visione: Creare prodotti digitali che fanno una vera differenza.",
+    "description2": "Con passione per il design e la tecnologia, trasformiamo le vostre idee in esperienze digitali impressionanti.",
+    "learnMore": "Scopri di più su di noi",
+    "teamLabel": "Il nostro team",
+    "experienceYears": "Anni di esperienza",
+    "projectsCompleted": "Progetti"
   },
   "services": {
-    "title": "I nostri servizi",
-    "subtitle": "Dall'idea al prodotto finito – vi accompagniamo in ogni fase.",
-    "websites": "Siti web",
-    "websitesDesc": "Siti web moderni e responsive che ispirano",
-    "webapps": "Applicazioni web",
-    "webappsDesc": "Applicazioni web personalizzate per il vostro business",
-    "mobileApps": "App mobili",
-    "mobileAppsDesc": "App native e cross-platform per iOS e Android"
+    "label": "Servizi",
+    "title": "Cosa",
+    "titleHighlight": "offriamo",
+    "subtitle": "Dalla prima idea al prodotto finito – vi accompagniamo in ogni fase.",
+    "websites": {
+      "title": "Siti web",
+      "description": "Siti web moderni e responsive con design di prima classe e prestazioni ottimali."
+    },
+    "webapps": {
+      "title": "Applicazioni web",
+      "description": "Applicazioni web potenti che semplificano processi complessi."
+    },
+    "mobileApps": {
+      "title": "App mobili",
+      "description": "App native e cross-platform per iOS e Android che entusiasmano gli utenti."
+    }
+  },
+  "pricing": {
+    "label": "Prezzi",
+    "title": "Soluzioni",
+    "titleHighlight": "individuali",
+    "subtitle": "Sviluppiamo siti web, applicazioni web e app mobili – su misura per le vostre esigenze. Poiché ogni progetto è unico, creiamo un'offerta personalizzata per voi.",
+    "finalPrice": "Prezzo finale in base alle vostre esigenze",
+    "websites": {
+      "name": "Siti web",
+      "description": "Presenza web professionale per la vostra azienda",
+      "price": "da 800€",
+      "features": "Design responsive,Ottimizzazione SEO,CMS su richiesta,Caricamento veloce,Certificato SSL"
+    },
+    "webapps": {
+      "name": "Applicazioni web",
+      "description": "Applicazioni web complesse per i vostri processi",
+      "price": "da 8.000€",
+      "features": "Funzionalità personalizzate,Integrazione database,Connessioni API,Gestione utenti,Cloud hosting"
+    },
+    "mobileApps": {
+      "name": "App mobili",
+      "description": "App native e cross-platform",
+      "price": "da 15.000€",
+      "features": "iOS & Android,Funzionalità offline,Notifiche push,Pubblicazione App Store,Aggiornamenti regolari"
+    },
+    "cta": {
+      "badge": "Senza impegno & Gratuito",
+      "title": "Pronti a iniziare il vostro progetto?",
+      "subtitle": "Raccontateci la vostra idea e vi creeremo un'offerta su misura – trasparente e giusta.",
+      "button": "Consulenza gratuita"
+    }
+  },
+  "projects": {
+    "label": "Progetti",
+    "title": "I nostri",
+    "titleHighlight": "lavori",
+    "subtitle": "Scoprite una selezione dei nostri progetti realizzati con successo.",
+    "ecommerce": {
+      "title": "Piattaforma E-Commerce",
+      "subtitle": "Shopping online di nuova generazione",
+      "description": "Negozio online moderno con inventario in tempo reale, raccomandazioni personalizzate ed esperienza di checkout fluida."
+    },
+    "corporate": {
+      "title": "Sito Corporate",
+      "subtitle": "Identità aziendale digitale",
+      "description": "Sito web aziendale elegante focalizzato su storytelling, performance e ottimizzazione delle conversioni."
+    },
+    "fitness": {
+      "title": "App Fitness",
+      "subtitle": "La salute in tasca",
+      "description": "App mobile nativa con monitoraggio allenamenti, pianificazione nutrizionale e funzionalità social."
+    },
+    "saas": {
+      "title": "Dashboard SaaS",
+      "subtitle": "Business Intelligence",
+      "description": "Dashboard analitica complessa con dati in tempo reale, visualizzazioni interattive e collaborazione del team."
+    }
+  },
+  "cta": {
+    "title": "Avete un progetto in mente?",
+    "subtitle": "Non vediamo l'ora di sentirvi e creare insieme qualcosa di grande."
+  },
+  "contact": {
+    "label": "Contatti",
+    "title": "Lavoriamo",
+    "titleHighlight": "insieme",
+    "subtitle": "Avete un progetto in mente? Non vediamo l'ora di sentirvi e creare insieme qualcosa di grande.",
+    "email": "E-mail",
+    "phone": "Telefono",
+    "location": "Posizione",
+    "locationInfo": "Germania"
   },
   "reviews": {
     "title": "Testimonianze",
@@ -44,11 +137,6 @@
     "previousReview": "Recensione precedente",
     "nextReview": "Recensione successiva",
     "showReview": "Mostra recensione"
-  },
-  "cta": {
-    "title": "Pronti per il vostro prossimo progetto?",
-    "subtitle": "Realizziamo insieme la vostra visione digitale.",
-    "button": "Contattaci"
   },
   "footer": {
     "company": "Azienda",

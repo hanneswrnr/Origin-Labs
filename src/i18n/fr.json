@@ -13,25 +13,118 @@
     "learnMore": "En savoir plus",
     "viewAll": "Voir tout",
     "viewAllProjects": "Voir tous les projets",
-    "viewAllServices": "Voir tous les services"
+    "viewAllServices": "Voir tous les services",
+    "viewAllReviews": "Voir tous les avis sur Google",
+    "caseStudy": "Voir l'étude de cas",
+    "contactUs": "Nous contacter",
+    "callNow": "Appeler maintenant",
+    "responseTime": "Réponse sous 24h"
   },
   "hero": {
-    "tagline": "Agence de développement web",
+    "badge": "Votre partenaire pour l'excellence digitale",
     "title": "Solutions digitales",
     "titleHighlight": "qui inspirent",
-    "subtitle": "Nous développons des sites web, applications web et applications mobiles modernes pour les entreprises qui veulent se digitaliser.",
-    "cta": "Consultation gratuite",
-    "ctaSecondary": "Voir les projets"
+    "subtitle": "Nous développons des sites web, applications web et applications mobiles modernes pour les entreprises qui veulent se digitaliser."
+  },
+  "about": {
+    "label": "À propos",
+    "title": "L'innovation rencontre",
+    "titleHighlight": "la passion",
+    "description1": "Nous sommes une équipe d'esprits créatifs et d'experts techniques travaillant ensemble sur une vision : Créer des produits digitaux qui font une vraie différence.",
+    "description2": "Avec passion pour le design et la technologie, nous transformons vos idées en expériences digitales impressionnantes.",
+    "learnMore": "En savoir plus sur nous",
+    "teamLabel": "Notre équipe",
+    "experienceYears": "Ans d'expérience",
+    "projectsCompleted": "Projets"
   },
   "services": {
-    "title": "Nos services",
-    "subtitle": "De l'idée au produit fini – nous vous accompagnons à chaque étape.",
-    "websites": "Sites web",
-    "websitesDesc": "Sites web modernes et responsives qui inspirent",
-    "webapps": "Applications web",
-    "webappsDesc": "Applications web sur mesure pour votre entreprise",
-    "mobileApps": "Applications mobiles",
-    "mobileAppsDesc": "Applications natives et multiplateformes pour iOS et Android"
+    "label": "Services",
+    "title": "Ce que nous",
+    "titleHighlight": "offrons",
+    "subtitle": "De la première idée au produit fini – nous vous accompagnons à chaque étape.",
+    "websites": {
+      "title": "Sites web",
+      "description": "Sites web modernes et responsives avec un design de première classe et une performance optimale."
+    },
+    "webapps": {
+      "title": "Applications web",
+      "description": "Applications web puissantes qui simplifient les processus complexes."
+    },
+    "mobileApps": {
+      "title": "Applications mobiles",
+      "description": "Applications natives et multiplateformes pour iOS et Android qui ravissent les utilisateurs."
+    }
+  },
+  "pricing": {
+    "label": "Tarifs",
+    "title": "Solutions",
+    "titleHighlight": "individuelles",
+    "subtitle": "Nous développons des sites web, applications web et applications mobiles – adaptés à vos besoins. Chaque projet étant unique, nous vous créons une offre personnalisée.",
+    "finalPrice": "Prix final selon vos besoins",
+    "websites": {
+      "name": "Sites web",
+      "description": "Présence web professionnelle pour votre entreprise",
+      "price": "à partir de 800€",
+      "features": "Design responsive,Optimisation SEO,CMS sur demande,Chargement rapide,Certificat SSL"
+    },
+    "webapps": {
+      "name": "Applications web",
+      "description": "Applications web complexes pour vos processus",
+      "price": "à partir de 8 000€",
+      "features": "Fonctionnalités personnalisées,Intégration base de données,Connexions API,Gestion utilisateurs,Hébergement cloud"
+    },
+    "mobileApps": {
+      "name": "Applications mobiles",
+      "description": "Applications natives & cross-platform",
+      "price": "à partir de 15 000€",
+      "features": "iOS & Android,Fonctionnalité hors-ligne,Notifications push,Publication App Store,Mises à jour régulières"
+    },
+    "cta": {
+      "badge": "Sans engagement & Gratuit",
+      "title": "Prêt à démarrer votre projet ?",
+      "subtitle": "Parlez-nous de votre idée et nous vous créerons une offre sur mesure – transparente et équitable.",
+      "button": "Consultation gratuite"
+    }
+  },
+  "projects": {
+    "label": "Projets",
+    "title": "Nos",
+    "titleHighlight": "réalisations",
+    "subtitle": "Découvrez une sélection de nos projets réalisés avec succès.",
+    "ecommerce": {
+      "title": "Plateforme E-Commerce",
+      "subtitle": "Shopping en ligne nouvelle génération",
+      "description": "Boutique en ligne moderne avec inventaire en temps réel, recommandations personnalisées et expérience de paiement fluide."
+    },
+    "corporate": {
+      "title": "Site Corporate",
+      "subtitle": "Identité d'entreprise digitale",
+      "description": "Site web d'entreprise élégant axé sur le storytelling, la performance et l'optimisation des conversions."
+    },
+    "fitness": {
+      "title": "Application Fitness",
+      "subtitle": "La santé dans votre poche",
+      "description": "Application mobile native avec suivi d'entraînement, planification nutritionnelle et fonctionnalités sociales."
+    },
+    "saas": {
+      "title": "Dashboard SaaS",
+      "subtitle": "Business Intelligence",
+      "description": "Dashboard analytique complexe avec données en temps réel, visualisations interactives et collaboration d'équipe."
+    }
+  },
+  "cta": {
+    "title": "Vous avez un projet en tête ?",
+    "subtitle": "Nous sommes impatients de vous entendre et de créer ensemble quelque chose de génial."
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Travaillons",
+    "titleHighlight": "ensemble",
+    "subtitle": "Vous avez un projet en tête ? Nous sommes impatients de vous entendre et de créer ensemble quelque chose de génial.",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "location": "Emplacement",
+    "locationInfo": "Allemagne"
   },
   "reviews": {
     "title": "Témoignages",
@@ -44,11 +137,6 @@
     "previousReview": "Avis précédent",
     "nextReview": "Avis suivant",
     "showReview": "Afficher l'avis"
-  },
-  "cta": {
-    "title": "Prêt pour votre prochain projet?",
-    "subtitle": "Réalisons ensemble votre vision digitale.",
-    "button": "Nous contacter"
   },
   "footer": {
     "company": "Entreprise",
