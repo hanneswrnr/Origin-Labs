@@ -10,19 +10,19 @@ import { useTranslation } from "@/hooks/useTranslation";
 function getFooterLinks(t: (key: string) => string) {
   return {
     company: [
-      { label: t("footer.aboutUs"), href: "/about" },
-      { label: t("footer.projects"), href: "/projects" },
-      { label: t("footer.career"), href: "/career" },
+      { label: t("footer.aboutUs"), href: "/ueber-uns" },
+      { label: t("footer.projects"), href: "/projekte" },
+      { label: t("footer.career"), href: "/karriere" },
     ],
     services: [
-      { label: t("footer.websites"), href: "/services#websites" },
-      { label: t("footer.webapps"), href: "/services#webapps" },
-      { label: t("footer.mobileApps"), href: "/services#mobile" },
+      { label: t("footer.websites"), href: "/leistungen#websites" },
+      { label: t("footer.webapps"), href: "/leistungen#webapps" },
+      { label: t("footer.mobileApps"), href: "/leistungen#mobile" },
     ],
     legal: [
-      { label: t("footer.imprint"), href: "/imprint" },
-      { label: t("footer.privacy"), href: "/privacy" },
-      { label: t("footer.terms"), href: "/terms" },
+      { label: t("footer.imprint"), href: "/impressum" },
+      { label: t("footer.privacy"), href: "/datenschutz" },
+      { label: t("footer.terms"), href: "/agb" },
     ],
   };
 }

@@ -967,7 +967,7 @@ export default function Home() {
                   ),
                   title: t("services.websites.title"),
                   description: t("services.websites.description"),
-                  link: "/services#websites",
+                  link: "/leistungen#websites",
                 },
                 {
                   icon: (
@@ -977,7 +977,7 @@ export default function Home() {
                   ),
                   title: t("services.webapps.title"),
                   description: t("services.webapps.description"),
-                  link: "/services#webapps",
+                  link: "/leistungen#webapps",
                 },
                 {
                   icon: (
@@ -987,7 +987,7 @@ export default function Home() {
                   ),
                   title: t("services.mobileApps.title"),
                   description: t("services.mobileApps.description"),
-                  link: "/services#mobile",
+                  link: "/leistungen#mobile",
                 },
               ].map((service, index) => (
                 <motion.div
