@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const router = useRouter();
+  const { theme } = useTheme();
   const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,7 +44,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-slate-50 to-white flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-white via-slate-50 to-white dark:from-admin-bg dark:via-[#121212] dark:to-admin-bg flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Gradient Orbs */}
@@ -75,7 +77,7 @@ export default function AdminLoginPage() {
 
         {/* Grid Pattern */}
         <div
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05] dark:invert"
           style={{
             backgroundImage: `linear-gradient(#4B5563 1px, transparent 1px),
                               linear-gradient(90deg, #4B5563 1px, transparent 1px)`,
@@ -116,9 +118,9 @@ export default function AdminLoginPage() {
         <div className="absolute -inset-1 bg-gradient-to-r from-primary-cyan/20 via-primary-blue/20 to-violet-500/20 rounded-[2.5rem] blur-xl opacity-60" />
 
         {/* Glass Card */}
-        <div className="relative bg-white/80 backdrop-blur-2xl rounded-[2rem] border border-slate-grey/10 shadow-2xl shadow-slate-grey/10 p-10">
+        <div className="relative bg-white/80 dark:bg-admin-surface/80 backdrop-blur-2xl rounded-[2rem] border border-slate-grey/10 dark:border-white/10 shadow-2xl shadow-slate-grey/10 dark:shadow-black/30 p-10">
           {/* Inner Highlight */}
-          <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-white/80 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-white/80 dark:from-white/5 to-transparent pointer-events-none" />
 
           {/* Logo */}
           <motion.div
@@ -129,7 +131,7 @@ export default function AdminLoginPage() {
           >
             <Link href="/" className="block">
               <Image
-                src="/logo-full.png"
+                src={theme === "dark" ? "/logo-full-dark.png" : "/logo-full.png"}
                 alt="Origin Labs"
                 width={180}
                 height={54}
@@ -146,10 +148,10 @@ export default function AdminLoginPage() {
             transition={{ delay: 0.3 }}
             className="relative text-center mb-10"
           >
-            <h1 className="text-3xl font-bold text-slate-grey mb-3 font-montserrat">
+            <h1 className="text-3xl font-bold text-slate-grey dark:text-white mb-3 font-montserrat">
               Admin Portal
             </h1>
-            <p className="text-slate-grey/60 text-sm">
+            <p className="text-slate-grey/60 dark:text-slate-300/70 text-sm">
               Sichere Anmeldung zum Dashboard
             </p>
           </motion.div>
@@ -161,7 +163,7 @@ export default function AdminLoginPage() {
               <motion.div
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                className="p-4 rounded-2xl bg-red-50 border border-red-100"
+                className="p-4 rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800/30"
               >
                 <div className="flex items-center gap-3">
                   <div className="p-1.5 bg-red-100 rounded-lg">
@@ -182,7 +184,7 @@ export default function AdminLoginPage() {
             >
               <label
                 htmlFor="email"
-                className="block text-sm font-semibold text-slate-grey mb-2"
+                className="block text-sm font-semibold text-slate-grey dark:text-slate-200 mb-2"
               >
                 E-Mail Adresse
               </label>
@@ -203,9 +205,9 @@ export default function AdminLoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
-                    className="relative w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-50/50 border-2 border-slate-grey/10
-                             focus:outline-none focus:border-primary-cyan focus:bg-white
-                             transition-all duration-300 text-slate-grey placeholder:text-slate-grey/40"
+                    className="relative w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-50/50 dark:bg-admin-surface-hover/50 border-2 border-slate-grey/10 dark:border-white/10
+                             focus:outline-none focus:border-primary-cyan focus:bg-white dark:focus:bg-admin-surface
+                             transition-all duration-300 text-slate-grey dark:text-white placeholder:text-slate-grey/40 dark:placeholder:text-slate-400"
                     placeholder="admin@origin-labs.de"
                     required
                   />
@@ -221,7 +223,7 @@ export default function AdminLoginPage() {
             >
               <label
                 htmlFor="password"
-                className="block text-sm font-semibold text-slate-grey mb-2"
+                className="block text-sm font-semibold text-slate-grey dark:text-slate-200 mb-2"
               >
                 Passwort
               </label>
@@ -242,9 +244,9 @@ export default function AdminLoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     onFocus={() => setFocusedField("password")}
                     onBlur={() => setFocusedField(null)}
-                    className="relative w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-50/50 border-2 border-slate-grey/10
-                             focus:outline-none focus:border-primary-cyan focus:bg-white
-                             transition-all duration-300 text-slate-grey placeholder:text-slate-grey/40"
+                    className="relative w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-50/50 dark:bg-admin-surface-hover/50 border-2 border-slate-grey/10 dark:border-white/10
+                             focus:outline-none focus:border-primary-cyan focus:bg-white dark:focus:bg-admin-surface
+                             transition-all duration-300 text-slate-grey dark:text-white placeholder:text-slate-grey/40 dark:placeholder:text-slate-400"
                     placeholder="••••••••"
                     required
                   />
@@ -301,7 +303,7 @@ export default function AdminLoginPage() {
           {/* Divider */}
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-grey/10" />
+              <div className="w-full border-t border-slate-grey/10 dark:border-white/10" />
             </div>
           </div>
 
@@ -314,7 +316,7 @@ export default function AdminLoginPage() {
           >
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-slate-grey/50 hover:text-primary-cyan transition-colors duration-300 group"
+              className="inline-flex items-center gap-2 text-sm text-slate-grey/50 dark:text-slate-400 hover:text-primary-cyan transition-colors duration-300 group"
             >
               <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -333,7 +335,7 @@ export default function AdminLoginPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 text-xs text-slate-grey/40"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 text-xs text-slate-grey/40 dark:text-slate-500"
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />

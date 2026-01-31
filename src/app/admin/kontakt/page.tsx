@@ -67,7 +67,7 @@ export default function AdminKontaktPage() {
     colSpan?: number;
   }) => (
     <div className={`relative group ${colSpan === 2 ? "md:col-span-2" : ""}`}>
-      <label className="block text-sm font-semibold text-slate-grey mb-2 flex items-center gap-2">
+      <label className="block text-sm font-semibold text-slate-grey dark:text-slate-200 mb-2 flex items-center gap-2">
         {icon}
         {label}
       </label>
@@ -75,10 +75,10 @@ export default function AdminKontaktPage() {
         type={type}
         value={form[field]}
         onChange={(e) => handleChange(field, e.target.value)}
-        className="w-full px-5 py-4 bg-white border-2 border-slate-grey/10 rounded-2xl
+        className="w-full px-5 py-4 bg-white dark:bg-admin-surface border-2 border-slate-grey/10 dark:border-white/10 rounded-2xl
                    focus:outline-none focus:border-primary-cyan focus:ring-2 focus:ring-primary-cyan/20
-                   transition-all duration-300 hover:border-slate-grey/20
-                   placeholder:text-slate-grey/30"
+                   transition-all duration-300 hover:border-slate-grey/20 dark:hover:border-white/20
+                   placeholder:text-slate-grey/30 dark:placeholder:text-slate-500 dark:text-white"
         placeholder={placeholder}
       />
     </div>
@@ -91,7 +91,7 @@ export default function AdminKontaktPage() {
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold text-slate-grey font-montserrat"
+          className="text-3xl font-bold text-slate-grey dark:text-white font-montserrat"
         >
           Kontaktdaten verwalten
         </motion.h1>
@@ -99,7 +99,7 @@ export default function AdminKontaktPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="text-slate-grey/60 mt-2"
+          className="text-slate-grey/60 dark:text-slate-300/70 mt-2"
         >
           Änderungen werden auf der Homepage und der Kontaktseite angezeigt.
         </motion.p>
@@ -137,10 +137,10 @@ export default function AdminKontaktPage() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="relative bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
-                        shadow-xl shadow-slate-grey/5 p-8 overflow-hidden"
+            className="relative bg-white/95 dark:bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10 dark:border-white/10
+                        shadow-xl shadow-slate-grey/5 dark:shadow-black/20 p-8 overflow-hidden"
           >
-            <h2 className="text-xl font-bold text-slate-grey mb-8 font-montserrat flex items-center gap-3">
+            <h2 className="text-xl font-bold text-slate-grey dark:text-white mb-8 font-montserrat flex items-center gap-3">
               <div className="p-2 bg-gradient-to-r from-primary-cyan to-primary-blue rounded-xl shadow-lg shadow-primary-cyan/30">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -200,10 +200,10 @@ export default function AdminKontaktPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className="relative bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
-                        shadow-xl shadow-slate-grey/5 p-8 overflow-hidden"
+            className="relative bg-white/95 dark:bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10 dark:border-white/10
+                        shadow-xl shadow-slate-grey/5 dark:shadow-black/20 p-8 overflow-hidden"
           >
-            <h2 className="text-xl font-bold text-slate-grey mb-8 font-montserrat flex items-center gap-3">
+            <h2 className="text-xl font-bold text-slate-grey dark:text-white mb-8 font-montserrat flex items-center gap-3">
               <div className="p-2 bg-gradient-to-r from-violet-500 to-purple-500 rounded-xl shadow-lg shadow-violet-500/30">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -220,7 +220,7 @@ export default function AdminKontaktPage() {
                   { field: "twitter" as const, label: "X (Twitter)", color: "#000000", placeholder: "https://x.com/...", icon: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" },
                 ].map((social) => (
                   <div key={social.field} className="relative group">
-                    <label className="block text-sm font-semibold text-slate-grey mb-2 flex items-center gap-2">
+                    <label className="block text-sm font-semibold text-slate-grey dark:text-slate-200 mb-2 flex items-center gap-2">
                       <span style={{ color: social.color }}>
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                           <path d={social.icon} />
@@ -251,8 +251,8 @@ export default function AdminKontaktPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <p className="text-sm text-slate-grey/70">
-                    <span className="font-semibold text-slate-grey">Hinweis:</span> Die Social Media Links werden im Footer
+                  <p className="text-sm text-slate-grey/70 dark:text-slate-300/70">
+                    <span className="font-semibold text-slate-grey dark:text-white">Hinweis:</span> Die Social Media Links werden im Footer
                     der Website und auf der Kontaktseite angezeigt. Leer gelassene Felder werden nicht angezeigt.
                   </p>
                 </div>

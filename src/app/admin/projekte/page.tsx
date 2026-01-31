@@ -56,7 +56,7 @@ export default function AdminProjektePage() {
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold text-slate-grey font-montserrat"
+            className="text-3xl font-bold text-slate-grey dark:text-white font-montserrat"
           >
             Projekte verwalten
           </motion.h1>
@@ -64,7 +64,7 @@ export default function AdminProjektePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-slate-grey/60 mt-2"
+            className="text-slate-grey/60 dark:text-slate-300/70 mt-2"
           >
             {projects.length} Projekte insgesamt, {projects.filter(p => p.published).length} veröffentlicht
           </motion.p>
@@ -96,7 +96,7 @@ export default function AdminProjektePage() {
                       whitespace-nowrap transition-all duration-300
                       ${filter === tab.value
                         ? "text-white gradient-primary"
-                        : "bg-white/90 text-slate-grey border-2 border-slate-grey/10 hover:border-primary-cyan/30"
+                        : "bg-white/90 dark:bg-admin-surface/90 text-slate-grey dark:text-slate-200 border-2 border-slate-grey/10 dark:border-white/10 hover:border-primary-cyan/30"
                       }`}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -115,8 +115,8 @@ export default function AdminProjektePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="relative bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10
-                       shadow-xl shadow-slate-grey/5 overflow-hidden group hover:shadow-2xl hover:border-primary-cyan/30 transition-all duration-300"
+            className="relative bg-white/95 dark:bg-admin-surface/95 backdrop-blur-2xl rounded-3xl border-2 border-slate-grey/10 dark:border-white/10
+                       shadow-xl shadow-slate-grey/5 dark:shadow-black/20 overflow-hidden group hover:shadow-2xl hover:border-primary-cyan/30 transition-all duration-300"
           >
 
               {/* Project Color Header */}
@@ -142,13 +142,13 @@ export default function AdminProjektePage() {
               </div>
 
               {/* Content */}
-              <div className="relative p-6 bg-white">
+              <div className="relative p-6 bg-white dark:bg-admin-surface">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="font-bold text-slate-grey text-xl">
+                    <h3 className="font-bold text-slate-grey dark:text-white text-xl">
                       {project.title}
                     </h3>
-                    <p className="text-slate-grey/60 text-sm mt-1">{project.subtitle}</p>
+                    <p className="text-slate-grey/60 dark:text-slate-300/70 text-sm mt-1">{project.subtitle}</p>
                   </div>
                   <span className="px-3 py-1.5 text-xs font-bold bg-gradient-to-r from-primary-cyan/10 to-primary-blue/10
                              text-primary-blue rounded-xl border border-primary-cyan/20">
@@ -156,7 +156,7 @@ export default function AdminProjektePage() {
                   </span>
                 </div>
 
-                <p className="text-slate-grey/70 text-sm line-clamp-2 mb-5 leading-relaxed">
+                <p className="text-slate-grey/70 dark:text-slate-300/70 text-sm line-clamp-2 mb-5 leading-relaxed">
                   {project.description}
                 </p>
 
@@ -165,7 +165,7 @@ export default function AdminProjektePage() {
                   {project.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 text-xs font-medium bg-slate-grey/5 text-slate-grey/70
+                      className="px-3 py-1.5 text-xs font-medium bg-slate-grey/5 dark:bg-white/5 text-slate-grey/70 dark:text-slate-300/70
                                rounded-lg transition-all duration-300 hover:bg-gradient-to-r
                                hover:from-primary-cyan/10 hover:to-primary-blue/10 hover:text-primary-blue
                                cursor-default"
@@ -174,14 +174,14 @@ export default function AdminProjektePage() {
                     </span>
                   ))}
                   {project.tags.length > 3 && (
-                    <span className="px-3 py-1.5 text-xs font-medium bg-slate-grey/5 text-slate-grey/40 rounded-lg">
+                    <span className="px-3 py-1.5 text-xs font-medium bg-slate-grey/5 dark:bg-white/5 text-slate-grey/40 dark:text-slate-500 rounded-lg">
                       +{project.tags.length - 3}
                     </span>
                   )}
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center justify-between pt-5 border-t-2 border-slate-grey/5">
+                <div className="flex items-center justify-between pt-5 border-t-2 border-slate-grey/5 dark:border-white/10">
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => togglePublished(project.id)}
@@ -239,14 +239,14 @@ export default function AdminProjektePage() {
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="w-20 h-20 bg-gradient-to-br from-slate-grey/5 to-slate-grey/10 rounded-3xl
+              className="w-20 h-20 bg-gradient-to-br from-slate-grey/5 to-slate-grey/10 dark:from-white/5 dark:to-white/10 rounded-3xl
                        flex items-center justify-center mb-6"
             >
-              <svg className="w-10 h-10 text-slate-grey/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-10 h-10 text-slate-grey/30 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
               </svg>
             </motion.div>
-            <p className="text-slate-grey/60 text-center text-lg">
+            <p className="text-slate-grey/60 dark:text-slate-400 text-center text-lg">
               Keine Projekte in dieser Kategorie gefunden.
             </p>
           </motion.div>

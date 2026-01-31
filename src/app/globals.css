@@ -21,6 +21,11 @@
   --hover-bg: rgba(75, 85, 99, 0.05);
   --text-muted: rgba(75, 85, 99, 0.7);
   --divider: rgba(75, 85, 99, 0.1);
+
+  /* Admin Dashboard Colors */
+  --admin-bg: #f8fafc;
+  --admin-surface: #ffffff;
+  --admin-surface-hover: #f1f5f9;
 }
 
 .dark {
@@ -43,6 +48,11 @@
   --hover-bg: rgba(255, 255, 255, 0.1);
   --text-muted: rgba(255, 255, 255, 0.85);
   --divider: rgba(255, 255, 255, 0.1);
+
+  /* Admin Dashboard Colors */
+  --admin-bg: #0f0f0f;
+  --admin-surface: #1a1a1a;
+  --admin-surface-hover: #252525;
 }
 
 @theme inline {
@@ -66,6 +76,11 @@
   --color-hover-bg: var(--hover-bg);
   --color-text-muted: var(--text-muted);
   --color-divider: var(--divider);
+
+  /* Admin Dashboard Colors */
+  --color-admin-bg: var(--admin-bg);
+  --color-admin-surface: var(--admin-surface);
+  --color-admin-surface-hover: var(--admin-surface-hover);
 
   /* Fonts */
   --font-heading: var(--font-montserrat);
